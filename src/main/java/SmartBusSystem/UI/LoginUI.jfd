@@ -1,0 +1,83 @@
+JFDML JFormDesigner: "8.2.2.0.382" Java: "17.0.10" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
+			"autoSize": false
+		} ) {
+			name: "this"
+			"alwaysOnTop": true
+			"title": "智慧公交系统"
+			"$sizePolicy": 1
+			add( new FormComponent( "javax.swing.JFormattedTextField" ) {
+				name: "IdInput"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 185
+				"y": 125
+				"width": 195
+				"height": 25
+			} )
+			add( new FormComponent( "javax.swing.JPasswordField" ) {
+				name: "PasswordInput"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 185
+				"y": 175
+				"width": 195
+				"height": 25
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "Title"
+				"text": "智慧公交系统"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 25, false )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 160
+				"y": 45
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "Id"
+				"text": "账号:"
+				"font": &SwingDerivedFont0 new com.jformdesigner.model.SwingDerivedFont( null, 0, 12, false )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 110
+				"y": 125
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "Password"
+				"text": "密码:"
+				"font": #SwingDerivedFont0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 110
+				"y": 175
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "Code"
+				"text": "验证码:"
+				"font": #SwingDerivedFont0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 110
+				"y": 225
+			} )
+			add( new FormComponent( "javax.swing.JFormattedTextField" ) {
+				name: "CodeInput"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 55
+				"height": 25
+				"x": 210
+				"y": 225
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "RightCode"
+				"text": "点击一下!"
+				"font": new java.awt.Font( "宋体", 1, 15 )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 280
+				"y": 225
+				"height": 25
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 540, 330 )
+		} )
+	}
+}

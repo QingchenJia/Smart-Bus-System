@@ -6,11 +6,14 @@ public class User {
     private String name;
     private int aptitude;
 
-    public User(String ID, String password, String name, int aptitude) {
+    private String phoneNum;
+
+    public User(String ID, String password, String name, int aptitude, String phoneNum) {
         this.ID = ID;
         this.password = password;
         this.name = name;
         this.aptitude = aptitude;
+        this.phoneNum = phoneNum;
     }
 
     public String getID() {
@@ -45,8 +48,22 @@ public class User {
         this.aptitude = aptitude;
     }
 
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
+    }
+
     @Override
     public String toString() {
-        return "User{" + "ID='" + ID + '\'' + ", password='" + password + '\'' + ", name='" + name + '\'' + ", aptitude=" + aptitude + '}';
+        return "User{" +
+                "ID='" + ID + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", aptitude=" + aptitude +
+                ", phoneNum='" + phoneNum + '\'' +
+                '}';
     }
 }
