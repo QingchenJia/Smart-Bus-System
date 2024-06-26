@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SmartBusSystem.mapper.AdminMapper">
+    <resultMap id="AdminResult" type="SmartBusSystem.pojo.Admin">
+        <id column="AID" property="ID"/>
+        <result column="Password" property="passwd"/>
+    </resultMap>
+    <select id="SelectById" resultType="SmartBusSystem.pojo.Admin">
+        SELECT *
+        FROM admin
+        WHERE AID = #{ID};
+    </select>
+</mapper>
