@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SmartBusSystem.mapper.DriverMapper">
+    <resultMap id="DriverResult" type="SmartBusSystem.pojo.Driver">
+        <id column="DID" property="ID"/>
+        <result column="Password" property="password"/>
+        <result column="DrivingYears" property="drivingYears"/>
+        <result column="DName" property="name"/>
+        <result column="PhoneNum" property="phoneNum"/>
+    </resultMap>
+    <insert id="InsertDriver">
+        INSERT INTO driver
+        VALUES (#{ID}, #{password}, #{drivingYears},
+        <if test="name!=null">#{name},</if>
+        <if test="name==null">'注册司机',</if>> #{password})
+    </insert>
+    <select id="SelectAll" resultType="SmartBusSystem.pojo.Driver">
+        SELECT *
+        FROM driver;
+    </select>
+    <select id="SelectById" resultType="SmartBusSystem.pojo.Driver">
+        SELECT *
+        FROM driver
+        WHERE DID = #{ID};
+    </select>
+</mapper>

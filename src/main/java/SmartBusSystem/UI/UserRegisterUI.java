@@ -4,6 +4,8 @@
 
 package SmartBusSystem.UI;
 
+import SmartBusSystem.pojo.User;
+import SmartBusSystem.service.SecurityProtect;
 import SmartBusSystem.service.register.UserRegister;
 
 import java.awt.*;
@@ -26,7 +28,6 @@ public class UserRegisterUI extends JFrame {
         String password = new String(PasswordInput.getPassword());
         String passwordAgain = new String(PasswordAgainInput.getPassword());
         String phoneNum = PhoneNumIdInput.getText();
-        int aptitude = IsAptitude.isSelected() ? 0 : 1;
 
         if (!UserRegister.checkID(ID)) {
             IdWrong.setVisible(true);
@@ -55,6 +56,24 @@ public class UserRegisterUI extends JFrame {
         // TODO add your code here
         this.dispose();
         new LoginUI();
+    }
+
+    private void RegisterMouseReleased(MouseEvent e) throws Exception {
+        // TODO add your code here
+        String ID = IdInput.getText();
+        String password = new String(PasswordInput.getPassword());
+        String phoneNum = PhoneNumIdInput.getText();
+        int aptitude = IsAptitude.isSelected() ? 0 : 1;
+
+        User user = new User();
+        user.setID(ID);
+        user.setPassword(SecurityProtect.encrypt(password));
+        user.setPhoneNum(phoneNum);
+        user.setAptitude(aptitude);
+
+        UserRegister.register(user);
+
+        Pass.dispose();
     }
 
     private void initComponents() {
@@ -343,6 +362,15 @@ public class UserRegisterUI extends JFrame {
             Register.setText("\u901a\u8fc7\u68c0\u6d4b\uff01\u6ce8\u518c");
             Register.setFont(Register.getFont().deriveFont(Register.getFont().getStyle() | Font.BOLD, Register.getFont().getSize() + 10f));
             Register.setFocusPainted(false);
+            Register.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    try {
+RegisterMouseReleased(e);} catch (Exception ex) {
+    throw new RuntimeException(ex);
+}
+                }
+            });
             PassContentPane.add(Register);
             Register.setBounds(new Rectangle(new Point(70, 25), Register.getPreferredSize()));
 

@@ -13,8 +13,8 @@
     <insert id="InsertUser">
         INSERT INTO user
         VALUES (#{ID}, #{password},
-        <if test="name==null">'注册用户',</if>
-        <if test="name!=null">#{name},</if>#{aptitude}, #{phoneNum});
+        <if test="name!=null">#{name},</if>
+        <if test="name==null">'注册用户',</if>#{aptitude}, #{phoneNum});
     </insert>
     <select id="SelectAll" resultType="SmartBusSystem.pojo.User">
         SELECT *
