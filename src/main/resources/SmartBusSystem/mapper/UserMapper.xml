@@ -8,7 +8,14 @@
         <result column="Password" property="password"/>
         <result column="UName" property="name"/>
         <result column="Aptitude" property="aptitude"/>
+        <result column="PhoneNum" property="phoneNum"/>
     </resultMap>
+    <insert id="InsertUser">
+        INSERT INTO user
+        VALUES (#{ID}, #{password},
+        <if test="name==null">'注册用户',</if>
+        <if test="name!=null">#{name},</if>#{aptitude}, #{phoneNum});
+    </insert>
     <select id="SelectAll" resultType="SmartBusSystem.pojo.User">
         SELECT *
         FROM user;

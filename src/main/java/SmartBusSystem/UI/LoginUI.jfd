@@ -10,6 +10,7 @@ new FormModel {
 			"alwaysOnTop": true
 			"title": "智慧公交系统"
 			"$sizePolicy": 1
+			"defaultCloseOperation": 3
 			add( new FormComponent( "javax.swing.JFormattedTextField" ) {
 				name: "IdInput"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
@@ -40,7 +41,7 @@ new FormModel {
 				"font": &SwingDerivedFont0 new com.jformdesigner.model.SwingDerivedFont( null, 0, 12, false )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 110
-				"y": 125
+				"y": 120
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "Password"
@@ -48,7 +49,7 @@ new FormModel {
 				"font": #SwingDerivedFont0
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 110
-				"y": 175
+				"y": 170
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "Code"
@@ -56,7 +57,7 @@ new FormModel {
 				"font": #SwingDerivedFont0
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 110
-				"y": 225
+				"y": 220
 			} )
 			add( new FormComponent( "javax.swing.JFormattedTextField" ) {
 				name: "CodeInput"
@@ -75,9 +76,95 @@ new FormModel {
 				"y": 225
 				"height": 25
 			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "UserLogin"
+				"text": "乘客登录"
+				"font": &SwingDerivedFont1 new com.jformdesigner.model.SwingDerivedFont( null, 1, 10, false )
+				"focusPainted": false
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 110
+				"y": 265
+				"height": 31
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "DriverLogin"
+				"text": "司机登录"
+				"font": #SwingDerivedFont1
+				"focusPainted": false
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 255
+				"y": 265
+				"height": 31
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "Register"
+				"text": "注册"
+				"font": &SwingDerivedFont2 new com.jformdesigner.model.SwingDerivedFont( null, 1, 7, false )
+				"focusPainted": false
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "RegisterMouseReleased", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 390
+				"y": 125
+				"height": 25
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "Recover"
+				"text": "找回密码"
+				"font": #SwingDerivedFont2
+				"focusPainted": false
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"height": 25
+				"x": 390
+				"y": 175
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "AdminLogin"
+				"text": "管理员入口"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 5, false )
+				"focusPainted": false
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 420
+				"y": 5
+				"width": 125
+				"height": 30
+			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 540, 330 )
+			"size": new java.awt.Dimension( 560, 355 )
+		} )
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
+			"autoSize": false
+		} ) {
+			name: "RegisterSelect"
+			"alwaysOnTop": true
+			"$sizePolicy": 1
+			"title": "注册选项"
+			"defaultCloseOperation": 2
+			"modal": true
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "UserRegister"
+				"text": "乘客注册"
+				"font": #SwingDerivedFont1
+				"focusPainted": false
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "UserRegisterMouseReleased", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 40
+				"y": 20
+				"height": 26
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "DriverRegister"
+				"text": "司机注册"
+				"font": #SwingDerivedFont1
+				"focusPainted": false
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 40
+				"y": 65
+				"height": 26
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 10, 365 )
+			"size": new java.awt.Dimension( 215, 145 )
 		} )
 	}
 }

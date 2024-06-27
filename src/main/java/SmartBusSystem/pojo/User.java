@@ -5,8 +5,10 @@ public class User {
     private String password;
     private String name;
     private int aptitude;
-
     private String phoneNum;
+
+    public User() {
+    }
 
     public User(String ID, String password, String name, int aptitude, String phoneNum) {
         this.ID = ID;

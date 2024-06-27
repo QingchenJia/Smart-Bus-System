@@ -10,4 +10,5 @@ public interface UserMapper {
     User SelectById(String ID);
 
     List<User> SelectByAptitude(int aptitude);
+    void InsertUser(User user);
 }
