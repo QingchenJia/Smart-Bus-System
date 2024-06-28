@@ -7,8 +7,9 @@ import SmartBusSystem.service.DatabaseOperation;
 public class UserRegister {
     public static boolean containUser(String ID) {
         UserMapper userMapper = DatabaseOperation.session.getMapper(UserMapper.class);
-        User userResult = userMapper.SelectById(ID);
-        return userResult != null;
+        User user = userMapper.SelectById(ID);
+        System.out.println(user);   //控制台展示查询结果
+        return user != null;
     }
 
     public static boolean checkID(String ID) {

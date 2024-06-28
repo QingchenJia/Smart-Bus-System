@@ -109,7 +109,7 @@ new FormModel {
 				"width": 35
 				"height": 25
 				"x": 110
-				"y": 210
+				"y": 215
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"size": new java.awt.Dimension( 360, 340 )
@@ -211,25 +211,6 @@ new FormModel {
 			"location": new java.awt.Point( 0, 920 )
 		} )
 		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
-			name: "DrivingYearsWrong"
-			"title": "错误提醒"
-			"modal": true
-			"alwaysOnTop": true
-			"$sizePolicy": 1
-			"defaultCloseOperation": 2
-			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "tips6"
-				"text": "驾龄格式错误，请重新输入"
-				"font": #SwingDerivedFont2
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 35
-				"y": 30
-			} )
-		}, new FormLayoutConstraints( null ) {
-			"size": #Dimension0
-			"location": new java.awt.Point( 0, 1061 )
-		} )
-		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
 			name: "Pass"
 			"title": "检测通过"
 			"modal": true
@@ -248,7 +229,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"size": #Dimension0
-			"location": new java.awt.Point( 0, 1202 )
+			"location": new java.awt.Point( 0, 1055 )
 		} )
 	}
 }

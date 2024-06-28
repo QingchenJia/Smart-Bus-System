@@ -14,7 +14,7 @@
         INSERT INTO driver
         VALUES (#{ID}, #{password}, #{drivingYears},
         <if test="name!=null">#{name},</if>
-        <if test="name==null">'注册司机',</if>> #{password})
+        <if test="name==null">'注册司机',</if>#{phoneNum})
     </insert>
     <select id="SelectAll" resultType="SmartBusSystem.pojo.Driver">
         SELECT *

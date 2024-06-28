@@ -4,6 +4,10 @@
 
 package SmartBusSystem.UI;
 
+import SmartBusSystem.pojo.Driver;
+import SmartBusSystem.service.SecurityProtect;
+import SmartBusSystem.service.register.DriverRegister;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -14,18 +18,61 @@ import javax.swing.*;
 public class DriverRegisterUI extends JFrame {
     public DriverRegisterUI() {
         initComponents();
+        this.setVisible(true);
     }
 
     private void CheckMouseReleased(MouseEvent e) {
         // TODO add your code here
+        String ID = IdInput.getText();
+        String password = new String(PasswordInput.getPassword());
+        String passwordAgain = new String(PasswordAgainInput.getPassword());
+        String phoneNum = PhoneNumIdInput.getText();
+
+        if (!DriverRegister.checkID(ID)) {
+            IdWrong.setVisible(true);
+            return;
+        }
+        if (DriverRegister.containDriver(ID)) {
+            IdExist.setVisible(true);
+            return;
+        }
+        if (!DriverRegister.checkPassword(password)) {
+            PasswordWrong.setVisible(true);
+            return;
+        }
+        if (!password.equals(passwordAgain)) {
+            PasswordDifferent.setVisible(true);
+            return;
+        }
+        if (!DriverRegister.checkPhoneNum(phoneNum)) {
+            PhoneNumWrong.setVisible(true);
+            return;
+        }
+        Pass.setVisible(true);
     }
 
     private void BackwardMouseReleased(MouseEvent e) {
         // TODO add your code here
+        this.dispose();
+        new LoginUI();
     }
 
-    private void RegisterMouseReleased(MouseEvent e) {
+    private void RegisterMouseReleased(MouseEvent e) throws Exception {
         // TODO add your code here
+        String ID = IdInput.getText();
+        String password = new String(PasswordInput.getPassword());
+        int drivingYears = Integer.parseInt(DrvingYearsInput.getText());
+        String phoneNum = PhoneNumIdInput.getText();
+
+        Driver driver = new Driver();
+        driver.setID(ID);
+        driver.setPassword(SecurityProtect.encrypt(password));
+        driver.setDrivingYears(drivingYears);
+        driver.setPhoneNum(phoneNum);
+
+        DriverRegister.register(driver);
+
+        Pass.dispose();
     }
 
     private void initComponents() {
@@ -52,8 +99,6 @@ public class DriverRegisterUI extends JFrame {
         tips4 = new JLabel();
         PhoneNumWrong = new JDialog();
         tips5 = new JLabel();
-        DrivingYearsWrong = new JDialog();
-        tips6 = new JLabel();
         Pass = new JDialog();
         Register = new JButton();
 
@@ -128,7 +173,7 @@ public class DriverRegisterUI extends JFrame {
         contentPane.add(Backward);
         Backward.setBounds(new Rectangle(new Point(60, 250), Backward.getPreferredSize()));
         contentPane.add(DrvingYearsInput);
-        DrvingYearsInput.setBounds(110, 210, 35, 25);
+        DrvingYearsInput.setBounds(110, 215, 35, 25);
 
         contentPane.setPreferredSize(new Dimension(360, 340));
         setSize(360, 340);
@@ -299,39 +344,6 @@ public class DriverRegisterUI extends JFrame {
             PhoneNumWrong.setLocationRelativeTo(PhoneNumWrong.getOwner());
         }
 
-        //======== DrivingYearsWrong ========
-        {
-            DrivingYearsWrong.setTitle("\u9519\u8bef\u63d0\u9192");
-            DrivingYearsWrong.setModal(true);
-            DrivingYearsWrong.setAlwaysOnTop(true);
-            DrivingYearsWrong.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-            var DrivingYearsWrongContentPane = DrivingYearsWrong.getContentPane();
-            DrivingYearsWrongContentPane.setLayout(null);
-
-            //---- tips6 ----
-            tips6.setText("\u9a7e\u9f84\u683c\u5f0f\u9519\u8bef\uff0c\u8bf7\u91cd\u65b0\u8f93\u5165");
-            tips6.setFont(tips6.getFont().deriveFont(tips6.getFont().getStyle() | Font.BOLD, tips6.getFont().getSize() + 8f));
-            DrivingYearsWrongContentPane.add(tips6);
-            tips6.setBounds(new Rectangle(new Point(35, 30), tips6.getPreferredSize()));
-
-            {
-                // compute preferred size
-                Dimension preferredSize = new Dimension();
-                for(int i = 0; i < DrivingYearsWrongContentPane.getComponentCount(); i++) {
-                    Rectangle bounds = DrivingYearsWrongContentPane.getComponent(i).getBounds();
-                    preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
-                    preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
-                }
-                Insets insets = DrivingYearsWrongContentPane.getInsets();
-                preferredSize.width += insets.right;
-                preferredSize.height += insets.bottom;
-                DrivingYearsWrongContentPane.setMinimumSize(preferredSize);
-                DrivingYearsWrongContentPane.setPreferredSize(preferredSize);
-            }
-            DrivingYearsWrong.setSize(360, 125);
-            DrivingYearsWrong.setLocationRelativeTo(DrivingYearsWrong.getOwner());
-        }
-
         //======== Pass ========
         {
             Pass.setTitle("\u68c0\u6d4b\u901a\u8fc7");
@@ -348,7 +360,10 @@ public class DriverRegisterUI extends JFrame {
             Register.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseReleased(MouseEvent e) {
-                    RegisterMouseReleased(e);
+                    try {
+RegisterMouseReleased(e);} catch (Exception ex) {
+    throw new RuntimeException(ex);
+}
                 }
             });
             PassContentPane.add(Register);
@@ -397,8 +412,6 @@ public class DriverRegisterUI extends JFrame {
     private JLabel tips4;
     private JDialog PhoneNumWrong;
     private JLabel tips5;
-    private JDialog DrivingYearsWrong;
-    private JLabel tips6;
     private JDialog Pass;
     private JButton Register;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on

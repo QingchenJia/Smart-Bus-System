@@ -4,6 +4,7 @@
 
 package SmartBusSystem.UI;
 
+import SmartBusSystem.service.login.DriverLogin;
 import SmartBusSystem.service.login.UserLogin;
 import SmartBusSystem.service.login.VerifyCode;
 
@@ -37,7 +38,7 @@ public class LoginUI extends JFrame {
         RightCode.setText(VerifyCode.getVerifyCode());
     }
 
-    private void UserLoginMouseReleased(MouseEvent e) throws Exception {
+    private void UserLoginButtonMouseReleased(MouseEvent e) throws Exception {
         // TODO add your code here
         String ID = IdInput.getText();
         String password = new String(PasswordInput.getPassword());
@@ -57,6 +58,35 @@ public class LoginUI extends JFrame {
             return;
         }
         Pass.setVisible(true);
+    }
+
+    private void DriverLoginButtonMouseReleased(MouseEvent e) throws Exception {
+        // TODO add your code here
+        String ID = IdInput.getText();
+        String password = new String(PasswordInput.getPassword());
+        String code = CodeInput.getText();
+        String rightCode = RightCode.getText();
+
+        if (!DriverLogin.verifyID(ID)) {
+            IdNoExist.setVisible(true);
+            return;
+        }
+        if (!DriverLogin.verifyPassword(ID, password)) {
+            PasswordWrong.setVisible(true);
+            return;
+        }
+        if (!DriverLogin.verifyVerifyCode(code, rightCode)) {
+            CodeWrong.setVisible(true);
+            return;
+        }
+        Pass.setVisible(true);
+    }
+
+    private void DriverRegisterMouseReleased(MouseEvent e) {
+        // TODO add your code here
+        RegisterSelect.dispose();
+        this.dispose();
+        new DriverRegisterUI();
     }
 
     private void initComponents() {
@@ -84,7 +114,7 @@ public class LoginUI extends JFrame {
         CodeWrong = new JDialog();
         tips3 = new JLabel();
         Pass = new JDialog();
-        Register2 = new JButton();
+        EnterSystem = new JButton();
 
         //======== this ========
         setAlwaysOnTop(true);
@@ -143,7 +173,7 @@ public class LoginUI extends JFrame {
             @Override
             public void mouseReleased(MouseEvent e) {
                 try {
-UserLoginMouseReleased(e);} catch (Exception ex) {
+UserLoginButtonMouseReleased(e);} catch (Exception ex) {
     throw new RuntimeException(ex);
 }
             }
@@ -155,6 +185,15 @@ UserLoginMouseReleased(e);} catch (Exception ex) {
         DriverLoginButton.setText("\u53f8\u673a\u767b\u5f55");
         DriverLoginButton.setFont(DriverLoginButton.getFont().deriveFont(DriverLoginButton.getFont().getStyle() | Font.BOLD, DriverLoginButton.getFont().getSize() + 10f));
         DriverLoginButton.setFocusPainted(false);
+        DriverLoginButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                try {
+DriverLoginButtonMouseReleased(e);} catch (Exception ex) {
+    throw new RuntimeException(ex);
+}
+            }
+        });
         contentPane.add(DriverLoginButton);
         DriverLoginButton.setBounds(255, 265, DriverLoginButton.getPreferredSize().width, 31);
 
@@ -215,6 +254,12 @@ UserLoginMouseReleased(e);} catch (Exception ex) {
             DriverRegister.setText("\u53f8\u673a\u6ce8\u518c");
             DriverRegister.setFont(DriverRegister.getFont().deriveFont(DriverRegister.getFont().getStyle() | Font.BOLD, DriverRegister.getFont().getSize() + 10f));
             DriverRegister.setFocusPainted(false);
+            DriverRegister.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    DriverRegisterMouseReleased(e);
+                }
+            });
             RegisterSelectContentPane.add(DriverRegister);
             DriverRegister.setBounds(40, 65, DriverRegister.getPreferredSize().width, 26);
 
@@ -331,18 +376,12 @@ UserLoginMouseReleased(e);} catch (Exception ex) {
             var PassContentPane = Pass.getContentPane();
             PassContentPane.setLayout(null);
 
-            //---- Register2 ----
-            Register2.setText("\u8fdb\u5165\u7cfb\u7edf");
-            Register2.setFont(Register2.getFont().deriveFont(Register2.getFont().getStyle() | Font.BOLD, Register2.getFont().getSize() + 10f));
-            Register2.setFocusPainted(false);
-            Register2.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                    RegisterMouseReleased(e);
-                }
-            });
-            PassContentPane.add(Register2);
-            Register2.setBounds(new Rectangle(new Point(40, 35), Register2.getPreferredSize()));
+            //---- EnterSystem ----
+            EnterSystem.setText("\u8fdb\u5165\u7cfb\u7edf");
+            EnterSystem.setFont(EnterSystem.getFont().deriveFont(EnterSystem.getFont().getStyle() | Font.BOLD, EnterSystem.getFont().getSize() + 10f));
+            EnterSystem.setFocusPainted(false);
+            PassContentPane.add(EnterSystem);
+            EnterSystem.setBounds(new Rectangle(new Point(40, 35), EnterSystem.getPreferredSize()));
 
             {
                 // compute preferred size
@@ -388,6 +427,6 @@ UserLoginMouseReleased(e);} catch (Exception ex) {
     private JDialog CodeWrong;
     private JLabel tips3;
     private JDialog Pass;
-    private JButton Register2;
+    private JButton EnterSystem;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

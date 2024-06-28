@@ -14,6 +14,7 @@ public class UserLogin {
     public static boolean verifyPassword(String ID, String password) throws Exception {
         UserMapper userMapper = DatabaseOperation.session.getMapper(UserMapper.class);
         User user = userMapper.SelectById(ID);
+        System.out.println(user);   //控制台展示查询结果
         return password.equals(SecurityProtect.decrypt(user.getPassword()));
     }
 
