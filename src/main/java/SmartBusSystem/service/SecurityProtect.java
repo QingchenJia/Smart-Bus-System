@@ -11,8 +11,8 @@ public class SecurityProtect {
     private static final String algorithm = "AES/CBC/PKCS5Padding";
 
     static {
-        String keyString = "1234567890123456";
-        String ivString = "abcdefghijklmnop";
+        String keyString = "1234567890123456";  //密钥
+        String ivString = "abcdefghijklmnop";   //向量
         key = new SecretKeySpec(keyString.getBytes(), "AES");
         iv = new IvParameterSpec(ivString.getBytes());
     }

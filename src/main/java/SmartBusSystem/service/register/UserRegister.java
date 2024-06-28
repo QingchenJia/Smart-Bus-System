@@ -16,7 +16,7 @@ public class UserRegister {
     }
 
     public static boolean checkPassword(String password) {
-        return password.matches("[A-Za-z0-9@#&.]{6,}");
+        return password.matches("[A-Za-z0-9@#.]{6,20}");
     }
 
     public static boolean checkPhoneNum(String phoneNum) {

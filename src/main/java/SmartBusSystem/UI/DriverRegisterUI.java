@@ -1,79 +1,31 @@
 /*
- * Created by JFormDesigner on Thu Jun 27 13:40:09 CST 2024
+ * Created by JFormDesigner on Fri Jun 28 19:16:35 CST 2024
  */
 
 package SmartBusSystem.UI;
 
-import SmartBusSystem.pojo.User;
-import SmartBusSystem.service.SecurityProtect;
-import SmartBusSystem.service.register.UserRegister;
-
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Arrays;
 import javax.swing.*;
 
 /**
  * @author 87948
  */
-public class UserRegisterUI extends JFrame {
-    public UserRegisterUI() {
+public class DriverRegisterUI extends JFrame {
+    public DriverRegisterUI() {
         initComponents();
-        this.setVisible(true);
     }
 
     private void CheckMouseReleased(MouseEvent e) {
         // TODO add your code here
-        String ID = IdInput.getText();
-        String password = new String(PasswordInput.getPassword());
-        String passwordAgain = new String(PasswordAgainInput.getPassword());
-        String phoneNum = PhoneNumIdInput.getText();
-
-        if (!UserRegister.checkID(ID)) {
-            IdWrong.setVisible(true);
-            return;
-        }
-        if (UserRegister.containUser(ID)) {
-            IdExist.setVisible(true);
-            return;
-        }
-        if (!UserRegister.checkPassword(password)) {
-            PasswordWrong.setVisible(true);
-            return;
-        }
-        if (!password.equals(passwordAgain)) {
-            PasswordDifferent.setVisible(true);
-            return;
-        }
-        if (!UserRegister.checkPhoneNum(phoneNum)) {
-            PasswordDifferent.setVisible(true);
-            return;
-        }
-        Pass.setVisible(true);
     }
 
     private void BackwardMouseReleased(MouseEvent e) {
         // TODO add your code here
-        this.dispose();
-        new LoginUI();
     }
 
-    private void RegisterMouseReleased(MouseEvent e) throws Exception {
+    private void RegisterMouseReleased(MouseEvent e) {
         // TODO add your code here
-        String ID = IdInput.getText();
-        String password = new String(PasswordInput.getPassword());
-        String phoneNum = PhoneNumIdInput.getText();
-        int aptitude = IsAptitude.isSelected() ? 0 : 1;
-
-        User user = new User();
-        user.setID(ID);
-        user.setPassword(SecurityProtect.encrypt(password));
-        user.setPhoneNum(phoneNum);
-        user.setAptitude(aptitude);
-
-        UserRegister.register(user);
-
-        Pass.dispose();
     }
 
     private void initComponents() {
@@ -82,14 +34,14 @@ public class UserRegisterUI extends JFrame {
         Password = new JLabel();
         PhoneNum = new JLabel();
         PasswordAgain = new JLabel();
-        Aptitude = new JLabel();
+        DrivingYears = new JLabel();
         IdInput = new JFormattedTextField();
         PhoneNumIdInput = new JFormattedTextField();
         PasswordInput = new JPasswordField();
         PasswordAgainInput = new JPasswordField();
-        IsAptitude = new JCheckBox();
         Check = new JButton();
         Backward = new JButton();
+        DrvingYearsInput = new JFormattedTextField();
         IdWrong = new JDialog();
         tips1 = new JLabel();
         IdExist = new JDialog();
@@ -100,11 +52,13 @@ public class UserRegisterUI extends JFrame {
         tips4 = new JLabel();
         PhoneNumWrong = new JDialog();
         tips5 = new JLabel();
+        DrivingYearsWrong = new JDialog();
+        tips6 = new JLabel();
         Pass = new JDialog();
         Register = new JButton();
 
         //======== this ========
-        setTitle("\u4e58\u5ba2\u6ce8\u518c");
+        setTitle("\u53f8\u673a\u6ce8\u518c");
         setAlwaysOnTop(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         var contentPane = getContentPane();
@@ -134,11 +88,11 @@ public class UserRegisterUI extends JFrame {
         contentPane.add(PasswordAgain);
         PasswordAgain.setBounds(new Rectangle(new Point(40, 130), PasswordAgain.getPreferredSize()));
 
-        //---- Aptitude ----
-        Aptitude.setText("\u8d44\u8d28:");
-        Aptitude.setFont(Aptitude.getFont().deriveFont(Aptitude.getFont().getSize() + 12f));
-        contentPane.add(Aptitude);
-        Aptitude.setBounds(new Rectangle(new Point(40, 210), Aptitude.getPreferredSize()));
+        //---- DrivingYears ----
+        DrivingYears.setText("\u9a7e\u9f84:");
+        DrivingYears.setFont(DrivingYears.getFont().deriveFont(DrivingYears.getFont().getSize() + 12f));
+        contentPane.add(DrivingYears);
+        DrivingYears.setBounds(new Rectangle(new Point(40, 210), DrivingYears.getPreferredSize()));
         contentPane.add(IdInput);
         IdInput.setBounds(110, 55, 195, 25);
         contentPane.add(PhoneNumIdInput);
@@ -147,12 +101,6 @@ public class UserRegisterUI extends JFrame {
         PasswordInput.setBounds(110, 95, 195, 25);
         contentPane.add(PasswordAgainInput);
         PasswordAgainInput.setBounds(155, 135, 150, 25);
-
-        //---- IsAptitude ----
-        IsAptitude.setText("\u4f18\u60e0");
-        IsAptitude.setFont(IsAptitude.getFont().deriveFont(IsAptitude.getFont().getStyle() | Font.BOLD, IsAptitude.getFont().getSize() + 7f));
-        contentPane.add(IsAptitude);
-        IsAptitude.setBounds(new Rectangle(new Point(110, 210), IsAptitude.getPreferredSize()));
 
         //---- Check ----
         Check.setText("\u68c0\u67e5");
@@ -179,6 +127,8 @@ public class UserRegisterUI extends JFrame {
         });
         contentPane.add(Backward);
         Backward.setBounds(new Rectangle(new Point(60, 250), Backward.getPreferredSize()));
+        contentPane.add(DrvingYearsInput);
+        DrvingYearsInput.setBounds(110, 210, 35, 25);
 
         contentPane.setPreferredSize(new Dimension(360, 340));
         setSize(360, 340);
@@ -349,6 +299,39 @@ public class UserRegisterUI extends JFrame {
             PhoneNumWrong.setLocationRelativeTo(PhoneNumWrong.getOwner());
         }
 
+        //======== DrivingYearsWrong ========
+        {
+            DrivingYearsWrong.setTitle("\u9519\u8bef\u63d0\u9192");
+            DrivingYearsWrong.setModal(true);
+            DrivingYearsWrong.setAlwaysOnTop(true);
+            DrivingYearsWrong.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            var DrivingYearsWrongContentPane = DrivingYearsWrong.getContentPane();
+            DrivingYearsWrongContentPane.setLayout(null);
+
+            //---- tips6 ----
+            tips6.setText("\u9a7e\u9f84\u683c\u5f0f\u9519\u8bef\uff0c\u8bf7\u91cd\u65b0\u8f93\u5165");
+            tips6.setFont(tips6.getFont().deriveFont(tips6.getFont().getStyle() | Font.BOLD, tips6.getFont().getSize() + 8f));
+            DrivingYearsWrongContentPane.add(tips6);
+            tips6.setBounds(new Rectangle(new Point(35, 30), tips6.getPreferredSize()));
+
+            {
+                // compute preferred size
+                Dimension preferredSize = new Dimension();
+                for(int i = 0; i < DrivingYearsWrongContentPane.getComponentCount(); i++) {
+                    Rectangle bounds = DrivingYearsWrongContentPane.getComponent(i).getBounds();
+                    preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
+                    preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
+                }
+                Insets insets = DrivingYearsWrongContentPane.getInsets();
+                preferredSize.width += insets.right;
+                preferredSize.height += insets.bottom;
+                DrivingYearsWrongContentPane.setMinimumSize(preferredSize);
+                DrivingYearsWrongContentPane.setPreferredSize(preferredSize);
+            }
+            DrivingYearsWrong.setSize(360, 125);
+            DrivingYearsWrong.setLocationRelativeTo(DrivingYearsWrong.getOwner());
+        }
+
         //======== Pass ========
         {
             Pass.setTitle("\u68c0\u6d4b\u901a\u8fc7");
@@ -365,10 +348,7 @@ public class UserRegisterUI extends JFrame {
             Register.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseReleased(MouseEvent e) {
-                    try {
-RegisterMouseReleased(e);} catch (Exception ex) {
-    throw new RuntimeException(ex);
-}
+                    RegisterMouseReleased(e);
                 }
             });
             PassContentPane.add(Register);
@@ -399,14 +379,14 @@ RegisterMouseReleased(e);} catch (Exception ex) {
     private JLabel Password;
     private JLabel PhoneNum;
     private JLabel PasswordAgain;
-    private JLabel Aptitude;
+    private JLabel DrivingYears;
     private JFormattedTextField IdInput;
     private JFormattedTextField PhoneNumIdInput;
     private JPasswordField PasswordInput;
     private JPasswordField PasswordAgainInput;
-    private JCheckBox IsAptitude;
     private JButton Check;
     private JButton Backward;
+    private JFormattedTextField DrvingYearsInput;
     private JDialog IdWrong;
     private JLabel tips1;
     private JDialog IdExist;
@@ -417,6 +397,8 @@ RegisterMouseReleased(e);} catch (Exception ex) {
     private JLabel tips4;
     private JDialog PhoneNumWrong;
     private JLabel tips5;
+    private JDialog DrivingYearsWrong;
+    private JLabel tips6;
     private JDialog Pass;
     private JButton Register;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on

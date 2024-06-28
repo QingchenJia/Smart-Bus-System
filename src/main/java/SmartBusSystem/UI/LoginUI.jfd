@@ -71,23 +71,25 @@ new FormModel {
 				name: "RightCode"
 				"text": "点击一下!"
 				"font": new java.awt.Font( "宋体", 1, 15 )
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "RightCodeMouseReleased", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 280
 				"y": 225
 				"height": 25
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "UserLogin"
+				name: "UserLoginButton"
 				"text": "乘客登录"
 				"font": &SwingDerivedFont1 new com.jformdesigner.model.SwingDerivedFont( null, 1, 10, false )
 				"focusPainted": false
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "UserLoginMouseReleased", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 110
 				"y": 265
 				"height": 31
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "DriverLogin"
+				name: "DriverLoginButton"
 				"text": "司机登录"
 				"font": #SwingDerivedFont1
 				"focusPainted": false
@@ -163,8 +165,86 @@ new FormModel {
 				"height": 26
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 10, 365 )
+			"location": new java.awt.Point( 0, 365 )
 			"size": new java.awt.Dimension( 215, 145 )
+		} )
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "PasswordWrong"
+			"title": "错误提醒"
+			"modal": true
+			"alwaysOnTop": true
+			"$sizePolicy": 1
+			"defaultCloseOperation": 2
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "tips1"
+				"text": "密码错误，请重新输入"
+				"font": &SwingDerivedFont3 new com.jformdesigner.model.SwingDerivedFont( null, 1, 8, false )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 45
+				"y": 30
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"size": &Dimension0 new java.awt.Dimension( 315, 125 )
+			"location": new java.awt.Point( 0, 660 )
+		} )
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "IdNoExist"
+			"title": "错误提醒"
+			"modal": true
+			"alwaysOnTop": true
+			"$sizePolicy": 1
+			"defaultCloseOperation": 2
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "tips2"
+				"text": "账号不存在，请重新输入"
+				"font": #SwingDerivedFont3
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 40
+				"y": 30
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"size": #Dimension0
+			"location": new java.awt.Point( 0, 520 )
+		} )
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "CodeWrong"
+			"title": "错误提醒"
+			"modal": true
+			"alwaysOnTop": true
+			"$sizePolicy": 1
+			"defaultCloseOperation": 2
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "tips3"
+				"text": "验证码错误，请重新输入"
+				"font": #SwingDerivedFont3
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 45
+				"y": 30
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"size": #Dimension0
+			"location": new java.awt.Point( 0, 808 )
+		} )
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "Pass"
+			"title": "登陆成功"
+			"modal": true
+			"alwaysOnTop": true
+			"$sizePolicy": 1
+			"defaultCloseOperation": 2
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "Register2"
+				"text": "进入系统"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 10, false )
+				"focusPainted": false
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "RegisterMouseReleased", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 40
+				"y": 35
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"size": new java.awt.Dimension( 215, 145 )
+			"location": new java.awt.Point( 230, 365 )
 		} )
 	}
 }

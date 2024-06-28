@@ -4,6 +4,9 @@
 
 package SmartBusSystem.UI;
 
+import SmartBusSystem.service.login.UserLogin;
+import SmartBusSystem.service.login.VerifyCode;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -29,6 +32,33 @@ public class LoginUI extends JFrame {
         new UserRegisterUI();
     }
 
+    private void RightCodeMouseReleased(MouseEvent e) {
+        // TODO add your code here
+        RightCode.setText(VerifyCode.getVerifyCode());
+    }
+
+    private void UserLoginMouseReleased(MouseEvent e) throws Exception {
+        // TODO add your code here
+        String ID = IdInput.getText();
+        String password = new String(PasswordInput.getPassword());
+        String code = CodeInput.getText();
+        String rightCode = RightCode.getText();
+
+        if (!UserLogin.verifyID(ID)) {
+            IdNoExist.setVisible(true);
+            return;
+        }
+        if (!UserLogin.verifyPassword(ID, password)) {
+            PasswordWrong.setVisible(true);
+            return;
+        }
+        if (!UserLogin.verifyVerifyCode(code, rightCode)) {
+            CodeWrong.setVisible(true);
+            return;
+        }
+        Pass.setVisible(true);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         IdInput = new JFormattedTextField();
@@ -39,14 +69,22 @@ public class LoginUI extends JFrame {
         Code = new JLabel();
         CodeInput = new JFormattedTextField();
         RightCode = new JLabel();
-        UserLogin = new JButton();
-        DriverLogin = new JButton();
+        UserLoginButton = new JButton();
+        DriverLoginButton = new JButton();
         Register = new JButton();
         Recover = new JButton();
         AdminLogin = new JButton();
         RegisterSelect = new JDialog();
         UserRegister = new JButton();
         DriverRegister = new JButton();
+        PasswordWrong = new JDialog();
+        tips1 = new JLabel();
+        IdNoExist = new JDialog();
+        tips2 = new JLabel();
+        CodeWrong = new JDialog();
+        tips3 = new JLabel();
+        Pass = new JDialog();
+        Register2 = new JButton();
 
         //======== this ========
         setAlwaysOnTop(true);
@@ -88,22 +126,37 @@ public class LoginUI extends JFrame {
         //---- RightCode ----
         RightCode.setText("\u70b9\u51fb\u4e00\u4e0b!");
         RightCode.setFont(new Font("\u5b8b\u4f53", Font.BOLD, 15));
+        RightCode.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                RightCodeMouseReleased(e);
+            }
+        });
         contentPane.add(RightCode);
         RightCode.setBounds(280, 225, RightCode.getPreferredSize().width, 25);
 
-        //---- UserLogin ----
-        UserLogin.setText("\u4e58\u5ba2\u767b\u5f55");
-        UserLogin.setFont(UserLogin.getFont().deriveFont(UserLogin.getFont().getStyle() | Font.BOLD, UserLogin.getFont().getSize() + 10f));
-        UserLogin.setFocusPainted(false);
-        contentPane.add(UserLogin);
-        UserLogin.setBounds(110, 265, UserLogin.getPreferredSize().width, 31);
+        //---- UserLoginButton ----
+        UserLoginButton.setText("\u4e58\u5ba2\u767b\u5f55");
+        UserLoginButton.setFont(UserLoginButton.getFont().deriveFont(UserLoginButton.getFont().getStyle() | Font.BOLD, UserLoginButton.getFont().getSize() + 10f));
+        UserLoginButton.setFocusPainted(false);
+        UserLoginButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                try {
+UserLoginMouseReleased(e);} catch (Exception ex) {
+    throw new RuntimeException(ex);
+}
+            }
+        });
+        contentPane.add(UserLoginButton);
+        UserLoginButton.setBounds(110, 265, UserLoginButton.getPreferredSize().width, 31);
 
-        //---- DriverLogin ----
-        DriverLogin.setText("\u53f8\u673a\u767b\u5f55");
-        DriverLogin.setFont(DriverLogin.getFont().deriveFont(DriverLogin.getFont().getStyle() | Font.BOLD, DriverLogin.getFont().getSize() + 10f));
-        DriverLogin.setFocusPainted(false);
-        contentPane.add(DriverLogin);
-        DriverLogin.setBounds(255, 265, DriverLogin.getPreferredSize().width, 31);
+        //---- DriverLoginButton ----
+        DriverLoginButton.setText("\u53f8\u673a\u767b\u5f55");
+        DriverLoginButton.setFont(DriverLoginButton.getFont().deriveFont(DriverLoginButton.getFont().getStyle() | Font.BOLD, DriverLoginButton.getFont().getSize() + 10f));
+        DriverLoginButton.setFocusPainted(false);
+        contentPane.add(DriverLoginButton);
+        DriverLoginButton.setBounds(255, 265, DriverLoginButton.getPreferredSize().width, 31);
 
         //---- Register ----
         Register.setText("\u6ce8\u518c");
@@ -169,6 +222,145 @@ public class LoginUI extends JFrame {
             RegisterSelect.setSize(215, 145);
             RegisterSelect.setLocationRelativeTo(RegisterSelect.getOwner());
         }
+
+        //======== PasswordWrong ========
+        {
+            PasswordWrong.setTitle("\u9519\u8bef\u63d0\u9192");
+            PasswordWrong.setModal(true);
+            PasswordWrong.setAlwaysOnTop(true);
+            PasswordWrong.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            var PasswordWrongContentPane = PasswordWrong.getContentPane();
+            PasswordWrongContentPane.setLayout(null);
+
+            //---- tips1 ----
+            tips1.setText("\u5bc6\u7801\u9519\u8bef\uff0c\u8bf7\u91cd\u65b0\u8f93\u5165");
+            tips1.setFont(tips1.getFont().deriveFont(tips1.getFont().getStyle() | Font.BOLD, tips1.getFont().getSize() + 8f));
+            PasswordWrongContentPane.add(tips1);
+            tips1.setBounds(new Rectangle(new Point(45, 30), tips1.getPreferredSize()));
+
+            {
+                // compute preferred size
+                Dimension preferredSize = new Dimension();
+                for(int i = 0; i < PasswordWrongContentPane.getComponentCount(); i++) {
+                    Rectangle bounds = PasswordWrongContentPane.getComponent(i).getBounds();
+                    preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
+                    preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
+                }
+                Insets insets = PasswordWrongContentPane.getInsets();
+                preferredSize.width += insets.right;
+                preferredSize.height += insets.bottom;
+                PasswordWrongContentPane.setMinimumSize(preferredSize);
+                PasswordWrongContentPane.setPreferredSize(preferredSize);
+            }
+            PasswordWrong.setSize(315, 125);
+            PasswordWrong.setLocationRelativeTo(PasswordWrong.getOwner());
+        }
+
+        //======== IdNoExist ========
+        {
+            IdNoExist.setTitle("\u9519\u8bef\u63d0\u9192");
+            IdNoExist.setModal(true);
+            IdNoExist.setAlwaysOnTop(true);
+            IdNoExist.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            var IdNoExistContentPane = IdNoExist.getContentPane();
+            IdNoExistContentPane.setLayout(null);
+
+            //---- tips2 ----
+            tips2.setText("\u8d26\u53f7\u4e0d\u5b58\u5728\uff0c\u8bf7\u91cd\u65b0\u8f93\u5165");
+            tips2.setFont(tips2.getFont().deriveFont(tips2.getFont().getStyle() | Font.BOLD, tips2.getFont().getSize() + 8f));
+            IdNoExistContentPane.add(tips2);
+            tips2.setBounds(new Rectangle(new Point(40, 30), tips2.getPreferredSize()));
+
+            {
+                // compute preferred size
+                Dimension preferredSize = new Dimension();
+                for(int i = 0; i < IdNoExistContentPane.getComponentCount(); i++) {
+                    Rectangle bounds = IdNoExistContentPane.getComponent(i).getBounds();
+                    preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
+                    preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
+                }
+                Insets insets = IdNoExistContentPane.getInsets();
+                preferredSize.width += insets.right;
+                preferredSize.height += insets.bottom;
+                IdNoExistContentPane.setMinimumSize(preferredSize);
+                IdNoExistContentPane.setPreferredSize(preferredSize);
+            }
+            IdNoExist.setSize(315, 125);
+            IdNoExist.setLocationRelativeTo(IdNoExist.getOwner());
+        }
+
+        //======== CodeWrong ========
+        {
+            CodeWrong.setTitle("\u9519\u8bef\u63d0\u9192");
+            CodeWrong.setModal(true);
+            CodeWrong.setAlwaysOnTop(true);
+            CodeWrong.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            var CodeWrongContentPane = CodeWrong.getContentPane();
+            CodeWrongContentPane.setLayout(null);
+
+            //---- tips3 ----
+            tips3.setText("\u9a8c\u8bc1\u7801\u9519\u8bef\uff0c\u8bf7\u91cd\u65b0\u8f93\u5165");
+            tips3.setFont(tips3.getFont().deriveFont(tips3.getFont().getStyle() | Font.BOLD, tips3.getFont().getSize() + 8f));
+            CodeWrongContentPane.add(tips3);
+            tips3.setBounds(new Rectangle(new Point(45, 30), tips3.getPreferredSize()));
+
+            {
+                // compute preferred size
+                Dimension preferredSize = new Dimension();
+                for(int i = 0; i < CodeWrongContentPane.getComponentCount(); i++) {
+                    Rectangle bounds = CodeWrongContentPane.getComponent(i).getBounds();
+                    preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
+                    preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
+                }
+                Insets insets = CodeWrongContentPane.getInsets();
+                preferredSize.width += insets.right;
+                preferredSize.height += insets.bottom;
+                CodeWrongContentPane.setMinimumSize(preferredSize);
+                CodeWrongContentPane.setPreferredSize(preferredSize);
+            }
+            CodeWrong.setSize(315, 125);
+            CodeWrong.setLocationRelativeTo(CodeWrong.getOwner());
+        }
+
+        //======== Pass ========
+        {
+            Pass.setTitle("\u767b\u9646\u6210\u529f");
+            Pass.setModal(true);
+            Pass.setAlwaysOnTop(true);
+            Pass.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            var PassContentPane = Pass.getContentPane();
+            PassContentPane.setLayout(null);
+
+            //---- Register2 ----
+            Register2.setText("\u8fdb\u5165\u7cfb\u7edf");
+            Register2.setFont(Register2.getFont().deriveFont(Register2.getFont().getStyle() | Font.BOLD, Register2.getFont().getSize() + 10f));
+            Register2.setFocusPainted(false);
+            Register2.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    RegisterMouseReleased(e);
+                }
+            });
+            PassContentPane.add(Register2);
+            Register2.setBounds(new Rectangle(new Point(40, 35), Register2.getPreferredSize()));
+
+            {
+                // compute preferred size
+                Dimension preferredSize = new Dimension();
+                for(int i = 0; i < PassContentPane.getComponentCount(); i++) {
+                    Rectangle bounds = PassContentPane.getComponent(i).getBounds();
+                    preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
+                    preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
+                }
+                Insets insets = PassContentPane.getInsets();
+                preferredSize.width += insets.right;
+                preferredSize.height += insets.bottom;
+                PassContentPane.setMinimumSize(preferredSize);
+                PassContentPane.setPreferredSize(preferredSize);
+            }
+            Pass.setSize(215, 145);
+            Pass.setLocationRelativeTo(Pass.getOwner());
+        }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
 
@@ -181,13 +373,21 @@ public class LoginUI extends JFrame {
     private JLabel Code;
     private JFormattedTextField CodeInput;
     private JLabel RightCode;
-    private JButton UserLogin;
-    private JButton DriverLogin;
+    private JButton UserLoginButton;
+    private JButton DriverLoginButton;
     private JButton Register;
     private JButton Recover;
     private JButton AdminLogin;
     private JDialog RegisterSelect;
     private JButton UserRegister;
     private JButton DriverRegister;
+    private JDialog PasswordWrong;
+    private JLabel tips1;
+    private JDialog IdNoExist;
+    private JLabel tips2;
+    private JDialog CodeWrong;
+    private JLabel tips3;
+    private JDialog Pass;
+    private JButton Register2;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }
