@@ -121,10 +121,11 @@ new FormModel {
 				"y": 175
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "AdminLogin"
+				name: "AdminEnter"
 				"text": "管理员入口"
 				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 5, false )
 				"focusPainted": false
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "AdminEnterMouseReleased", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 420
 				"y": 5
@@ -228,24 +229,102 @@ new FormModel {
 			"location": new java.awt.Point( 0, 808 )
 		} )
 		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
-			name: "Pass"
-			"title": "登陆成功"
+			name: "DriverPass"
+			"title": "登陆成功(司机)"
 			"modal": true
 			"alwaysOnTop": true
 			"$sizePolicy": 1
 			"defaultCloseOperation": 2
 			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "EnterSystem"
+				name: "DriverEnterSystem"
 				"text": "进入系统"
-				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 10, false )
+				"font": &SwingDerivedFont4 new com.jformdesigner.model.SwingDerivedFont( null, 1, 10, false )
 				"focusPainted": false
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 40
 				"y": 35
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"size": new java.awt.Dimension( 215, 145 )
-			"location": new java.awt.Point( 230, 365 )
+			"size": &Dimension1 new java.awt.Dimension( 215, 145 )
+			"location": new java.awt.Point( 225, 950 )
+		} )
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
+			"autoSize": false
+		} ) {
+			name: "AdminLoginDialog"
+			"title": "管理员登录"
+			"$sizePolicy": 1
+			"alwaysOnTop": true
+			"modal": true
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "AdminId"
+				"text": "账号:"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 7, false )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 60
+				"height": 25
+				"x": 10
+				"y": 25
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "AdminPassword"
+				"text": "密码:"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 7, false )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 60
+				"height": 25
+				"x": 10
+				"y": 55
+			} )
+			add( new FormComponent( "javax.swing.JFormattedTextField" ) {
+				name: "AdminIdInput"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 130
+				"height": 20
+				"x": 70
+				"y": 30
+			} )
+			add( new FormComponent( "javax.swing.JPasswordField" ) {
+				name: "AdminPasswordInput"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 130
+				"height": 20
+				"x": 70
+				"y": 60
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "AdminLoginButton"
+				"text": "管理员登录"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 6, false )
+				"focusPainted": false
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "AdminLoginButtonMouseReleased", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 40
+				"y": 100
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 330, 520 )
+			"size": new java.awt.Dimension( 215, 180 )
+		} )
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "UserPass"
+			"title": "登陆成功(乘客)"
+			"modal": true
+			"alwaysOnTop": true
+			"$sizePolicy": 1
+			"defaultCloseOperation": 2
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "UserEnterSystem"
+				"text": "进入系统"
+				"font": #SwingDerivedFont4
+				"focusPainted": false
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 40
+				"y": 35
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"size": #Dimension1
+			"location": new java.awt.Point( 0, 950 )
 		} )
 	}
 }

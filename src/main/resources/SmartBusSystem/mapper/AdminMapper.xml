@@ -5,9 +5,9 @@
 <mapper namespace="SmartBusSystem.mapper.AdminMapper">
     <resultMap id="AdminResult" type="SmartBusSystem.pojo.Admin">
         <id column="AID" property="ID"/>
-        <result column="Password" property="passwd"/>
+        <result column="Password" property="password"/>
     </resultMap>
-    <select id="SelectById" resultType="SmartBusSystem.pojo.Admin">
+    <select id="SelectById" resultMap="AdminResult">
         SELECT *
         FROM admin
         WHERE AID = #{ID};

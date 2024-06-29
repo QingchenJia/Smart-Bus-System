@@ -4,6 +4,7 @@
 
 package SmartBusSystem.UI;
 
+import SmartBusSystem.service.login.AdminLogin;
 import SmartBusSystem.service.login.DriverLogin;
 import SmartBusSystem.service.login.UserLogin;
 import SmartBusSystem.service.login.VerifyCode;
@@ -57,7 +58,8 @@ public class LoginUI extends JFrame {
             CodeWrong.setVisible(true);
             return;
         }
-        Pass.setVisible(true);
+
+        UserPass.setVisible(true);
     }
 
     private void DriverLoginButtonMouseReleased(MouseEvent e) throws Exception {
@@ -79,7 +81,8 @@ public class LoginUI extends JFrame {
             CodeWrong.setVisible(true);
             return;
         }
-        Pass.setVisible(true);
+
+        DriverPass.setVisible(true);
     }
 
     private void DriverRegisterMouseReleased(MouseEvent e) {
@@ -87,6 +90,26 @@ public class LoginUI extends JFrame {
         RegisterSelect.dispose();
         this.dispose();
         new DriverRegisterUI();
+    }
+
+    private void AdminEnterMouseReleased(MouseEvent e) {
+        // TODO add your code here
+        AdminLoginDialog.setVisible(true);
+    }
+
+    private void AdminLoginButtonMouseReleased(MouseEvent e) throws Exception {
+        // TODO add your code here
+        String ID = AdminIdInput.getText();
+        String password = new String(AdminPasswordInput.getPassword());
+
+        if (!AdminLogin.verifyID(ID)) {
+            return;
+        }
+        if (!AdminLogin.verifyPassword(ID, password)) {
+            return;
+        }
+
+        AdminLoginDialog.dispose();
     }
 
     private void initComponents() {
@@ -103,7 +126,7 @@ public class LoginUI extends JFrame {
         DriverLoginButton = new JButton();
         Register = new JButton();
         Recover = new JButton();
-        AdminLogin = new JButton();
+        AdminEnter = new JButton();
         RegisterSelect = new JDialog();
         UserRegister = new JButton();
         DriverRegister = new JButton();
@@ -113,8 +136,16 @@ public class LoginUI extends JFrame {
         tips2 = new JLabel();
         CodeWrong = new JDialog();
         tips3 = new JLabel();
-        Pass = new JDialog();
-        EnterSystem = new JButton();
+        DriverPass = new JDialog();
+        DriverEnterSystem = new JButton();
+        AdminLoginDialog = new JDialog();
+        AdminId = new JLabel();
+        AdminPassword = new JLabel();
+        AdminIdInput = new JFormattedTextField();
+        AdminPasswordInput = new JPasswordField();
+        AdminLoginButton = new JButton();
+        UserPass = new JDialog();
+        UserEnterSystem = new JButton();
 
         //======== this ========
         setAlwaysOnTop(true);
@@ -217,12 +248,18 @@ DriverLoginButtonMouseReleased(e);} catch (Exception ex) {
         contentPane.add(Recover);
         Recover.setBounds(390, 175, Recover.getPreferredSize().width, 25);
 
-        //---- AdminLogin ----
-        AdminLogin.setText("\u7ba1\u7406\u5458\u5165\u53e3");
-        AdminLogin.setFont(AdminLogin.getFont().deriveFont(AdminLogin.getFont().getStyle() | Font.BOLD, AdminLogin.getFont().getSize() + 5f));
-        AdminLogin.setFocusPainted(false);
-        contentPane.add(AdminLogin);
-        AdminLogin.setBounds(420, 5, 125, 30);
+        //---- AdminEnter ----
+        AdminEnter.setText("\u7ba1\u7406\u5458\u5165\u53e3");
+        AdminEnter.setFont(AdminEnter.getFont().deriveFont(AdminEnter.getFont().getStyle() | Font.BOLD, AdminEnter.getFont().getSize() + 5f));
+        AdminEnter.setFocusPainted(false);
+        AdminEnter.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                AdminEnterMouseReleased(e);
+            }
+        });
+        contentPane.add(AdminEnter);
+        AdminEnter.setBounds(420, 5, 125, 30);
 
         contentPane.setPreferredSize(new Dimension(560, 355));
         setSize(560, 355);
@@ -367,38 +404,117 @@ DriverLoginButtonMouseReleased(e);} catch (Exception ex) {
             CodeWrong.setLocationRelativeTo(CodeWrong.getOwner());
         }
 
-        //======== Pass ========
+        //======== DriverPass ========
         {
-            Pass.setTitle("\u767b\u9646\u6210\u529f");
-            Pass.setModal(true);
-            Pass.setAlwaysOnTop(true);
-            Pass.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-            var PassContentPane = Pass.getContentPane();
-            PassContentPane.setLayout(null);
+            DriverPass.setTitle("\u767b\u9646\u6210\u529f(\u53f8\u673a)");
+            DriverPass.setModal(true);
+            DriverPass.setAlwaysOnTop(true);
+            DriverPass.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            var DriverPassContentPane = DriverPass.getContentPane();
+            DriverPassContentPane.setLayout(null);
 
-            //---- EnterSystem ----
-            EnterSystem.setText("\u8fdb\u5165\u7cfb\u7edf");
-            EnterSystem.setFont(EnterSystem.getFont().deriveFont(EnterSystem.getFont().getStyle() | Font.BOLD, EnterSystem.getFont().getSize() + 10f));
-            EnterSystem.setFocusPainted(false);
-            PassContentPane.add(EnterSystem);
-            EnterSystem.setBounds(new Rectangle(new Point(40, 35), EnterSystem.getPreferredSize()));
+            //---- DriverEnterSystem ----
+            DriverEnterSystem.setText("\u8fdb\u5165\u7cfb\u7edf");
+            DriverEnterSystem.setFont(DriverEnterSystem.getFont().deriveFont(DriverEnterSystem.getFont().getStyle() | Font.BOLD, DriverEnterSystem.getFont().getSize() + 10f));
+            DriverEnterSystem.setFocusPainted(false);
+            DriverPassContentPane.add(DriverEnterSystem);
+            DriverEnterSystem.setBounds(new Rectangle(new Point(40, 35), DriverEnterSystem.getPreferredSize()));
 
             {
                 // compute preferred size
                 Dimension preferredSize = new Dimension();
-                for(int i = 0; i < PassContentPane.getComponentCount(); i++) {
-                    Rectangle bounds = PassContentPane.getComponent(i).getBounds();
+                for(int i = 0; i < DriverPassContentPane.getComponentCount(); i++) {
+                    Rectangle bounds = DriverPassContentPane.getComponent(i).getBounds();
                     preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
                     preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
                 }
-                Insets insets = PassContentPane.getInsets();
+                Insets insets = DriverPassContentPane.getInsets();
                 preferredSize.width += insets.right;
                 preferredSize.height += insets.bottom;
-                PassContentPane.setMinimumSize(preferredSize);
-                PassContentPane.setPreferredSize(preferredSize);
+                DriverPassContentPane.setMinimumSize(preferredSize);
+                DriverPassContentPane.setPreferredSize(preferredSize);
             }
-            Pass.setSize(215, 145);
-            Pass.setLocationRelativeTo(Pass.getOwner());
+            DriverPass.setSize(215, 145);
+            DriverPass.setLocationRelativeTo(DriverPass.getOwner());
+        }
+
+        //======== AdminLoginDialog ========
+        {
+            AdminLoginDialog.setTitle("\u7ba1\u7406\u5458\u767b\u5f55");
+            AdminLoginDialog.setAlwaysOnTop(true);
+            AdminLoginDialog.setModal(true);
+            var AdminLoginDialogContentPane = AdminLoginDialog.getContentPane();
+            AdminLoginDialogContentPane.setLayout(null);
+
+            //---- AdminId ----
+            AdminId.setText("\u8d26\u53f7:");
+            AdminId.setFont(AdminId.getFont().deriveFont(AdminId.getFont().getSize() + 7f));
+            AdminLoginDialogContentPane.add(AdminId);
+            AdminId.setBounds(10, 25, 60, 25);
+
+            //---- AdminPassword ----
+            AdminPassword.setText("\u5bc6\u7801:");
+            AdminPassword.setFont(AdminPassword.getFont().deriveFont(AdminPassword.getFont().getSize() + 7f));
+            AdminLoginDialogContentPane.add(AdminPassword);
+            AdminPassword.setBounds(10, 55, 60, 25);
+            AdminLoginDialogContentPane.add(AdminIdInput);
+            AdminIdInput.setBounds(70, 30, 130, 20);
+            AdminLoginDialogContentPane.add(AdminPasswordInput);
+            AdminPasswordInput.setBounds(70, 60, 130, 20);
+
+            //---- AdminLoginButton ----
+            AdminLoginButton.setText("\u7ba1\u7406\u5458\u767b\u5f55");
+            AdminLoginButton.setFont(AdminLoginButton.getFont().deriveFont(AdminLoginButton.getFont().getStyle() | Font.BOLD, AdminLoginButton.getFont().getSize() + 6f));
+            AdminLoginButton.setFocusPainted(false);
+            AdminLoginButton.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    try {
+AdminLoginButtonMouseReleased(e);} catch (Exception ex) {
+    throw new RuntimeException(ex);
+}
+                }
+            });
+            AdminLoginDialogContentPane.add(AdminLoginButton);
+            AdminLoginButton.setBounds(new Rectangle(new Point(40, 100), AdminLoginButton.getPreferredSize()));
+
+            AdminLoginDialogContentPane.setPreferredSize(new Dimension(215, 180));
+            AdminLoginDialog.setSize(215, 180);
+            AdminLoginDialog.setLocationRelativeTo(AdminLoginDialog.getOwner());
+        }
+
+        //======== UserPass ========
+        {
+            UserPass.setTitle("\u767b\u9646\u6210\u529f(\u4e58\u5ba2)");
+            UserPass.setModal(true);
+            UserPass.setAlwaysOnTop(true);
+            UserPass.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            var UserPassContentPane = UserPass.getContentPane();
+            UserPassContentPane.setLayout(null);
+
+            //---- UserEnterSystem ----
+            UserEnterSystem.setText("\u8fdb\u5165\u7cfb\u7edf");
+            UserEnterSystem.setFont(UserEnterSystem.getFont().deriveFont(UserEnterSystem.getFont().getStyle() | Font.BOLD, UserEnterSystem.getFont().getSize() + 10f));
+            UserEnterSystem.setFocusPainted(false);
+            UserPassContentPane.add(UserEnterSystem);
+            UserEnterSystem.setBounds(new Rectangle(new Point(40, 35), UserEnterSystem.getPreferredSize()));
+
+            {
+                // compute preferred size
+                Dimension preferredSize = new Dimension();
+                for(int i = 0; i < UserPassContentPane.getComponentCount(); i++) {
+                    Rectangle bounds = UserPassContentPane.getComponent(i).getBounds();
+                    preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
+                    preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
+                }
+                Insets insets = UserPassContentPane.getInsets();
+                preferredSize.width += insets.right;
+                preferredSize.height += insets.bottom;
+                UserPassContentPane.setMinimumSize(preferredSize);
+                UserPassContentPane.setPreferredSize(preferredSize);
+            }
+            UserPass.setSize(215, 145);
+            UserPass.setLocationRelativeTo(UserPass.getOwner());
         }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
@@ -416,7 +532,7 @@ DriverLoginButtonMouseReleased(e);} catch (Exception ex) {
     private JButton DriverLoginButton;
     private JButton Register;
     private JButton Recover;
-    private JButton AdminLogin;
+    private JButton AdminEnter;
     private JDialog RegisterSelect;
     private JButton UserRegister;
     private JButton DriverRegister;
@@ -426,7 +542,15 @@ DriverLoginButtonMouseReleased(e);} catch (Exception ex) {
     private JLabel tips2;
     private JDialog CodeWrong;
     private JLabel tips3;
-    private JDialog Pass;
-    private JButton EnterSystem;
+    private JDialog DriverPass;
+    private JButton DriverEnterSystem;
+    private JDialog AdminLoginDialog;
+    private JLabel AdminId;
+    private JLabel AdminPassword;
+    private JFormattedTextField AdminIdInput;
+    private JPasswordField AdminPasswordInput;
+    private JButton AdminLoginButton;
+    private JDialog UserPass;
+    private JButton UserEnterSystem;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

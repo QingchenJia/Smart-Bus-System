@@ -16,16 +16,16 @@
         <if test="name!=null">#{name},</if>
         <if test="name==null">'注册用户',</if>#{aptitude}, #{phoneNum});
     </insert>
-    <select id="SelectAll" resultType="SmartBusSystem.pojo.User">
+    <select id="SelectAll" resultMap="UserResult">
         SELECT *
         FROM user;
     </select>
-    <select id="SelectById" resultType="SmartBusSystem.pojo.User">
+    <select id="SelectById" resultMap="UserResult">
         SELECT *
         FROM user
         WHERE UID = #{ID};
     </select>
-    <select id="SelectByAptitude" resultType="SmartBusSystem.pojo.User">
+    <select id="SelectByAptitude" resultMap="UserResult">
         SELECT *
         FROM user
         WHERE Aptitude = #{aptitude};

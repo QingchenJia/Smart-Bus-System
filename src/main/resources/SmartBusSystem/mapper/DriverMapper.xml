@@ -16,11 +16,11 @@
         <if test="name!=null">#{name},</if>
         <if test="name==null">'注册司机',</if>#{phoneNum})
     </insert>
-    <select id="SelectAll" resultType="SmartBusSystem.pojo.Driver">
+    <select id="SelectAll" resultMap="DriverResult">
         SELECT *
         FROM driver;
     </select>
-    <select id="SelectById" resultType="SmartBusSystem.pojo.Driver">
+    <select id="SelectById" resultMap="DriverResult">
         SELECT *
         FROM driver
         WHERE DID = #{ID};
