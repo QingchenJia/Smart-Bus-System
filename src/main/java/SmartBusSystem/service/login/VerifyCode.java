@@ -30,6 +30,9 @@ public class VerifyCode {
         char temp = codeArray[index];
         codeArray[index] = codeArray[codeArray.length - 1];
         codeArray[codeArray.length - 1] = temp;
-        return new String(codeArray);
+
+        String verifyCode = new String(codeArray);
+        System.out.println(verifyCode);
+        return verifyCode;
     }
 }

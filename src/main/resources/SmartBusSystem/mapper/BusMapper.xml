@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SmartBusSystem.mapper.BusMapper">
+    <resultMap id="BusResult" type="SmartBusSystem.pojo.Bus">
+        <id column="LicenseNumber" property="licenseNumber"/>
+        <result column="Status" property="status"/>
+    </resultMap>
+    <select id="SelectAll" resultMap="BusResult">
+        SELECT *
+        FROM bus;
+    </select>
+    <select id="SelectByLicenseNumber" resultMap="BusResult">
+        SELECT *
+        FROM bus
+        WHERE LicenseNumber = #{licenseNumber};
+    </select>
+    <insert id="InsertBus">
+        INSERT INTO bus
+        VALUES (#{licenseNumber}, #{status});
+    </insert>
+</mapper>

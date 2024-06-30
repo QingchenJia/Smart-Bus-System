@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SmartBusSystem.mapper.StopMapper">
+    <resultMap id="StopResult" type="SmartBusSystem.pojo.Stop">
+        <id column="SID" property="ID"/>
+        <result column="SName" property="name"/>
+    </resultMap>
+    <select id="SelectAll" resultMap="StopResult">
+        SELECT *
+        FROM stop;
+    </select>
+    <select id="SelectById" resultMap="StopResult">
+        SELECT *
+        FROM stop
+        WHERE SID = #{ID};
+    </select>
+    <insert id="InsertStop">
+        INSERT INTO stop
+        VALUES (#{ID}, #{name});
+    </insert>
+</mapper>

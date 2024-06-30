@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SmartBusSystem.mapper.RouteMapper">
+    <resultMap id="RouteResult" type="SmartBusSystem.pojo.Route">
+        <id column="RID" property="ID"/>
+        <result column="RName" property="name"/>
+        <result column="Status" property="status"/>
+        <result column="StartTime" property="startTime"/>
+        <result column="EndTime" property="endTime"/>
+        <result column="Price" property="price"/>
+    </resultMap>\
+    <select id="SelectAll" resultMap="RouteResult">
+        SELECT *
+        FROM route;
+    </select>
+    <select id="SelectById" resultMap="RouteResult">
+        SELECT *
+        FROM route
+        WHERE RID = #{ID};
+    </select>
+    <insert id="InsertRoute">
+        INSERT INTO route
+        VALUES (#{ID}, #{name}, #{status}, #{startTime}, #{endTime}, #{price});
+    </insert>
+</mapper>
