@@ -1,0 +1,88 @@
+JFDML JFormDesigner: "8.2.2.0.382" Java: "17.0.10" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
+			"autoSize": false
+		} ) {
+			name: "this"
+			"$sizePolicy": 1
+			"title": "乘客端"
+			"defaultCloseOperation": 3
+			menuBar: new FormContainer( "javax.swing.JMenuBar", new FormLayoutManager( class javax.swing.JMenuBar ) ) {
+				name: "TopMenu"
+				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+					name: "Me"
+					"text": "关于我"
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 4, false )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "TotalView"
+						"text": "个人总览"
+						"borderPainted": true
+						"border": &MatteBorder0 new javax.swing.border.MatteBorder( 1, 1, 1, 1, sfield java.awt.Color black )
+						"iconTextGap": 0
+						"font": &SwingDerivedFont0 new com.jformdesigner.model.SwingDerivedFont( null, 0, 1, false )
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "InformationModify"
+						"text": "信息修改"
+						"borderPainted": true
+						"border": #MatteBorder0
+						"iconTextGap": 0
+						"font": &SwingDerivedFont1 new com.jformdesigner.model.SwingDerivedFont( null, 0, 1, false )
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "LoginOut"
+						"text": "账号退出"
+						"borderPainted": true
+						"border": #MatteBorder0
+						"iconTextGap": 0
+						"font": &SwingDerivedFont2 new com.jformdesigner.model.SwingDerivedFont( null, 0, 1, false )
+						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "LoginOutMouseReleased", true ) )
+					} )
+				} )
+				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+					name: "ServiceMenu"
+					"text": "功能"
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 4, false )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "ReturnHomePage"
+						"text": "返回主页"
+						"borderPainted": true
+						"border": #MatteBorder0
+						"iconTextGap": 0
+						"font": #SwingDerivedFont0
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "Direction"
+						"text": "路径导航"
+						"borderPainted": true
+						"border": #MatteBorder0
+						"iconTextGap": 0
+						"font": #SwingDerivedFont1
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "StopQuery"
+						"text": "站点查询"
+						"borderPainted": true
+						"border": #MatteBorder0
+						"iconTextGap": 0
+						"font": #SwingDerivedFont2
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "RouteQuery"
+						"text": "线路查询"
+						"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 1, false )
+						"iconTextGap": 0
+						"borderPainted": true
+						"border": #MatteBorder0
+					} )
+				} )
+			}
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 640, 480 )
+		} )
+	}
+}

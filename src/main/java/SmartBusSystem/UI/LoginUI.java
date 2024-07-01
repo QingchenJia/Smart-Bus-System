@@ -112,6 +112,13 @@ public class LoginUI extends JFrame {
         AdminLoginDialog.dispose();
     }
 
+    private void UserEnterSystemMouseReleased(MouseEvent e) {
+        // TODO add your code here
+        UserPass.dispose();
+        this.dispose();
+        new UserServiceUI();
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         IdInput = new JFormattedTextField();
@@ -496,6 +503,12 @@ AdminLoginButtonMouseReleased(e);} catch (Exception ex) {
             UserEnterSystem.setText("\u8fdb\u5165\u7cfb\u7edf");
             UserEnterSystem.setFont(UserEnterSystem.getFont().deriveFont(UserEnterSystem.getFont().getStyle() | Font.BOLD, UserEnterSystem.getFont().getSize() + 10f));
             UserEnterSystem.setFocusPainted(false);
+            UserEnterSystem.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    UserEnterSystemMouseReleased(e);
+                }
+            });
             UserPassContentPane.add(UserEnterSystem);
             UserEnterSystem.setBounds(new Rectangle(new Point(40, 35), UserEnterSystem.getPreferredSize()));
 
