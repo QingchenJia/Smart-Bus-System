@@ -10,18 +10,19 @@
         <result column="StartTime" property="startTime"/>
         <result column="EndTime" property="endTime"/>
         <result column="Price" property="price"/>
-    </resultMap>\
+    </resultMap>
+    <insert id="InsertRoute">
+        INSERT INTO `route`
+        VALUES (#{ID}, #{name}, #{status}, #{startTime}, #{endTime}, #{price});
+    </insert>
     <select id="SelectAll" resultMap="RouteResult">
         SELECT *
-        FROM route;
+        FROM `route`;
     </select>
     <select id="SelectById" resultMap="RouteResult">
         SELECT *
-        FROM route
+        FROM `route`
         WHERE RID = #{ID};
     </select>
-    <insert id="InsertRoute">
-        INSERT INTO route
-        VALUES (#{ID}, #{name}, #{status}, #{startTime}, #{endTime}, #{price});
-    </insert>
+
 </mapper>

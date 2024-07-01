@@ -11,23 +11,23 @@
         <result column="PhoneNum" property="phoneNum"/>
     </resultMap>
     <insert id="InsertUser">
-        INSERT INTO user
+        INSERT INTO `user`
         VALUES (#{ID}, #{password},
         <if test="name!=null">#{name},</if>
         <if test="name==null">'注册用户',</if>#{aptitude}, #{phoneNum});
     </insert>
     <select id="SelectAll" resultMap="UserResult">
         SELECT *
-        FROM user;
+        FROM `user`;
     </select>
     <select id="SelectById" resultMap="UserResult">
         SELECT *
-        FROM user
+        FROM `user`
         WHERE UID = #{ID};
     </select>
     <select id="SelectByAptitude" resultMap="UserResult">
         SELECT *
-        FROM user
+        FROM `user`
         WHERE Aptitude = #{aptitude};
     </select>
 </mapper>

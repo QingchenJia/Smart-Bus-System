@@ -18,11 +18,11 @@
     </insert>
     <select id="SelectAll" resultMap="DriverResult">
         SELECT *
-        FROM driver;
+        FROM `driver`;
     </select>
     <select id="SelectById" resultMap="DriverResult">
         SELECT *
-        FROM driver
+        FROM `driver`
         WHERE DID = #{ID};
     </select>
 </mapper>

@@ -7,17 +7,17 @@
         <id column="SID" property="ID"/>
         <result column="SName" property="name"/>
     </resultMap>
+    <insert id="InsertStop">
+        INSERT INTO `stop`
+        VALUES (#{ID}, #{name});
+    </insert>
     <select id="SelectAll" resultMap="StopResult">
         SELECT *
-        FROM stop;
+        FROM `stop`;
     </select>
     <select id="SelectById" resultMap="StopResult">
         SELECT *
-        FROM stop
+        FROM `stop`
         WHERE SID = #{ID};
     </select>
-    <insert id="InsertStop">
-        INSERT INTO stop
-        VALUES (#{ID}, #{name});
-    </insert>
 </mapper>

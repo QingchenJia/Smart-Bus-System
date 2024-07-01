@@ -9,7 +9,7 @@
     </resultMap>
     <select id="SelectById" resultMap="AdminResult">
         SELECT *
-        FROM admin
+        FROM `admin`
         WHERE AID = #{ID};
     </select>
 </mapper>

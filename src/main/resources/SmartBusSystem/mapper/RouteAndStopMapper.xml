@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SmartBusSystem.mapper.RouteAndStopMapper">
+    <resultMap id="RouteAndStopResult" type="SmartBusSystem.pojo.RouteAndStop">
+        <id column="RID" property="RID"/>
+        <id column="SID" property="SID"/>
+        <result column="Order" property="order"/>
+    </resultMap>
+    <insert id="InsertRouteAndStop">
+        INSERT INTO `route-stop`
+        VALUES (RID = #{RID}, SID = #{SID}, `Order` = #{order});
+    </insert>
+    <select id="SelectById" resultMap="RouteAndStopResult">
+        SELECT *
+        FROM smartbussystem.`route-stop`
+        <where>
+            <if test="RID!=null">RID = #{RID}</if>
+            <if test="SID!=null">AND SID = #{SID};</if>
+        </where>
+    </select>
+</mapper>

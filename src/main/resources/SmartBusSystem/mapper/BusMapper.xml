@@ -7,17 +7,17 @@
         <id column="LicenseNumber" property="licenseNumber"/>
         <result column="Status" property="status"/>
     </resultMap>
+    <insert id="InsertBus">
+        INSERT INTO `bus`
+        VALUES (#{licenseNumber}, #{status});
+    </insert>
     <select id="SelectAll" resultMap="BusResult">
         SELECT *
-        FROM bus;
+        FROM `bus`;
     </select>
     <select id="SelectByLicenseNumber" resultMap="BusResult">
         SELECT *
-        FROM bus
+        FROM `bus`
         WHERE LicenseNumber = #{licenseNumber};
     </select>
-    <insert id="InsertBus">
-        INSERT INTO bus
-        VALUES (#{licenseNumber}, #{status});
-    </insert>
 </mapper>
