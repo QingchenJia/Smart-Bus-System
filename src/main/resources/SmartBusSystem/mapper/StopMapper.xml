@@ -20,4 +20,13 @@
         FROM `stop`
         WHERE SID = #{ID};
     </select>
+    <select id="SelectStopOrderInRoute" resultMap="StopResult">
+        SELECT `stop`.SID, SName
+        FROM `stop`,
+             `route`,
+             `route-stop`
+        WHERE `route`.RID = `route-stop`.RID
+          AND `stop`.SID = `route-stop`.SID
+        ORDER BY `Order`;
+    </select>
 </mapper>

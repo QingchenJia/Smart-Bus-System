@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.Random;
 
 public class VerifyCode {
-    public static ArrayList<Character> alphabet = new ArrayList<>();    //字母表
-    public static ArrayList<Integer> number = new ArrayList<>();    //数字表
+    public static ArrayList<Character> alphabet = new ArrayList<>();    // 字母表
+    public static ArrayList<Integer> number = new ArrayList<>();    // 数字表
     public static Random random = new Random();
 
     static {

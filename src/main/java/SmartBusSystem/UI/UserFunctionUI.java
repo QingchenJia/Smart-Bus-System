@@ -4,13 +4,21 @@
 
 package SmartBusSystem.UI;
 
+import javax.swing.table.*;
+
+import SmartBusSystem.mapper.RouteMapper;
+import SmartBusSystem.mapper.StopMapper;
+import SmartBusSystem.pojo.Route;
+import SmartBusSystem.pojo.Stop;
 import SmartBusSystem.pojo.User;
+import SmartBusSystem.service.DatabaseOperation;
 import SmartBusSystem.service.function.UserFunction;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 /**
  * @author 87948
@@ -18,6 +26,7 @@ import java.awt.event.MouseEvent;
 public class UserFunctionUI extends JFrame {
     public UserFunctionUI() {
         initComponents();
+        initRouteGuide();
         this.setVisible(true);
     }
 
@@ -62,6 +71,9 @@ public class UserFunctionUI extends JFrame {
         Direction = new JMenuItem();
         StopQuery = new JMenuItem();
         RouteQuery = new JMenuItem();
+        Title = new JLabel();
+        TablePane = new JScrollPane();
+        RouteGuide = new JTable();
         TotalViewDialog = new JDialog();
         Id = new JLabel();
         PhoneNum = new JLabel();
@@ -86,7 +98,7 @@ public class UserFunctionUI extends JFrame {
         NewPasswordAgainInput = new JPasswordField();
         InformationChange = new JButton();
         PasswordChange = new JButton();
-        PasswordDifferent2 = new JDialog();
+        PasswordDifferent = new JDialog();
         tips2 = new JLabel();
         PhoneNumWrong = new JDialog();
         tips3 = new JLabel();
@@ -186,6 +198,42 @@ public class UserFunctionUI extends JFrame {
             TopMenu.add(ServiceMenu);
         }
         setJMenuBar(TopMenu);
+
+        //---- Title ----
+        Title.setText("\u516c\u4ea4\u7ebf\u8def\u6307\u5357");
+        Title.setFont(Title.getFont().deriveFont(Title.getFont().getStyle() | Font.BOLD, Title.getFont().getSize() + 13f));
+        contentPane.add(Title);
+        Title.setBounds(new Rectangle(new Point(235, 20), Title.getPreferredSize()));
+
+        //======== TablePane ========
+        {
+
+            //---- RouteGuide ----
+            RouteGuide.setModel(new DefaultTableModel(
+                new Object[][] {
+                },
+                new String[] {
+                    "\u7ebf\u8def", "\u540d\u79f0", "\u7ad9\u70b9\u987a\u5e8f"
+                }
+            ) {
+                boolean[] columnEditable = new boolean[] {
+                    false, false, false
+                };
+                @Override
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return columnEditable[columnIndex];
+                }
+            });
+            {
+                TableColumnModel cm = RouteGuide.getColumnModel();
+                cm.getColumn(0).setPreferredWidth(35);
+                cm.getColumn(1).setPreferredWidth(135);
+                cm.getColumn(2).setPreferredWidth(420);
+            }
+            TablePane.setViewportView(RouteGuide);
+        }
+        contentPane.add(TablePane);
+        TablePane.setBounds(20, 55, 590, 320);
 
         contentPane.setPreferredSize(new Dimension(640, 480));
         setSize(640, 480);
@@ -333,37 +381,37 @@ public class UserFunctionUI extends JFrame {
             InformationModifyDialog.setLocationRelativeTo(InformationModifyDialog.getOwner());
         }
 
-        //======== PasswordDifferent2 ========
+        //======== PasswordDifferent ========
         {
-            PasswordDifferent2.setTitle("\u9519\u8bef\u63d0\u9192");
-            PasswordDifferent2.setModal(true);
-            PasswordDifferent2.setAlwaysOnTop(true);
-            PasswordDifferent2.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-            var PasswordDifferent2ContentPane = PasswordDifferent2.getContentPane();
-            PasswordDifferent2ContentPane.setLayout(null);
+            PasswordDifferent.setTitle("\u9519\u8bef\u63d0\u9192");
+            PasswordDifferent.setModal(true);
+            PasswordDifferent.setAlwaysOnTop(true);
+            PasswordDifferent.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            var PasswordDifferentContentPane = PasswordDifferent.getContentPane();
+            PasswordDifferentContentPane.setLayout(null);
 
             //---- tips2 ----
             tips2.setText("\u524d\u540e\u5bc6\u7801\u4e0d\u4e00\u81f4\uff0c\u8bf7\u91cd\u65b0\u8f93\u5165");
             tips2.setFont(tips2.getFont().deriveFont(tips2.getFont().getStyle() | Font.BOLD, tips2.getFont().getSize() + 5f));
-            PasswordDifferent2ContentPane.add(tips2);
+            PasswordDifferentContentPane.add(tips2);
             tips2.setBounds(new Rectangle(new Point(30, 30), tips2.getPreferredSize()));
 
             {
                 // compute preferred size
                 Dimension preferredSize = new Dimension();
-                for(int i = 0; i < PasswordDifferent2ContentPane.getComponentCount(); i++) {
-                    Rectangle bounds = PasswordDifferent2ContentPane.getComponent(i).getBounds();
+                for(int i = 0; i < PasswordDifferentContentPane.getComponentCount(); i++) {
+                    Rectangle bounds = PasswordDifferentContentPane.getComponent(i).getBounds();
                     preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
                     preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
                 }
-                Insets insets = PasswordDifferent2ContentPane.getInsets();
+                Insets insets = PasswordDifferentContentPane.getInsets();
                 preferredSize.width += insets.right;
                 preferredSize.height += insets.bottom;
-                PasswordDifferent2ContentPane.setMinimumSize(preferredSize);
-                PasswordDifferent2ContentPane.setPreferredSize(preferredSize);
+                PasswordDifferentContentPane.setMinimumSize(preferredSize);
+                PasswordDifferentContentPane.setPreferredSize(preferredSize);
             }
-            PasswordDifferent2.setSize(280, 120);
-            PasswordDifferent2.setLocationRelativeTo(PasswordDifferent2.getOwner());
+            PasswordDifferent.setSize(280, 120);
+            PasswordDifferent.setLocationRelativeTo(PasswordDifferent.getOwner());
         }
 
         //======== PhoneNumWrong ========
@@ -478,6 +526,9 @@ public class UserFunctionUI extends JFrame {
     private JMenuItem Direction;
     private JMenuItem StopQuery;
     private JMenuItem RouteQuery;
+    private JLabel Title;
+    private JScrollPane TablePane;
+    private JTable RouteGuide;
     private JDialog TotalViewDialog;
     private JLabel Id;
     private JLabel PhoneNum;
@@ -502,7 +553,7 @@ public class UserFunctionUI extends JFrame {
     private JPasswordField NewPasswordAgainInput;
     private JButton InformationChange;
     private JButton PasswordChange;
-    private JDialog PasswordDifferent2;
+    private JDialog PasswordDifferent;
     private JLabel tips2;
     private JDialog PhoneNumWrong;
     private JLabel tips3;
@@ -519,5 +570,27 @@ public class UserFunctionUI extends JFrame {
 
     public void setCurrentUserId(String currentUserId) {
         this.currentUserId = currentUserId;
+    }
+
+    private void initRouteGuide() {
+        // 获取表格模型
+        DefaultTableModel model = (DefaultTableModel) RouteGuide.getModel();
+
+        // 添加新行数据
+        List<Route> routes = UserFunction.queryAllRoute();
+
+        for (Route route : routes) {
+            String routeId = route.getID();
+            String routeName = route.getName();
+            List<Stop> stops = UserFunction.queryStopOrderInRoute(routeId);
+            StringBuilder tempStops = new StringBuilder();
+
+            for (Stop stop : stops) {
+                tempStops.append(stop.getName()).append("-");
+            }
+            String stopNameResults = new String(tempStops);
+
+            model.addRow(new Object[]{routeId, routeName, stopNameResults});
+        }
     }
 }

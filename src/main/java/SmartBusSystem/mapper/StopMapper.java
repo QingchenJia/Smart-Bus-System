@@ -10,4 +10,5 @@ public interface StopMapper {
     Stop SelectById(String ID);
 
     void InsertStop(Stop stop);
+    List<Stop> SelectStopOrderInRoute(String RID);
 }
