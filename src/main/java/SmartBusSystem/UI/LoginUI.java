@@ -116,7 +116,8 @@ public class LoginUI extends JFrame {
         // TODO add your code here
         UserPass.dispose();
         this.dispose();
-        new UserServiceUI();
+        String ID = IdInput.getText();
+        new UserFunctionUI().setCurrentUserId(ID);  //打开功能界面 同时记录当前用户ID
     }
 
     private void initComponents() {
