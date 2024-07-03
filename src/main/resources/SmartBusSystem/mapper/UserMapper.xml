@@ -16,6 +16,19 @@
         <if test="name!=null">#{name},</if>
         <if test="name==null">'注册用户',</if>#{aptitude}, #{phoneNum});
     </insert>
+    <update id="UpdateUser">
+        UPDATE `user`
+        SET
+        <if test="name!=null">UName=#{name},</if>
+        <if test="phoneNum!=null">PhoneNum=#{phoneNum},</if>
+        <if test="aptitude!=null">Aptitude=#{aptitude}</if>
+        WHERE UID = #{ID};
+    </update>
+    <update id="UpdatePassword">
+        UPDATE `user`
+        SET Password=#{password}
+        WHERE UID = #{ID};
+    </update>
     <select id="SelectAll" resultMap="UserResult">
         SELECT *
         FROM `user`;

@@ -10,8 +10,10 @@ import SmartBusSystem.mapper.RouteMapper;
 import SmartBusSystem.mapper.StopMapper;
 import SmartBusSystem.pojo.Route;
 import SmartBusSystem.pojo.Stop;
+import SmartBusSystem.pojo.TableRow.RouteGuideRow;
 import SmartBusSystem.pojo.User;
 import SmartBusSystem.service.DatabaseOperation;
+import SmartBusSystem.service.SecurityProtect;
 import SmartBusSystem.service.function.UserFunction;
 
 import javax.swing.*;
@@ -57,6 +59,56 @@ public class UserFunctionUI extends JFrame {
         IsAptitude.setSelected(currentUser.getAptitude() == 1);
 
         InformationModifyDialog.setVisible(true);
+    }
+
+    private void InformationChangeMouseReleased(MouseEvent e) {
+        // TODO add your code here
+        String ID = currentUserId;
+        String name = NameInput.getText();
+
+        String phoneNum = PhoneNumInput.getText();
+        if (!UserFunction.checkPhoneNum(phoneNum)) {
+            PhoneNumWrong.setVisible(true);
+            return;
+        }
+
+        int aptitude = IsAptitude.isSelected() ? 1 : 0;
+
+        User user = new User();
+        user.setID(ID);
+        user.setName(name);
+        user.setPhoneNum(phoneNum);
+        user.setAptitude(aptitude);
+
+        UserFunction.updateUserInformation(user);
+
+        Pass.setVisible(true);
+    }
+
+    private void PasswordChangeMouseReleased(MouseEvent e) throws Exception {
+        // TODO add your code here
+        String ID = currentUserId;
+        String oldPassword = new String(OldPasswordInput.getPassword());
+        String newPassword = new String(NewPasswordInput.getPassword());
+        String newPasswordAgain = new String(NewPasswordAgainInput.getPassword());
+
+        if (!UserFunction.oldPasswordIsRight(ID, oldPassword)) {
+            OldPasswordWrong.setVisible(true);
+            return;
+        }
+        if (!UserFunction.checkPassword(newPassword)) {
+            PasswordWrong.setVisible(true);
+            return;
+        }
+        if (!newPassword.equals(newPasswordAgain)) {
+            PasswordDifferent.setVisible(true);
+            return;
+        }
+
+        String newPasswordResult = SecurityProtect.encrypt(newPassword);
+        UserFunction.updateUserNewPassword(ID, newPasswordResult);
+
+        Pass.setVisible(true);
     }
 
     private void initComponents() {
@@ -106,6 +158,8 @@ public class UserFunctionUI extends JFrame {
         tips1 = new JLabel();
         Pass = new JDialog();
         PassMessage = new JLabel();
+        OldPasswordWrong = new JDialog();
+        tips4 = new JLabel();
 
         //======== this ========
         setTitle("\u4e58\u5ba2\u7aef");
@@ -366,6 +420,12 @@ public class UserFunctionUI extends JFrame {
             InformationChange.setText("\u4fdd\u5b58");
             InformationChange.setFont(InformationChange.getFont().deriveFont(InformationChange.getFont().getStyle() | Font.BOLD, InformationChange.getFont().getSize() + 1f));
             InformationChange.setFocusPainted(false);
+            InformationChange.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    InformationChangeMouseReleased(e);
+                }
+            });
             InformationModifyDialogContentPane.add(InformationChange);
             InformationChange.setBounds(new Rectangle(new Point(110, 110), InformationChange.getPreferredSize()));
 
@@ -373,6 +433,15 @@ public class UserFunctionUI extends JFrame {
             PasswordChange.setText("\u4fdd\u5b58");
             PasswordChange.setFont(PasswordChange.getFont().deriveFont(PasswordChange.getFont().getStyle() | Font.BOLD, PasswordChange.getFont().getSize() + 1f));
             PasswordChange.setFocusPainted(false);
+            PasswordChange.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    try {
+PasswordChangeMouseReleased(e);} catch (Exception ex) {
+    throw new RuntimeException(ex);
+}
+                }
+            });
             InformationModifyDialogContentPane.add(PasswordChange);
             PasswordChange.setBounds(new Rectangle(new Point(110, 225), PasswordChange.getPreferredSize()));
 
@@ -512,6 +581,39 @@ public class UserFunctionUI extends JFrame {
             Pass.setSize(155, 115);
             Pass.setLocationRelativeTo(Pass.getOwner());
         }
+
+        //======== OldPasswordWrong ========
+        {
+            OldPasswordWrong.setTitle("\u9519\u8bef\u63d0\u9192");
+            OldPasswordWrong.setModal(true);
+            OldPasswordWrong.setAlwaysOnTop(true);
+            OldPasswordWrong.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            var OldPasswordWrongContentPane = OldPasswordWrong.getContentPane();
+            OldPasswordWrongContentPane.setLayout(null);
+
+            //---- tips4 ----
+            tips4.setText("\u5bc6\u7801\u9519\u8bef\uff0c\u8bf7\u91cd\u65b0\u8f93\u5165");
+            tips4.setFont(tips4.getFont().deriveFont(tips4.getFont().getStyle() | Font.BOLD, tips4.getFont().getSize() + 5f));
+            OldPasswordWrongContentPane.add(tips4);
+            tips4.setBounds(new Rectangle(new Point(30, 30), tips4.getPreferredSize()));
+
+            {
+                // compute preferred size
+                Dimension preferredSize = new Dimension();
+                for(int i = 0; i < OldPasswordWrongContentPane.getComponentCount(); i++) {
+                    Rectangle bounds = OldPasswordWrongContentPane.getComponent(i).getBounds();
+                    preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
+                    preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
+                }
+                Insets insets = OldPasswordWrongContentPane.getInsets();
+                preferredSize.width += insets.right;
+                preferredSize.height += insets.bottom;
+                OldPasswordWrongContentPane.setMinimumSize(preferredSize);
+                OldPasswordWrongContentPane.setPreferredSize(preferredSize);
+            }
+            OldPasswordWrong.setSize(280, 120);
+            OldPasswordWrong.setLocationRelativeTo(OldPasswordWrong.getOwner());
+        }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
 
@@ -561,6 +663,8 @@ public class UserFunctionUI extends JFrame {
     private JLabel tips1;
     private JDialog Pass;
     private JLabel PassMessage;
+    private JDialog OldPasswordWrong;
+    private JLabel tips4;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
     private String currentUserId;
 
@@ -577,18 +681,11 @@ public class UserFunctionUI extends JFrame {
         DefaultTableModel model = (DefaultTableModel) RouteGuide.getModel();
 
         // 添加新行数据
-        List<Route> routes = UserFunction.queryAllRoute();
-
-        for (Route route : routes) {
-            String routeId = route.getID();
-            String routeName = route.getName();
-            List<Stop> stops = UserFunction.queryStopOrderInRoute(routeId);
-            StringBuilder tempStops = new StringBuilder();
-
-            for (Stop stop : stops) {
-                tempStops.append(stop.getName()).append("-");
-            }
-            String stopNameResults = new String(tempStops);
+        List<RouteGuideRow> allRouteGuideRow = UserFunction.getAllRouteGuideRow();
+        for (RouteGuideRow routeGuideRow : allRouteGuideRow) {
+            String routeId = routeGuideRow.getRouteId();
+            String routeName = routeGuideRow.getRouteName();
+            String stopNameResults = routeGuideRow.getStopNameResults();
 
             model.addRow(new Object[]{routeId, routeName, stopNameResults});
         }

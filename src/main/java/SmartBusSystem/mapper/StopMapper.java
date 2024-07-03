@@ -1,6 +1,7 @@
 package SmartBusSystem.mapper;
 
 import SmartBusSystem.pojo.Stop;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -10,5 +11,6 @@ public interface StopMapper {
     Stop SelectById(String ID);
 
     void InsertStop(Stop stop);
-    List<Stop> SelectStopOrderInRoute(String RID);
+
+    List<Stop> SelectStopOrderInRoute(@Param("RID") String RID);
 }

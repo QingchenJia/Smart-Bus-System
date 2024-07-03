@@ -27,6 +27,7 @@
              `route-stop`
         WHERE `route`.RID = `route-stop`.RID
           AND `stop`.SID = `route-stop`.SID
+          AND `route`.RID = #{RID}
         ORDER BY `Order`;
     </select>
 </mapper>
