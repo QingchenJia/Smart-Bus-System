@@ -4,6 +4,7 @@
 
 package SmartBusSystem.UI;
 
+import SmartBusSystem.service.SecurityProtect;
 import SmartBusSystem.service.login.AdminLogin;
 import SmartBusSystem.service.login.DriverLogin;
 import SmartBusSystem.service.login.UserLogin;
@@ -11,6 +12,7 @@ import SmartBusSystem.service.login.VerifyCode;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Objects;
 import javax.swing.*;
 
 /**
@@ -120,6 +122,62 @@ public class LoginUI extends JFrame {
         new UserFunctionUI().setCurrentUserId(ID);  //打开功能界面 同时记录当前用户ID
     }
 
+    private void RecoverButtonMouseReleased(MouseEvent e) throws Exception {
+        // TODO add your code here
+        String ID = RecoverIdInput.getText();
+        String phoneNum = RecoverPhoneNumInput.getText();
+        String newPassword = new String(NewPasswordInput.getPassword());
+        String newPasswordAgain = new String(NewPasswordAgainInput.getPassword());
+        String role = Objects.requireNonNull(RoleSelect.getSelectedItem()).toString();
+
+        String newPasswordResult = SecurityProtect.encrypt(newPassword);
+
+        if (role.equals("乘客")) {
+            if (!UserLogin.verifyID(ID)) {
+                IdNoExist.setVisible(true);
+                return;
+            }
+            if (!UserLogin.verifyPhoneNum(ID, phoneNum)) {
+                PhoneNumWrong.setVisible(true);
+                return;
+            }
+            if (!UserLogin.checkPassword(newPassword)) {
+                PasswordFormatError.setVisible(true);
+                return;
+            }
+            if (!newPassword.equals(newPasswordAgain)) {
+                PasswordDifferent.setVisible(true);
+                return;
+            }
+
+            UserLogin.resetPassword(ID, newPasswordResult);
+        } else if (role.equals("司机")) {
+            if (!DriverLogin.verifyID(ID)) {
+                IdNoExist.setVisible(true);
+                return;
+            }
+            if (!DriverLogin.verifyPhoneNum(ID, phoneNum)) {
+                PhoneNumWrong.setVisible(true);
+                return;
+            }
+            if (!DriverLogin.checkPassword(newPassword)) {
+                PasswordFormatError.setVisible(true);
+                return;
+            }
+            if (!newPassword.equals(newPasswordAgain)) {
+                PasswordDifferent.setVisible(true);
+                return;
+            }
+
+            DriverLogin.resetPassword(ID, newPasswordResult);
+        }
+    }
+
+    private void RecoverMouseReleased(MouseEvent e) {
+        // TODO add your code here
+        RecoverDialog.setVisible(true);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         IdInput = new JFormattedTextField();
@@ -154,6 +212,24 @@ public class LoginUI extends JFrame {
         AdminLoginButton = new JButton();
         UserPass = new JDialog();
         UserEnterSystem = new JButton();
+        RecoverDialog = new JDialog();
+        RecoverId = new JLabel();
+        RecoverPhoneNum = new JLabel();
+        NewPassword = new JLabel();
+        NewPasswordAgain = new JLabel();
+        RecoverIdInput = new JTextField();
+        RecoverPhoneNumInput = new JTextField();
+        NewPasswordInput = new JPasswordField();
+        NewPasswordAgainInput = new JPasswordField();
+        RoleSelect = new JComboBox<>();
+        Role = new JLabel();
+        RecoverButton = new JButton();
+        PhoneNumWrong = new JDialog();
+        tips4 = new JLabel();
+        PasswordFormatError = new JDialog();
+        tips5 = new JLabel();
+        PasswordFormatError2 = new JDialog();
+        PasswordDifferent = new JLabel();
 
         //======== this ========
         setAlwaysOnTop(true);
@@ -253,6 +329,12 @@ DriverLoginButtonMouseReleased(e);} catch (Exception ex) {
         Recover.setText("\u627e\u56de\u5bc6\u7801");
         Recover.setFont(Recover.getFont().deriveFont(Recover.getFont().getStyle() | Font.BOLD, Recover.getFont().getSize() + 7f));
         Recover.setFocusPainted(false);
+        Recover.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                RecoverMouseReleased(e);
+            }
+        });
         contentPane.add(Recover);
         Recover.setBounds(390, 175, Recover.getPreferredSize().width, 25);
 
@@ -324,7 +406,7 @@ DriverLoginButtonMouseReleased(e);} catch (Exception ex) {
 
             //---- tips1 ----
             tips1.setText("\u5bc6\u7801\u9519\u8bef\uff0c\u8bf7\u91cd\u65b0\u8f93\u5165");
-            tips1.setFont(tips1.getFont().deriveFont(tips1.getFont().getStyle() | Font.BOLD, tips1.getFont().getSize() + 8f));
+            tips1.setFont(tips1.getFont().deriveFont(tips1.getFont().getStyle() | Font.BOLD, tips1.getFont().getSize() + 7f));
             PasswordWrongContentPane.add(tips1);
             tips1.setBounds(new Rectangle(new Point(45, 30), tips1.getPreferredSize()));
 
@@ -357,7 +439,7 @@ DriverLoginButtonMouseReleased(e);} catch (Exception ex) {
 
             //---- tips2 ----
             tips2.setText("\u8d26\u53f7\u4e0d\u5b58\u5728\uff0c\u8bf7\u91cd\u65b0\u8f93\u5165");
-            tips2.setFont(tips2.getFont().deriveFont(tips2.getFont().getStyle() | Font.BOLD, tips2.getFont().getSize() + 8f));
+            tips2.setFont(tips2.getFont().deriveFont(tips2.getFont().getStyle() | Font.BOLD, tips2.getFont().getSize() + 7f));
             IdNoExistContentPane.add(tips2);
             tips2.setBounds(new Rectangle(new Point(40, 30), tips2.getPreferredSize()));
 
@@ -390,9 +472,9 @@ DriverLoginButtonMouseReleased(e);} catch (Exception ex) {
 
             //---- tips3 ----
             tips3.setText("\u9a8c\u8bc1\u7801\u9519\u8bef\uff0c\u8bf7\u91cd\u65b0\u8f93\u5165");
-            tips3.setFont(tips3.getFont().deriveFont(tips3.getFont().getStyle() | Font.BOLD, tips3.getFont().getSize() + 8f));
+            tips3.setFont(tips3.getFont().deriveFont(tips3.getFont().getStyle() | Font.BOLD, tips3.getFont().getSize() + 7f));
             CodeWrongContentPane.add(tips3);
-            tips3.setBounds(new Rectangle(new Point(45, 30), tips3.getPreferredSize()));
+            tips3.setBounds(new Rectangle(new Point(40, 30), tips3.getPreferredSize()));
 
             {
                 // compute preferred size
@@ -530,6 +612,180 @@ AdminLoginButtonMouseReleased(e);} catch (Exception ex) {
             UserPass.setSize(215, 145);
             UserPass.setLocationRelativeTo(UserPass.getOwner());
         }
+
+        //======== RecoverDialog ========
+        {
+            RecoverDialog.setTitle("\u627e\u56de\u5bc6\u7801");
+            RecoverDialog.setAlwaysOnTop(true);
+            var RecoverDialogContentPane = RecoverDialog.getContentPane();
+            RecoverDialogContentPane.setLayout(null);
+
+            //---- RecoverId ----
+            RecoverId.setText("\u8d26\u53f7:");
+            RecoverId.setFont(RecoverId.getFont().deriveFont(RecoverId.getFont().getStyle() | Font.BOLD, RecoverId.getFont().getSize() + 7f));
+            RecoverDialogContentPane.add(RecoverId);
+            RecoverId.setBounds(new Rectangle(new Point(40, 35), RecoverId.getPreferredSize()));
+
+            //---- RecoverPhoneNum ----
+            RecoverPhoneNum.setText("\u624b\u673a\u53f7:");
+            RecoverPhoneNum.setFont(RecoverPhoneNum.getFont().deriveFont(RecoverPhoneNum.getFont().getStyle() | Font.BOLD, RecoverPhoneNum.getFont().getSize() + 7f));
+            RecoverDialogContentPane.add(RecoverPhoneNum);
+            RecoverPhoneNum.setBounds(new Rectangle(new Point(40, 65), RecoverPhoneNum.getPreferredSize()));
+
+            //---- NewPassword ----
+            NewPassword.setText("\u65b0\u5bc6\u7801:");
+            NewPassword.setFont(NewPassword.getFont().deriveFont(NewPassword.getFont().getStyle() | Font.BOLD, NewPassword.getFont().getSize() + 7f));
+            RecoverDialogContentPane.add(NewPassword);
+            NewPassword.setBounds(new Rectangle(new Point(40, 95), NewPassword.getPreferredSize()));
+
+            //---- NewPasswordAgain ----
+            NewPasswordAgain.setText("\u786e\u8ba4:");
+            NewPasswordAgain.setFont(NewPasswordAgain.getFont().deriveFont(NewPasswordAgain.getFont().getStyle() | Font.BOLD, NewPasswordAgain.getFont().getSize() + 7f));
+            RecoverDialogContentPane.add(NewPasswordAgain);
+            NewPasswordAgain.setBounds(new Rectangle(new Point(40, 125), NewPasswordAgain.getPreferredSize()));
+            RecoverDialogContentPane.add(RecoverIdInput);
+            RecoverIdInput.setBounds(90, 40, 155, 20);
+            RecoverDialogContentPane.add(RecoverPhoneNumInput);
+            RecoverPhoneNumInput.setBounds(110, 70, 135, 20);
+            RecoverDialogContentPane.add(NewPasswordInput);
+            NewPasswordInput.setBounds(110, 100, 135, 20);
+            RecoverDialogContentPane.add(NewPasswordAgainInput);
+            NewPasswordAgainInput.setBounds(90, 130, 155, 20);
+
+            //---- RoleSelect ----
+            RoleSelect.setModel(new DefaultComboBoxModel<>(new String[] {
+                "\u4e58\u5ba2",
+                "\u53f8\u673a"
+            }));
+            RoleSelect.setFont(RoleSelect.getFont().deriveFont(RoleSelect.getFont().getStyle() | Font.BOLD, RoleSelect.getFont().getSize() + 4f));
+            RecoverDialogContentPane.add(RoleSelect);
+            RoleSelect.setBounds(new Rectangle(new Point(90, 155), RoleSelect.getPreferredSize()));
+
+            //---- Role ----
+            Role.setText("\u8eab\u4efd:");
+            Role.setFont(Role.getFont().deriveFont(Role.getFont().getStyle() | Font.BOLD, Role.getFont().getSize() + 7f));
+            RecoverDialogContentPane.add(Role);
+            Role.setBounds(new Rectangle(new Point(40, 155), Role.getPreferredSize()));
+
+            //---- RecoverButton ----
+            RecoverButton.setText("\u4fdd\u5b58");
+            RecoverButton.setFont(RecoverButton.getFont().deriveFont(RecoverButton.getFont().getStyle() | Font.BOLD, RecoverButton.getFont().getSize() + 4f));
+            RecoverButton.setFocusPainted(false);
+            RecoverButton.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    try {
+RecoverButtonMouseReleased(e);} catch (Exception ex) {
+    throw new RuntimeException(ex);
+}
+                }
+            });
+            RecoverDialogContentPane.add(RecoverButton);
+            RecoverButton.setBounds(new Rectangle(new Point(120, 195), RecoverButton.getPreferredSize()));
+
+            RecoverDialogContentPane.setPreferredSize(new Dimension(315, 275));
+            RecoverDialog.setSize(315, 275);
+            RecoverDialog.setLocationRelativeTo(RecoverDialog.getOwner());
+        }
+
+        //======== PhoneNumWrong ========
+        {
+            PhoneNumWrong.setTitle("\u9519\u8bef\u63d0\u9192");
+            PhoneNumWrong.setModal(true);
+            PhoneNumWrong.setAlwaysOnTop(true);
+            PhoneNumWrong.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            var PhoneNumWrongContentPane = PhoneNumWrong.getContentPane();
+            PhoneNumWrongContentPane.setLayout(null);
+
+            //---- tips4 ----
+            tips4.setText("\u624b\u673a\u53f7\u9519\u8bef\uff0c\u8bf7\u91cd\u65b0\u8f93\u5165");
+            tips4.setFont(tips4.getFont().deriveFont(tips4.getFont().getStyle() | Font.BOLD, tips4.getFont().getSize() + 7f));
+            PhoneNumWrongContentPane.add(tips4);
+            tips4.setBounds(new Rectangle(new Point(40, 30), tips4.getPreferredSize()));
+
+            {
+                // compute preferred size
+                Dimension preferredSize = new Dimension();
+                for(int i = 0; i < PhoneNumWrongContentPane.getComponentCount(); i++) {
+                    Rectangle bounds = PhoneNumWrongContentPane.getComponent(i).getBounds();
+                    preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
+                    preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
+                }
+                Insets insets = PhoneNumWrongContentPane.getInsets();
+                preferredSize.width += insets.right;
+                preferredSize.height += insets.bottom;
+                PhoneNumWrongContentPane.setMinimumSize(preferredSize);
+                PhoneNumWrongContentPane.setPreferredSize(preferredSize);
+            }
+            PhoneNumWrong.setSize(315, 125);
+            PhoneNumWrong.setLocationRelativeTo(PhoneNumWrong.getOwner());
+        }
+
+        //======== PasswordFormatError ========
+        {
+            PasswordFormatError.setTitle("\u9519\u8bef\u63d0\u9192");
+            PasswordFormatError.setModal(true);
+            PasswordFormatError.setAlwaysOnTop(true);
+            PasswordFormatError.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            var PasswordFormatErrorContentPane = PasswordFormatError.getContentPane();
+            PasswordFormatErrorContentPane.setLayout(null);
+
+            //---- tips5 ----
+            tips5.setText("\u5bc6\u7801\u683c\u5f0f\u9519\u8bef\uff0c\u8bf7\u91cd\u65b0\u8f93\u5165");
+            tips5.setFont(tips5.getFont().deriveFont(tips5.getFont().getStyle() | Font.BOLD, tips5.getFont().getSize() + 7f));
+            PasswordFormatErrorContentPane.add(tips5);
+            tips5.setBounds(new Rectangle(new Point(40, 30), tips5.getPreferredSize()));
+
+            {
+                // compute preferred size
+                Dimension preferredSize = new Dimension();
+                for(int i = 0; i < PasswordFormatErrorContentPane.getComponentCount(); i++) {
+                    Rectangle bounds = PasswordFormatErrorContentPane.getComponent(i).getBounds();
+                    preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
+                    preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
+                }
+                Insets insets = PasswordFormatErrorContentPane.getInsets();
+                preferredSize.width += insets.right;
+                preferredSize.height += insets.bottom;
+                PasswordFormatErrorContentPane.setMinimumSize(preferredSize);
+                PasswordFormatErrorContentPane.setPreferredSize(preferredSize);
+            }
+            PasswordFormatError.setSize(315, 125);
+            PasswordFormatError.setLocationRelativeTo(PasswordFormatError.getOwner());
+        }
+
+        //======== PasswordFormatError2 ========
+        {
+            PasswordFormatError2.setTitle("\u9519\u8bef\u63d0\u9192");
+            PasswordFormatError2.setModal(true);
+            PasswordFormatError2.setAlwaysOnTop(true);
+            PasswordFormatError2.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            var PasswordFormatError2ContentPane = PasswordFormatError2.getContentPane();
+            PasswordFormatError2ContentPane.setLayout(null);
+
+            //---- PasswordDifferent ----
+            PasswordDifferent.setText("\u524d\u540e\u5bc6\u7801\u4e0d\u4e00\u81f4\uff0c\u8bf7\u91cd\u65b0\u8f93\u5165");
+            PasswordDifferent.setFont(PasswordDifferent.getFont().deriveFont(PasswordDifferent.getFont().getStyle() | Font.BOLD, PasswordDifferent.getFont().getSize() + 7f));
+            PasswordFormatError2ContentPane.add(PasswordDifferent);
+            PasswordDifferent.setBounds(new Rectangle(new Point(40, 30), PasswordDifferent.getPreferredSize()));
+
+            {
+                // compute preferred size
+                Dimension preferredSize = new Dimension();
+                for(int i = 0; i < PasswordFormatError2ContentPane.getComponentCount(); i++) {
+                    Rectangle bounds = PasswordFormatError2ContentPane.getComponent(i).getBounds();
+                    preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
+                    preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
+                }
+                Insets insets = PasswordFormatError2ContentPane.getInsets();
+                preferredSize.width += insets.right;
+                preferredSize.height += insets.bottom;
+                PasswordFormatError2ContentPane.setMinimumSize(preferredSize);
+                PasswordFormatError2ContentPane.setPreferredSize(preferredSize);
+            }
+            PasswordFormatError2.setSize(315, 125);
+            PasswordFormatError2.setLocationRelativeTo(PasswordFormatError2.getOwner());
+        }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
 
@@ -566,5 +822,23 @@ AdminLoginButtonMouseReleased(e);} catch (Exception ex) {
     private JButton AdminLoginButton;
     private JDialog UserPass;
     private JButton UserEnterSystem;
+    private JDialog RecoverDialog;
+    private JLabel RecoverId;
+    private JLabel RecoverPhoneNum;
+    private JLabel NewPassword;
+    private JLabel NewPasswordAgain;
+    private JTextField RecoverIdInput;
+    private JTextField RecoverPhoneNumInput;
+    private JPasswordField NewPasswordInput;
+    private JPasswordField NewPasswordAgainInput;
+    private JComboBox<String> RoleSelect;
+    private JLabel Role;
+    private JButton RecoverButton;
+    private JDialog PhoneNumWrong;
+    private JLabel tips4;
+    private JDialog PasswordFormatError;
+    private JLabel tips5;
+    private JDialog PasswordFormatError2;
+    private JLabel PasswordDifferent;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }

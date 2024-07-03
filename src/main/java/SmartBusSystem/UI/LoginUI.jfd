@@ -115,6 +115,7 @@ new FormModel {
 				"text": "找回密码"
 				"font": #SwingDerivedFont2
 				"focusPainted": false
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "RecoverMouseReleased", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"height": 25
 				"x": 390
@@ -181,7 +182,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "tips1"
 				"text": "密码错误，请重新输入"
-				"font": &SwingDerivedFont3 new com.jformdesigner.model.SwingDerivedFont( null, 1, 8, false )
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 7, false )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 45
 				"y": 30
@@ -200,7 +201,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "tips2"
 				"text": "账号不存在，请重新输入"
-				"font": #SwingDerivedFont3
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 7, false )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 40
 				"y": 30
@@ -219,13 +220,13 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "tips3"
 				"text": "验证码错误，请重新输入"
-				"font": #SwingDerivedFont3
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 7, false )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 45
+				"x": 40
 				"y": 30
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"size": #Dimension0
+			"size": &Dimension1 new java.awt.Dimension( 315, 125 )
 			"location": new java.awt.Point( 0, 808 )
 		} )
 		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
@@ -238,14 +239,14 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "DriverEnterSystem"
 				"text": "进入系统"
-				"font": &SwingDerivedFont4 new com.jformdesigner.model.SwingDerivedFont( null, 1, 10, false )
+				"font": &SwingDerivedFont3 new com.jformdesigner.model.SwingDerivedFont( null, 1, 10, false )
 				"focusPainted": false
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 40
 				"y": 35
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"size": &Dimension1 new java.awt.Dimension( 215, 145 )
+			"size": &Dimension2 new java.awt.Dimension( 215, 145 )
 			"location": new java.awt.Point( 225, 950 )
 		} )
 		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
@@ -303,7 +304,7 @@ new FormModel {
 				"y": 100
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 330, 520 )
+			"location": new java.awt.Point( 340, 360 )
 			"size": new java.awt.Dimension( 215, 180 )
 		} )
 		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
@@ -316,7 +317,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "UserEnterSystem"
 				"text": "进入系统"
-				"font": #SwingDerivedFont4
+				"font": #SwingDerivedFont3
 				"focusPainted": false
 				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "UserEnterSystemMouseReleased", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
@@ -324,8 +325,170 @@ new FormModel {
 				"y": 35
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"size": #Dimension1
+			"size": #Dimension2
 			"location": new java.awt.Point( 0, 950 )
+		} )
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
+			"autoSize": false
+		} ) {
+			name: "RecoverDialog"
+			"title": "找回密码"
+			"$sizePolicy": 1
+			"alwaysOnTop": true
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "RecoverId"
+				"text": "账号:"
+				"font": &SwingDerivedFont4 new com.jformdesigner.model.SwingDerivedFont( null, 1, 7, false )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 40
+				"y": 35
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "RecoverPhoneNum"
+				"text": "手机号:"
+				"font": #SwingDerivedFont4
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 40
+				"y": 65
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "NewPassword"
+				"text": "新密码:"
+				"font": #SwingDerivedFont4
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 40
+				"y": 95
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "NewPasswordAgain"
+				"text": "确认:"
+				"font": #SwingDerivedFont4
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 40
+				"y": 125
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "RecoverIdInput"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 90
+				"y": 40
+				"width": 155
+				"height": 20
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "RecoverPhoneNumInput"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 135
+				"height": 20
+				"x": 110
+				"y": 70
+			} )
+			add( new FormComponent( "javax.swing.JPasswordField" ) {
+				name: "NewPasswordInput"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 110
+				"y": 100
+				"width": 135
+				"height": 20
+			} )
+			add( new FormComponent( "javax.swing.JPasswordField" ) {
+				name: "NewPasswordAgainInput"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 155
+				"height": 20
+				"x": 90
+				"y": 130
+			} )
+			add( new FormComponent( "javax.swing.JComboBox" ) {
+				name: "RoleSelect"
+				"model": new javax.swing.DefaultComboBoxModel {
+					selectedItem: "乘客"
+					addElement( "乘客" )
+					addElement( "司机" )
+				}
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 4, false )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 90
+				"y": 155
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "Role"
+				"text": "身份:"
+				"font": #SwingDerivedFont4
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 40
+				"y": 155
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "RecoverButton"
+				"text": "保存"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 4, false )
+				"focusPainted": false
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "RecoverButtonMouseReleased", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 120
+				"y": 195
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 1110 )
+			"size": new java.awt.Dimension( 315, 275 )
+		} )
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "PhoneNumWrong"
+			"title": "错误提醒"
+			"modal": true
+			"alwaysOnTop": true
+			"$sizePolicy": 1
+			"defaultCloseOperation": 2
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "tips4"
+				"text": "手机号错误，请重新输入"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 7, false )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 40
+				"y": 30
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"size": #Dimension1
+			"location": new java.awt.Point( 0, 1401 )
+		} )
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "PasswordFormatError"
+			"title": "错误提醒"
+			"modal": true
+			"alwaysOnTop": true
+			"$sizePolicy": 1
+			"defaultCloseOperation": 2
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "tips5"
+				"text": "密码格式错误，请重新输入"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 7, false )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 40
+				"y": 30
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"size": #Dimension0
+			"location": new java.awt.Point( 0, 1542 )
+		} )
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "PasswordFormatError2"
+			"title": "错误提醒"
+			"modal": true
+			"alwaysOnTop": true
+			"$sizePolicy": 1
+			"defaultCloseOperation": 2
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "PasswordDifferent"
+				"text": "前后密码不一致，请重新输入"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 7, false )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 40
+				"y": 30
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"size": #Dimension0
+			"location": new java.awt.Point( 0, 1683 )
 		} )
 	}
 }

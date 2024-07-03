@@ -106,6 +106,7 @@ public class UserFunctionUI extends JFrame {
         }
 
         String newPasswordResult = SecurityProtect.encrypt(newPassword);
+
         UserFunction.updateUserNewPassword(ID, newPasswordResult);
 
         Pass.setVisible(true);
