@@ -24,20 +24,4 @@ public class DriverLogin {
     public static boolean verifyVerifyCode(String code, String rightCode) {
         return UserLogin.verifyVerifyCode(code, rightCode);
     }
-
-    public static boolean verifyPhoneNum(String ID, String phoneNum) {
-        DriverMapper driverMapper = DatabaseOperation.session.getMapper(DriverMapper.class);
-        Driver driver = driverMapper.SelectById(ID);
-        System.out.println(driver);   // 控制台展示查询结果
-        return phoneNum.equals(driver.getPhoneNum());
-    }
-
-    public static boolean checkPassword(String password) {
-        return DriverRegister.checkPassword(password);
-    }
-
-    public static void resetPassword(String ID, String newPassword) {
-        DriverMapper driverMapper = DatabaseOperation.session.getMapper(DriverMapper.class);
-        driverMapper.UpdatePassword(ID, newPassword);
-    }
 }

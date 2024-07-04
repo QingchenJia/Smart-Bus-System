@@ -6,15 +6,11 @@ package SmartBusSystem.UI;
 
 import javax.swing.table.*;
 
-import SmartBusSystem.mapper.RouteMapper;
-import SmartBusSystem.mapper.StopMapper;
-import SmartBusSystem.pojo.Route;
-import SmartBusSystem.pojo.Stop;
 import SmartBusSystem.pojo.TableRow.RouteGuideRow;
 import SmartBusSystem.pojo.User;
-import SmartBusSystem.service.DatabaseOperation;
 import SmartBusSystem.service.SecurityProtect;
-import SmartBusSystem.service.function.UserFunction;
+import SmartBusSystem.service.function.UserHomePage;
+import SmartBusSystem.service.function.UserInformationModify;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,7 +37,7 @@ public class UserFunctionUI extends JFrame {
     private void TotalViewMouseReleased(MouseEvent e) {
         // TODO add your code here
         String currentUserId = this.getCurrentUserId();
-        User currentUser = UserFunction.queryCurrentUserInformation(currentUserId);
+        User currentUser = UserHomePage.queryCurrentUserInformation(currentUserId);
         NameText.setText(currentUser.getName());
         IdText.setText(currentUser.getID());
         PhoneNumText.setText(currentUser.getPhoneNum());
@@ -53,7 +49,7 @@ public class UserFunctionUI extends JFrame {
     private void InformationModifyMouseReleased(MouseEvent e) {
         // TODO add your code here
         String currentUserId = this.getCurrentUserId();
-        User currentUser = UserFunction.queryCurrentUserInformation(currentUserId);
+        User currentUser = UserHomePage.queryCurrentUserInformation(currentUserId);
         NameInput.setText(currentUser.getName());
         PhoneNumInput.setText(currentUser.getPhoneNum());
         IsAptitude.setSelected(currentUser.getAptitude() == 1);
@@ -67,7 +63,7 @@ public class UserFunctionUI extends JFrame {
         String name = NameInput.getText();
 
         String phoneNum = PhoneNumInput.getText();
-        if (!UserFunction.checkPhoneNum(phoneNum)) {
+        if (!UserInformationModify.checkPhoneNum(phoneNum)) {
             PhoneNumWrong.setVisible(true);
             return;
         }
@@ -80,7 +76,7 @@ public class UserFunctionUI extends JFrame {
         user.setPhoneNum(phoneNum);
         user.setAptitude(aptitude);
 
-        UserFunction.updateUserInformation(user);
+        UserInformationModify.updateUserInformation(user);
 
         Pass.setVisible(true);
     }
@@ -92,11 +88,11 @@ public class UserFunctionUI extends JFrame {
         String newPassword = new String(NewPasswordInput.getPassword());
         String newPasswordAgain = new String(NewPasswordAgainInput.getPassword());
 
-        if (!UserFunction.oldPasswordIsRight(ID, oldPassword)) {
+        if (!UserInformationModify.oldPasswordIsRight(ID, oldPassword)) {
             OldPasswordWrong.setVisible(true);
             return;
         }
-        if (!UserFunction.checkPassword(newPassword)) {
+        if (!UserInformationModify.checkPassword(newPassword)) {
             PasswordWrong.setVisible(true);
             return;
         }
@@ -107,9 +103,12 @@ public class UserFunctionUI extends JFrame {
 
         String newPasswordResult = SecurityProtect.encrypt(newPassword);
 
-        UserFunction.updateUserNewPassword(ID, newPasswordResult);
+        UserInformationModify.updateUserNewPassword(ID, newPasswordResult);
 
-        Pass.setVisible(true);
+        Pass.setVisible(true);  // 修改密码成功后 跳出成功提示
+        InformationModifyDialog.dispose();
+        this.dispose(); // 关闭当前页面
+        new LoginUI();  // 回到登录页面
     }
 
     private void initComponents() {
@@ -682,13 +681,13 @@ PasswordChangeMouseReleased(e);} catch (Exception ex) {
         DefaultTableModel model = (DefaultTableModel) RouteGuide.getModel();
 
         // 添加新行数据
-        List<RouteGuideRow> allRouteGuideRow = UserFunction.getAllRouteGuideRow();
+        List<RouteGuideRow> allRouteGuideRow = UserHomePage.getAllRouteGuideRow();
         for (RouteGuideRow routeGuideRow : allRouteGuideRow) {
             String routeId = routeGuideRow.getRouteId();
             String routeName = routeGuideRow.getRouteName();
-            String stopNameResults = routeGuideRow.getStopNameResults();
+            String stopNameResult = routeGuideRow.getStopNameResult();
 
-            model.addRow(new Object[]{routeId, routeName, stopNameResults});
+            model.addRow(new Object[]{routeId, routeName, stopNameResult});
         }
     }
 }

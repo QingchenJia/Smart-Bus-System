@@ -13,7 +13,7 @@ public class DatabaseOperation {
 
     static {
         String resource = "MybatisConfig.xml";
-        InputStream inputStream = null;
+        InputStream inputStream;
         try {
             inputStream = Resources.getResourceAsStream(resource);
         } catch (IOException e) {

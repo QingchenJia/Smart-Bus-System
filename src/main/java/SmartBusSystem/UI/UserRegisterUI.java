@@ -8,10 +8,10 @@ import SmartBusSystem.pojo.User;
 import SmartBusSystem.service.SecurityProtect;
 import SmartBusSystem.service.register.UserRegister;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.Arrays;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * @author 87948

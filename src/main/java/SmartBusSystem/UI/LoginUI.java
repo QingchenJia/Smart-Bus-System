@@ -9,6 +9,8 @@ import SmartBusSystem.service.login.AdminLogin;
 import SmartBusSystem.service.login.DriverLogin;
 import SmartBusSystem.service.login.UserLogin;
 import SmartBusSystem.service.login.VerifyCode;
+import SmartBusSystem.service.recover.DriverRecover;
+import SmartBusSystem.service.recover.UserRecover;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -133,15 +135,15 @@ public class LoginUI extends JFrame {
         String newPasswordResult = SecurityProtect.encrypt(newPassword);
 
         if (role.equals("乘客")) {
-            if (!UserLogin.verifyID(ID)) {
+            if (!UserRecover.verifyID(ID)) {
                 IdNoExist.setVisible(true);
                 return;
             }
-            if (!UserLogin.verifyPhoneNum(ID, phoneNum)) {
+            if (!UserRecover.verifyPhoneNum(ID, phoneNum)) {
                 PhoneNumWrong.setVisible(true);
                 return;
             }
-            if (!UserLogin.checkPassword(newPassword)) {
+            if (!UserRecover.checkPassword(newPassword)) {
                 PasswordFormatError.setVisible(true);
                 return;
             }
@@ -150,17 +152,17 @@ public class LoginUI extends JFrame {
                 return;
             }
 
-            UserLogin.resetPassword(ID, newPasswordResult);
+            UserRecover.resetPassword(ID, newPasswordResult);
         } else if (role.equals("司机")) {
-            if (!DriverLogin.verifyID(ID)) {
+            if (!DriverRecover.verifyID(ID)) {
                 IdNoExist.setVisible(true);
                 return;
             }
-            if (!DriverLogin.verifyPhoneNum(ID, phoneNum)) {
+            if (!DriverRecover.verifyPhoneNum(ID, phoneNum)) {
                 PhoneNumWrong.setVisible(true);
                 return;
             }
-            if (!DriverLogin.checkPassword(newPassword)) {
+            if (!DriverRecover.checkPassword(newPassword)) {
                 PasswordFormatError.setVisible(true);
                 return;
             }
@@ -169,7 +171,7 @@ public class LoginUI extends JFrame {
                 return;
             }
 
-            DriverLogin.resetPassword(ID, newPasswordResult);
+            DriverRecover.resetPassword(ID, newPasswordResult);
         }
     }
 
