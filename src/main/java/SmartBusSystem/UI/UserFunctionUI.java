@@ -160,6 +160,12 @@ public class UserFunctionUI extends JFrame {
         PassMessage = new JLabel();
         OldPasswordWrong = new JDialog();
         tips4 = new JLabel();
+        StopQueryDialog = new JDialog();
+        StopName = new JLabel();
+        StopNameInput = new JTextField();
+        StopListPane = new JScrollPane();
+        StopNameList = new JList();
+        SearchStop = new JButton();
 
         //======== this ========
         setTitle("\u4e58\u5ba2\u7aef");
@@ -614,6 +620,44 @@ PasswordChangeMouseReleased(e);} catch (Exception ex) {
             OldPasswordWrong.setSize(280, 120);
             OldPasswordWrong.setLocationRelativeTo(OldPasswordWrong.getOwner());
         }
+
+        //======== StopQueryDialog ========
+        {
+            StopQueryDialog.setTitle("\u7ad9\u70b9\u67e5\u8be2");
+            StopQueryDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            StopQueryDialog.setAlwaysOnTop(true);
+            StopQueryDialog.setModal(true);
+            StopQueryDialog.setFocusable(false);
+            StopQueryDialog.setFocusableWindowState(false);
+            var StopQueryDialogContentPane = StopQueryDialog.getContentPane();
+            StopQueryDialogContentPane.setLayout(null);
+
+            //---- StopName ----
+            StopName.setText("\u7ad9\u70b9\u540d\u79f0:");
+            StopName.setFont(StopName.getFont().deriveFont(StopName.getFont().getStyle() | Font.BOLD, StopName.getFont().getSize() + 5f));
+            StopQueryDialogContentPane.add(StopName);
+            StopName.setBounds(new Rectangle(new Point(40, 30), StopName.getPreferredSize()));
+            StopQueryDialogContentPane.add(StopNameInput);
+            StopNameInput.setBounds(130, 35, 135, StopNameInput.getPreferredSize().height);
+
+            //======== StopListPane ========
+            {
+                StopListPane.setViewportView(StopNameList);
+            }
+            StopQueryDialogContentPane.add(StopListPane);
+            StopListPane.setBounds(130, 65, 135, 80);
+
+            //---- SearchStop ----
+            SearchStop.setText("\u641c\u7d22");
+            SearchStop.setFont(SearchStop.getFont().deriveFont(SearchStop.getFont().getStyle() | Font.BOLD, SearchStop.getFont().getSize() + 1f));
+            SearchStop.setFocusPainted(false);
+            StopQueryDialogContentPane.add(SearchStop);
+            SearchStop.setBounds(new Rectangle(new Point(120, 165), SearchStop.getPreferredSize()));
+
+            StopQueryDialogContentPane.setPreferredSize(new Dimension(330, 240));
+            StopQueryDialog.setSize(330, 240);
+            StopQueryDialog.setLocationRelativeTo(StopQueryDialog.getOwner());
+        }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
 
@@ -665,6 +709,12 @@ PasswordChangeMouseReleased(e);} catch (Exception ex) {
     private JLabel PassMessage;
     private JDialog OldPasswordWrong;
     private JLabel tips4;
+    private JDialog StopQueryDialog;
+    private JLabel StopName;
+    private JTextField StopNameInput;
+    private JScrollPane StopListPane;
+    private JList StopNameList;
+    private JButton SearchStop;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
     private String currentUserId;
 

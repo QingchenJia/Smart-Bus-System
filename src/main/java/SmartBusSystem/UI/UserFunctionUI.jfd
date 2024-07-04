@@ -325,7 +325,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"size": new java.awt.Dimension( 280, 300 )
-			"location": new java.awt.Point( 5, 780 )
+			"location": new java.awt.Point( 5, 735 )
 		} )
 		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
 			name: "PasswordDifferent"
@@ -344,7 +344,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"size": new java.awt.Dimension( 280, 120 )
-			"location": new java.awt.Point( 5, 1235 )
+			"location": new java.awt.Point( 5, 1180 )
 		} )
 		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
 			name: "PhoneNumWrong"
@@ -363,7 +363,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"size": new java.awt.Dimension( 280, 120 )
-			"location": new java.awt.Point( 5, 1365 )
+			"location": new java.awt.Point( 5, 1310 )
 		} )
 		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
 			name: "PasswordWrong"
@@ -382,7 +382,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"size": &Dimension0 new java.awt.Dimension( 280, 120 )
-			"location": new java.awt.Point( 5, 1100 )
+			"location": new java.awt.Point( 5, 1045 )
 		} )
 		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
 			name: "Pass"
@@ -401,7 +401,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"size": new java.awt.Dimension( 155, 115 )
-			"location": new java.awt.Point( 5, 1625 )
+			"location": new java.awt.Point( 5, 1570 )
 		} )
 		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
 			name: "OldPasswordWrong"
@@ -420,7 +420,57 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"size": #Dimension0
-			"location": new java.awt.Point( 5, 1495 )
+			"location": new java.awt.Point( 5, 1440 )
+		} )
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
+			"autoSize": false
+		} ) {
+			name: "StopQueryDialog"
+			"title": "站点查询"
+			"defaultCloseOperation": 2
+			"alwaysOnTop": true
+			"modal": true
+			"$sizePolicy": 1
+			"focusable": false
+			"focusableWindowState": false
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "StopName"
+				"text": "站点名称:"
+				"font": #SwingDerivedFont3
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 40
+				"y": 30
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "StopNameInput"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 130
+				"y": 35
+				"width": 135
+			} )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "StopListPane"
+				add( new FormComponent( "javax.swing.JList" ) {
+					name: "StopNameList"
+				} )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 130
+				"y": 65
+				"width": 135
+				"height": 80
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "SearchStop"
+				"text": "搜索"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 1, false )
+				"focusPainted": false
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 120
+				"y": 165
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"size": new java.awt.Dimension( 330, 240 )
+			"location": new java.awt.Point( 0, 1701 )
 		} )
 	}
 }
