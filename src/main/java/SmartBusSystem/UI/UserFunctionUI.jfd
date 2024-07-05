@@ -101,6 +101,7 @@ new FormModel {
 						"borderPainted": true
 						"iconTextGap": 0
 						"font": #SwingDerivedFont2
+						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "StopQueryMouseReleased", true ) )
 					} )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
 						name: "RouteQuery"
@@ -431,8 +432,6 @@ new FormModel {
 			"alwaysOnTop": true
 			"modal": true
 			"$sizePolicy": 1
-			"focusable": false
-			"focusableWindowState": false
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "StopName"
 				"text": "站点名称:"
@@ -443,6 +442,7 @@ new FormModel {
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "StopNameInput"
+				"background": sfield java.awt.Color white
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 130
 				"y": 35
@@ -452,6 +452,7 @@ new FormModel {
 				name: "StopListPane"
 				add( new FormComponent( "javax.swing.JList" ) {
 					name: "StopNameList"
+					"visibleRowCount": 5
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 130

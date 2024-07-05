@@ -30,4 +30,9 @@
           AND `route`.RID = #{RID}
         ORDER BY `Order`;
     </select>
+    <select id="SelectStopBySimilarName" resultMap="StopResult">
+        SELECT *
+        FROM `stop`
+        WHERE SName LIKE CONCAT('%', #{similarName}, '%');
+    </select>
 </mapper>

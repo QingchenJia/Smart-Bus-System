@@ -8,7 +8,7 @@ public class DriverRegister {
     public static boolean containDriver(String ID) {
         DriverMapper driverMapper = DatabaseOperation.session.getMapper(DriverMapper.class);
         Driver driver = driverMapper.SelectById(ID);
-        System.out.println(driver); // 控制台展示查询结果
+        System.out.println("检索司机->" + driver);  // 控制台展示查询结果
         return driver != null;
     }
 

@@ -14,7 +14,7 @@ public class DriverRecover {
     public static boolean verifyPhoneNum(String ID, String phoneNum) {
         DriverMapper driverMapper = DatabaseOperation.session.getMapper(DriverMapper.class);
         Driver driver = driverMapper.SelectById(ID);
-        System.out.println(driver);   // 控制台展示查询结果
+        System.out.println("验证手机号->" + driver);   // 控制台展示查询结果
         return phoneNum.equals(driver.getPhoneNum());
     }
 

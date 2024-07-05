@@ -17,7 +17,7 @@ public class DriverLogin {
     public static boolean verifyPassword(String ID, String password) throws Exception {
         DriverMapper driverMapper = DatabaseOperation.session.getMapper(DriverMapper.class);
         Driver driver = driverMapper.SelectById(ID);
-        System.out.println(driver); // 控制台展示查询结果
+        System.out.println("验证密码->" + driver);  // 控制台展示查询结果
         return password.equals(SecurityProtect.decrypt(driver.getPassword()));
     }
 

@@ -9,14 +9,14 @@ public class AdminLogin {
     public static boolean verifyID(String ID) {
         AdminMapper adminMapper = DatabaseOperation.session.getMapper(AdminMapper.class);
         Admin admin = adminMapper.SelectById(ID);
-        System.out.println(admin);  // 控制台展示查询结果
+        System.out.println("检索管理员->" + admin);  // 控制台展示查询结果
         return admin != null;
     }
 
     public static boolean verifyPassword(String ID, String password) throws Exception {
         AdminMapper adminMapper = DatabaseOperation.session.getMapper(AdminMapper.class);
         Admin admin = adminMapper.SelectById(ID);
-        System.out.println(admin);  // 控制台展示查询结果
+        System.out.println("验证密码->" + admin);  // 控制台展示查询结果
         return password.equals(SecurityProtect.decrypt(admin.getPassword()));
     }
 }

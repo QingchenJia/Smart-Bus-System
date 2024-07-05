@@ -14,7 +14,7 @@ public class UserRecover {
     public static boolean verifyPhoneNum(String ID, String phoneNum) {
         UserMapper userMapper = DatabaseOperation.session.getMapper(UserMapper.class);
         User user = userMapper.SelectById(ID);
-        System.out.println(user);   // 控制台展示查询结果
+        System.out.println("验证手机号->" + user);   // 控制台展示查询结果
         return phoneNum.equals(user.getPhoneNum());
     }
 

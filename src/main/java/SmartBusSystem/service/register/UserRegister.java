@@ -8,7 +8,7 @@ public class UserRegister {
     public static boolean containUser(String ID) {
         UserMapper userMapper = DatabaseOperation.session.getMapper(UserMapper.class);
         User user = userMapper.SelectById(ID);
-        System.out.println(user);   // 控制台展示查询结果
+        System.out.println("检索用户->" + user);   // 控制台展示查询结果
         return user != null;
     }
 

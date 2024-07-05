@@ -13,4 +13,6 @@ public interface StopMapper {
     void InsertStop(Stop stop);
 
     List<Stop> SelectStopOrderInRoute(@Param("RID") String RID);
+
+    List<Stop> SelectStopBySimilarName(@Param("similarName") String similarName);
 }

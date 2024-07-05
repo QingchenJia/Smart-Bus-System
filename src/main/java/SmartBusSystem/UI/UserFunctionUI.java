@@ -4,15 +4,18 @@
 
 package SmartBusSystem.UI;
 
-import javax.swing.table.*;
-
 import SmartBusSystem.pojo.TableRow.RouteGuideRow;
 import SmartBusSystem.pojo.User;
 import SmartBusSystem.service.SecurityProtect;
 import SmartBusSystem.service.function.UserHomePage;
 import SmartBusSystem.service.function.UserInformationModify;
+import SmartBusSystem.service.function.UserSearchStop;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -25,6 +28,7 @@ public class UserFunctionUI extends JFrame {
     public UserFunctionUI() {
         initComponents();
         initRouteGuide();
+        initStopQueryDialog();
         this.setVisible(true);
     }
 
@@ -109,6 +113,11 @@ public class UserFunctionUI extends JFrame {
         InformationModifyDialog.dispose();
         this.dispose(); // 关闭当前页面
         new LoginUI();  // 回到登录页面
+    }
+
+    private void StopQueryMouseReleased(MouseEvent e) {
+        // TODO add your code here
+        StopQueryDialog.setVisible(true);
     }
 
     private void initComponents() {
@@ -246,6 +255,12 @@ public class UserFunctionUI extends JFrame {
                 StopQuery.setBorderPainted(true);
                 StopQuery.setIconTextGap(0);
                 StopQuery.setFont(StopQuery.getFont().deriveFont(StopQuery.getFont().getSize() + 1f));
+                StopQuery.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        StopQueryMouseReleased(e);
+                    }
+                });
                 ServiceMenu.add(StopQuery);
 
                 //---- RouteQuery ----
@@ -627,8 +642,6 @@ PasswordChangeMouseReleased(e);} catch (Exception ex) {
             StopQueryDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             StopQueryDialog.setAlwaysOnTop(true);
             StopQueryDialog.setModal(true);
-            StopQueryDialog.setFocusable(false);
-            StopQueryDialog.setFocusableWindowState(false);
             var StopQueryDialogContentPane = StopQueryDialog.getContentPane();
             StopQueryDialogContentPane.setLayout(null);
 
@@ -637,11 +650,17 @@ PasswordChangeMouseReleased(e);} catch (Exception ex) {
             StopName.setFont(StopName.getFont().deriveFont(StopName.getFont().getStyle() | Font.BOLD, StopName.getFont().getSize() + 5f));
             StopQueryDialogContentPane.add(StopName);
             StopName.setBounds(new Rectangle(new Point(40, 30), StopName.getPreferredSize()));
+
+            //---- StopNameInput ----
+            StopNameInput.setBackground(Color.white);
             StopQueryDialogContentPane.add(StopNameInput);
             StopNameInput.setBounds(130, 35, 135, StopNameInput.getPreferredSize().height);
 
             //======== StopListPane ========
             {
+
+                //---- StopNameList ----
+                StopNameList.setVisibleRowCount(5);
                 StopListPane.setViewportView(StopNameList);
             }
             StopQueryDialogContentPane.add(StopListPane);
@@ -739,5 +758,63 @@ PasswordChangeMouseReleased(e);} catch (Exception ex) {
 
             model.addRow(new Object[]{routeId, routeName, stopNameResult});
         }
+    }
+
+    private DefaultListModel<String> stopQueryListModel;
+
+    private void updateStopQueryList() {
+        String text = StopNameInput.getText();
+
+        if (text == null) {
+            stopQueryListModel.clear();
+            return;
+        }
+
+        List<String> stopQueryResults = UserSearchStop.listStop2listStopName(UserSearchStop.searchBySimilarName(text));
+
+        stopQueryListModel.clear();
+
+        for (String stopQueryResult : stopQueryResults) {
+            stopQueryListModel.addElement(stopQueryResult);
+        }
+    }
+
+    private void selectStopQueryList() {
+        String selectStopName = (String) StopNameList.getSelectedValue();
+        if (selectStopName != null) {
+            StopNameInput.setText(selectStopName);
+            stopQueryListModel.clear();
+        }
+    }
+
+    private void initStopQueryDialog() {
+        stopQueryListModel = new DefaultListModel<>();
+        StopNameList.setModel(stopQueryListModel);
+
+        StopNameInput.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                updateStopQueryList();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                updateStopQueryList();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                updateStopQueryList();
+            }
+        });
+
+        StopNameList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    selectStopQueryList();
+                }
+            }
+        });
     }
 }

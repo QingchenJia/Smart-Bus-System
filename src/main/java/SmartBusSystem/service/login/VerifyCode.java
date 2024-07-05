@@ -32,7 +32,7 @@ public class VerifyCode {
         codeArray[codeArray.length - 1] = temp;
 
         String verifyCode = new String(codeArray);
-        System.out.println(verifyCode);
+        System.out.println("验证码->" + verifyCode);
         return verifyCode;
     }
 }
