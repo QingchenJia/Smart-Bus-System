@@ -9,6 +9,7 @@ import SmartBusSystem.pojo.User;
 import SmartBusSystem.service.SecurityProtect;
 import SmartBusSystem.service.function.UserHomePage;
 import SmartBusSystem.service.function.UserInformationModify;
+import SmartBusSystem.service.function.UserSearchRoute;
 import SmartBusSystem.service.function.UserSearchStop;
 
 import javax.swing.*;
@@ -19,7 +20,9 @@ import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Time;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author 87948
@@ -127,6 +130,18 @@ public class UserFunctionUI extends JFrame {
         StopSearchResult.setVisible(true);
     }
 
+    private void RouteQueryMouseReleased(MouseEvent e) {
+        // TODO add your code here
+        showAllRouteIdInBox();
+        RouteQueryDialog.setVisible(true);
+    }
+
+    private void SearchRouteMouseReleased(MouseEvent e) {
+        // TODO add your code here
+        initRouteSearchResult();
+        RouteSearchResult.setVisible(true);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         TopMenu = new JMenuBar();
@@ -188,6 +203,18 @@ public class UserFunctionUI extends JFrame {
         PassRoute = new JLabel();
         PassRouteListPane = new JScrollPane();
         PassRouteList = new JList();
+        RouteQueryDialog = new JDialog();
+        StopName2 = new JLabel();
+        SelectRouteId = new JComboBox();
+        SearchRoute = new JButton();
+        RouteSearchResult = new JDialog();
+        RouteResultName = new JLabel();
+        RouteResultNameText = new JLabel();
+        PassStop = new JLabel();
+        PassStopListPane = new JScrollPane();
+        PassStopList = new JList();
+        WorkTime = new JLabel();
+        WorkTimeText = new JLabel();
 
         //======== this ========
         setTitle("\u4e58\u5ba2\u7aef");
@@ -281,6 +308,12 @@ public class UserFunctionUI extends JFrame {
                 RouteQuery.setFont(RouteQuery.getFont().deriveFont(RouteQuery.getFont().getSize() + 1f));
                 RouteQuery.setIconTextGap(0);
                 RouteQuery.setBorderPainted(true);
+                RouteQuery.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        RouteQueryMouseReleased(e);
+                    }
+                });
                 ServiceMenu.add(RouteQuery);
             }
             TopMenu.add(ServiceMenu);
@@ -734,9 +767,99 @@ PasswordChangeMouseReleased(e);} catch (Exception ex) {
             StopSearchResultContentPane.add(PassRouteListPane);
             PassRouteListPane.setBounds(60, 90, 160, 65);
 
-            StopSearchResultContentPane.setPreferredSize(new Dimension(280, 225));
-            StopSearchResult.setSize(280, 225);
+            StopSearchResultContentPane.setPreferredSize(new Dimension(280, 240));
+            StopSearchResult.setSize(280, 240);
             StopSearchResult.setLocationRelativeTo(StopSearchResult.getOwner());
+        }
+
+        //======== RouteQueryDialog ========
+        {
+            RouteQueryDialog.setTitle("\u7ebf\u8def\u67e5\u8be2");
+            RouteQueryDialog.setAlwaysOnTop(true);
+            RouteQueryDialog.setModal(true);
+            RouteQueryDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            var RouteQueryDialogContentPane = RouteQueryDialog.getContentPane();
+            RouteQueryDialogContentPane.setLayout(null);
+
+            //---- StopName2 ----
+            StopName2.setText("\u7ebf\u8def\u540d\u79f0:");
+            StopName2.setFont(StopName2.getFont().deriveFont(StopName2.getFont().getStyle() | Font.BOLD, StopName2.getFont().getSize() + 5f));
+            RouteQueryDialogContentPane.add(StopName2);
+            StopName2.setBounds(new Rectangle(new Point(40, 30), StopName2.getPreferredSize()));
+            RouteQueryDialogContentPane.add(SelectRouteId);
+            SelectRouteId.setBounds(125, 30, 90, SelectRouteId.getPreferredSize().height);
+
+            //---- SearchRoute ----
+            SearchRoute.setText("\u641c\u7d22");
+            SearchRoute.setFont(SearchRoute.getFont().deriveFont(SearchRoute.getFont().getStyle() | Font.BOLD, SearchRoute.getFont().getSize() + 1f));
+            SearchRoute.setFocusPainted(false);
+            SearchRoute.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    SearchRouteMouseReleased(e);
+                }
+            });
+            RouteQueryDialogContentPane.add(SearchRoute);
+            SearchRoute.setBounds(new Rectangle(new Point(80, 75), SearchRoute.getPreferredSize()));
+
+            RouteQueryDialogContentPane.setPreferredSize(new Dimension(235, 155));
+            RouteQueryDialog.pack();
+            RouteQueryDialog.setLocationRelativeTo(RouteQueryDialog.getOwner());
+        }
+
+        //======== RouteSearchResult ========
+        {
+            RouteSearchResult.setTitle("\u7ebf\u8def\u4fe1\u606f");
+            RouteSearchResult.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            RouteSearchResult.setAlwaysOnTop(true);
+            RouteSearchResult.setModal(true);
+            var RouteSearchResultContentPane = RouteSearchResult.getContentPane();
+            RouteSearchResultContentPane.setLayout(null);
+
+            //---- RouteResultName ----
+            RouteResultName.setText("\u540d\u79f0:");
+            RouteResultName.setFont(RouteResultName.getFont().deriveFont(RouteResultName.getFont().getStyle() | Font.BOLD, RouteResultName.getFont().getSize() + 5f));
+            RouteSearchResultContentPane.add(RouteResultName);
+            RouteResultName.setBounds(new Rectangle(new Point(60, 30), RouteResultName.getPreferredSize()));
+
+            //---- RouteResultNameText ----
+            RouteResultNameText.setText("\u540d\u79f0");
+            RouteResultNameText.setFont(RouteResultNameText.getFont().deriveFont(RouteResultNameText.getFont().getSize() + 4f));
+            RouteSearchResultContentPane.add(RouteResultNameText);
+            RouteResultNameText.setBounds(105, 30, 200, RouteResultNameText.getPreferredSize().height);
+
+            //---- PassStop ----
+            PassStop.setText("\u7ecf\u884c\u7ebf\u8def:");
+            PassStop.setFont(PassStop.getFont().deriveFont(PassStop.getFont().getStyle() | Font.BOLD, PassStop.getFont().getSize() + 5f));
+            RouteSearchResultContentPane.add(PassStop);
+            PassStop.setBounds(new Rectangle(new Point(60, 90), PassStop.getPreferredSize()));
+
+            //======== PassStopListPane ========
+            {
+
+                //---- PassStopList ----
+                PassStopList.setVisibleRowCount(5);
+                PassStopList.setFont(PassStopList.getFont().deriveFont(PassStopList.getFont().getStyle() & ~Font.BOLD, PassStopList.getFont().getSize() + 3f));
+                PassStopListPane.setViewportView(PassStopList);
+            }
+            RouteSearchResultContentPane.add(PassStopListPane);
+            PassStopListPane.setBounds(60, 120, 230, 90);
+
+            //---- WorkTime ----
+            WorkTime.setText("\u8fd0\u8425\u65f6\u95f4:");
+            WorkTime.setFont(WorkTime.getFont().deriveFont(WorkTime.getFont().getStyle() | Font.BOLD, WorkTime.getFont().getSize() + 5f));
+            RouteSearchResultContentPane.add(WorkTime);
+            WorkTime.setBounds(new Rectangle(new Point(60, 60), WorkTime.getPreferredSize()));
+
+            //---- WorkTimeText ----
+            WorkTimeText.setText("\u8fd0\u8425\u65f6\u95f4");
+            WorkTimeText.setFont(WorkTimeText.getFont().deriveFont(WorkTimeText.getFont().getSize() + 4f));
+            RouteSearchResultContentPane.add(WorkTimeText);
+            WorkTimeText.setBounds(140, 60, 205, 17);
+
+            RouteSearchResultContentPane.setPreferredSize(new Dimension(355, 275));
+            RouteSearchResult.setSize(355, 275);
+            RouteSearchResult.setLocationRelativeTo(RouteSearchResult.getOwner());
         }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
@@ -801,6 +924,18 @@ PasswordChangeMouseReleased(e);} catch (Exception ex) {
     private JLabel PassRoute;
     private JScrollPane PassRouteListPane;
     private JList PassRouteList;
+    private JDialog RouteQueryDialog;
+    private JLabel StopName2;
+    private JComboBox SelectRouteId;
+    private JButton SearchRoute;
+    private JDialog RouteSearchResult;
+    private JLabel RouteResultName;
+    private JLabel RouteResultNameText;
+    private JLabel PassStop;
+    private JScrollPane PassStopListPane;
+    private JList PassStopList;
+    private JLabel WorkTime;
+    private JLabel WorkTimeText;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 
     // 当前用户ID BEGIN
@@ -893,12 +1028,12 @@ PasswordChangeMouseReleased(e);} catch (Exception ex) {
 
     private void showAllStopNameInList() {
         // 备选列表展示全部站点
-        List<String> stopQueryResults = UserSearchStop.listStop2listStopName(UserSearchStop.showAllStop()); // 备选列表内容
+        List<String> stopQuerySelections = UserSearchStop.listStop2listStopName(UserSearchStop.showAllStop()); // 备选列表中选项内容
 
         stopQueryListModel.clear();
 
-        for (String stopQueryResult : stopQueryResults) {
-            stopQueryListModel.addElement(stopQueryResult);
+        for (String stopQuerySelection : stopQuerySelections) {
+            stopQueryListModel.addElement(stopQuerySelection);
         }
     }
 
@@ -921,4 +1056,38 @@ PasswordChangeMouseReleased(e);} catch (Exception ex) {
         }
     }
     // 站点搜索 END
+
+    // 线路搜索 BEGIN
+    private void showAllRouteIdInBox() {
+        List<String> routeQuerySelections = UserSearchRoute.listRoute2listRouteId(UserSearchRoute.showAllRoute());  // 备选容器中选项内容
+
+        for (String routeQuerySelection : routeQuerySelections) {
+            SelectRouteId.addItem(routeQuerySelection);
+        }
+    }
+
+    private DefaultListModel<String> passByStopListModel;
+
+    private void initRouteSearchResult() {
+        passByStopListModel = new DefaultListModel<>();
+        PassStopList.setModel(passByStopListModel);
+
+        String routeId = Objects.requireNonNull(SelectRouteId.getSelectedItem()).toString().split("路")[0];
+        String routeName = UserSearchRoute.getRouteById(routeId).getName();
+        Time startTime = UserSearchRoute.getRouteById(routeId).getStartTime();
+        Time endTime = UserSearchRoute.getRouteById(routeId).getEndTime();
+        String workTime = startTime + "->" + endTime;
+
+        RouteResultNameText.setText(routeName);
+        WorkTimeText.setText(workTime);
+
+        List<String> stopNames = UserSearchRoute.listStop2listStopName(UserSearchRoute.searchPassByStop(routeId));
+
+        passByStopListModel.clear();
+
+        for (String stopName : stopNames) {
+            passByStopListModel.addElement(stopName);
+        }
+    }
+    // 线路搜索 END
 }
