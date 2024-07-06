@@ -24,5 +24,15 @@
         FROM `route`
         WHERE RID = #{ID};
     </select>
-
+    <select id="SelectRoutePassByStop" resultMap="RouteResult">
+        SELECT `route`.RID, RName, Status, StartTime, EndTime, Price
+        FROM `route`,
+             `route-stop`,
+             `stop`
+        WHERE `route`.RID = `route-stop`.RID
+          AND `stop`.SID = `route-stop`.SID
+          AND SName = #{passByStopName}
+          AND Status = 1
+        ORDER BY `route`.RID;
+    </select>
 </mapper>
