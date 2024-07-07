@@ -35,4 +35,9 @@
         FROM `stop`
         WHERE SName LIKE CONCAT('%', #{similarName}, '%');
     </select>
+    <select id="SelectByName" resultMap="StopResult">
+        SELECT *
+        FROM `stop`
+        WHERE SName = #{Name};
+    </select>
 </mapper>

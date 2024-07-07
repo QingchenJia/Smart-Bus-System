@@ -8,8 +8,6 @@ import SmartBusSystem.pojo.Stop;
 import SmartBusSystem.pojo.TableRow.RouteGuideRow;
 import SmartBusSystem.pojo.User;
 import SmartBusSystem.service.DatabaseOperation;
-import SmartBusSystem.service.login.UserLogin;
-import SmartBusSystem.service.register.UserRegister;
 
 import java.util.ArrayList;
 import java.util.List;

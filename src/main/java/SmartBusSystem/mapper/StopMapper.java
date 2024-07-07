@@ -15,4 +15,5 @@ public interface StopMapper {
     List<Stop> SelectStopOrderInRoute(@Param("RID") String RID);
 
     List<Stop> SelectStopBySimilarName(@Param("similarName") String similarName);
+    Stop SelectByName(@Param("Name") String name);
 }

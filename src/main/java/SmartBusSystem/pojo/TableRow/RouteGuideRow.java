@@ -55,4 +55,8 @@ public class RouteGuideRow {
 
         return new String(tempStopName);
     }
+
+    public void addStop(Stop stop) {
+        stops.add(stop);
+    }
 }
