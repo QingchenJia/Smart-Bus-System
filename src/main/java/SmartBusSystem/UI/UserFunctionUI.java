@@ -6,6 +6,7 @@ package SmartBusSystem.UI;
 
 import SmartBusSystem.pojo.TableRow.RouteGuideRow;
 import SmartBusSystem.pojo.User;
+import SmartBusSystem.service.NavigationSystem.NavigationSystem;
 import SmartBusSystem.service.SecurityProtect;
 import SmartBusSystem.service.function.UserHomePage;
 import SmartBusSystem.service.function.UserInformationModify;
@@ -32,6 +33,8 @@ public class UserFunctionUI extends JFrame {
         initComponents();
         initRouteGuide();
         initStopQueryDialog();
+        initNavigationDialog();
+
         this.setVisible(true);
     }
 
@@ -120,14 +123,13 @@ public class UserFunctionUI extends JFrame {
 
     private void StopQueryMouseReleased(MouseEvent e) {
         // TODO add your code here
-        showAllStopNameInList();
+        showAllStopNameInList(stopQueryListModel);
         StopQueryDialog.setVisible(true);
     }
 
     private void SearchStopMouseReleased(MouseEvent e) {
         // TODO add your code here
-        initStopSearchResult();
-        StopSearchResult.setVisible(true);
+        if (initStopSearchResult()) StopSearchResult.setVisible(true);
     }
 
     private void RouteQueryMouseReleased(MouseEvent e) {
@@ -140,6 +142,18 @@ public class UserFunctionUI extends JFrame {
         // TODO add your code here
         initRouteSearchResult();
         RouteSearchResult.setVisible(true);
+    }
+
+    private void DirectionMouseReleased(MouseEvent e) {
+        // TODO add your code here
+        showAllStopNameInList(startStopQueryListModel);
+        showAllStopNameInList(endStopQueryListModel);
+        NavigationGuideDialog.setVisible(true);
+    }
+
+    private void NavigationButtonMouseReleased(MouseEvent e) {
+        // TODO add your code here
+        if (initNavigationGuideResult()) NavigationGuideResult.setVisible(true);
     }
 
     private void initComponents() {
@@ -215,6 +229,20 @@ public class UserFunctionUI extends JFrame {
         PassStopList = new JList();
         WorkTime = new JLabel();
         WorkTimeText = new JLabel();
+        NavigationGuideDialog = new JDialog();
+        StartStop = new JLabel();
+        StartStopNameInput = new JTextField();
+        StartStopListPane = new JScrollPane();
+        StartStopNameList = new JList();
+        NavigationButton = new JButton();
+        EndStop = new JLabel();
+        EndStopNameInput = new JTextField();
+        EndStopPane = new JScrollPane();
+        EndStopNameList = new JList();
+        NavigationGuideResult = new JDialog();
+        NavigationGuideTitle = new JLabel();
+        NavigationGuidePane = new JScrollPane();
+        NavigationGuideList = new JList();
 
         //======== this ========
         setTitle("\u4e58\u5ba2\u7aef");
@@ -288,6 +316,12 @@ public class UserFunctionUI extends JFrame {
                 Direction.setBorderPainted(true);
                 Direction.setIconTextGap(0);
                 Direction.setFont(Direction.getFont().deriveFont(Direction.getFont().getSize() + 1f));
+                Direction.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        DirectionMouseReleased(e);
+                    }
+                });
                 ServiceMenu.add(Direction);
 
                 //---- StopQuery ----
@@ -802,7 +836,7 @@ PasswordChangeMouseReleased(e);} catch (Exception ex) {
             RouteQueryDialogContentPane.add(SearchRoute);
             SearchRoute.setBounds(new Rectangle(new Point(80, 75), SearchRoute.getPreferredSize()));
 
-            RouteQueryDialogContentPane.setPreferredSize(new Dimension(235, 155));
+            RouteQueryDialogContentPane.setPreferredSize(new Dimension(235, 150));
             RouteQueryDialog.pack();
             RouteQueryDialog.setLocationRelativeTo(RouteQueryDialog.getOwner());
         }
@@ -829,7 +863,7 @@ PasswordChangeMouseReleased(e);} catch (Exception ex) {
             RouteResultNameText.setBounds(105, 30, 200, RouteResultNameText.getPreferredSize().height);
 
             //---- PassStop ----
-            PassStop.setText("\u7ecf\u884c\u7ebf\u8def:");
+            PassStop.setText("\u9014\u5f84\u7ad9\u70b9:");
             PassStop.setFont(PassStop.getFont().deriveFont(PassStop.getFont().getStyle() | Font.BOLD, PassStop.getFont().getSize() + 5f));
             RouteSearchResultContentPane.add(PassStop);
             PassStop.setBounds(new Rectangle(new Point(60, 90), PassStop.getPreferredSize()));
@@ -860,6 +894,103 @@ PasswordChangeMouseReleased(e);} catch (Exception ex) {
             RouteSearchResultContentPane.setPreferredSize(new Dimension(355, 275));
             RouteSearchResult.setSize(355, 275);
             RouteSearchResult.setLocationRelativeTo(RouteSearchResult.getOwner());
+        }
+
+        //======== NavigationGuideDialog ========
+        {
+            NavigationGuideDialog.setTitle("\u5bfc\u822a\u6307\u5357");
+            NavigationGuideDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            NavigationGuideDialog.setAlwaysOnTop(true);
+            NavigationGuideDialog.setModal(true);
+            var NavigationGuideDialogContentPane = NavigationGuideDialog.getContentPane();
+            NavigationGuideDialogContentPane.setLayout(null);
+
+            //---- StartStop ----
+            StartStop.setText("\u8d77\u70b9:");
+            StartStop.setFont(StartStop.getFont().deriveFont(StartStop.getFont().getStyle() | Font.BOLD, StartStop.getFont().getSize() + 5f));
+            NavigationGuideDialogContentPane.add(StartStop);
+            StartStop.setBounds(new Rectangle(new Point(25, 30), StartStop.getPreferredSize()));
+
+            //---- StartStopNameInput ----
+            StartStopNameInput.setBackground(Color.white);
+            NavigationGuideDialogContentPane.add(StartStopNameInput);
+            StartStopNameInput.setBounds(75, 35, 115, StartStopNameInput.getPreferredSize().height);
+
+            //======== StartStopListPane ========
+            {
+
+                //---- StartStopNameList ----
+                StartStopNameList.setVisibleRowCount(5);
+                StartStopListPane.setViewportView(StartStopNameList);
+            }
+            NavigationGuideDialogContentPane.add(StartStopListPane);
+            StartStopListPane.setBounds(75, 65, 115, 80);
+
+            //---- NavigationButton ----
+            NavigationButton.setText("\u5bfc\u822a");
+            NavigationButton.setFont(NavigationButton.getFont().deriveFont(NavigationButton.getFont().getStyle() | Font.BOLD, NavigationButton.getFont().getSize() + 3f));
+            NavigationButton.setFocusPainted(false);
+            NavigationButton.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    NavigationButtonMouseReleased(e);
+                }
+            });
+            NavigationGuideDialogContentPane.add(NavigationButton);
+            NavigationButton.setBounds(new Rectangle(new Point(160, 165), NavigationButton.getPreferredSize()));
+
+            //---- EndStop ----
+            EndStop.setText("\u7ec8\u70b9:");
+            EndStop.setFont(EndStop.getFont().deriveFont(EndStop.getFont().getStyle() | Font.BOLD, EndStop.getFont().getSize() + 5f));
+            NavigationGuideDialogContentPane.add(EndStop);
+            EndStop.setBounds(200, 30, 45, 18);
+
+            //---- EndStopNameInput ----
+            EndStopNameInput.setBackground(Color.white);
+            NavigationGuideDialogContentPane.add(EndStopNameInput);
+            EndStopNameInput.setBounds(250, 35, 115, EndStopNameInput.getPreferredSize().height);
+
+            //======== EndStopPane ========
+            {
+                EndStopPane.setViewportView(EndStopNameList);
+            }
+            NavigationGuideDialogContentPane.add(EndStopPane);
+            EndStopPane.setBounds(250, 65, 115, 80);
+
+            NavigationGuideDialogContentPane.setPreferredSize(new Dimension(405, 240));
+            NavigationGuideDialog.setSize(405, 240);
+            NavigationGuideDialog.setLocationRelativeTo(NavigationGuideDialog.getOwner());
+        }
+
+        //======== NavigationGuideResult ========
+        {
+            NavigationGuideResult.setTitle("\u7ebf\u8def\u4fe1\u606f");
+            NavigationGuideResult.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            NavigationGuideResult.setAlwaysOnTop(true);
+            NavigationGuideResult.setModal(true);
+            var NavigationGuideResultContentPane = NavigationGuideResult.getContentPane();
+            NavigationGuideResultContentPane.setLayout(null);
+
+            //---- NavigationGuideTitle ----
+            NavigationGuideTitle.setText("Title");
+            NavigationGuideTitle.setFont(NavigationGuideTitle.getFont().deriveFont(NavigationGuideTitle.getFont().getStyle() | Font.BOLD, NavigationGuideTitle.getFont().getSize() + 5f));
+            NavigationGuideResultContentPane.add(NavigationGuideTitle);
+            NavigationGuideTitle.setBounds(60, 30, 330, NavigationGuideTitle.getPreferredSize().height);
+
+            //======== NavigationGuidePane ========
+            {
+
+                //---- NavigationGuideList ----
+                NavigationGuideList.setVisibleRowCount(5);
+                NavigationGuideList.setFont(NavigationGuideList.getFont().deriveFont(NavigationGuideList.getFont().getStyle() & ~Font.BOLD, NavigationGuideList.getFont().getSize() + 3f));
+                NavigationGuidePane.setViewportView(NavigationGuideList);
+            }
+            NavigationGuideResultContentPane.add(NavigationGuidePane);
+            NavigationGuidePane.setBounds(60, 60, 300, 155);
+
+            NavigationGuideResultContentPane.setPreferredSize(new Dimension(420, 275));
+            NavigationGuideResult.setSize(420, 275);
+            NavigationGuideResult.setLocationRelativeTo(NavigationGuideResult.getOwner());
         }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
@@ -936,6 +1067,20 @@ PasswordChangeMouseReleased(e);} catch (Exception ex) {
     private JList PassStopList;
     private JLabel WorkTime;
     private JLabel WorkTimeText;
+    private JDialog NavigationGuideDialog;
+    private JLabel StartStop;
+    private JTextField StartStopNameInput;
+    private JScrollPane StartStopListPane;
+    private JList StartStopNameList;
+    private JButton NavigationButton;
+    private JLabel EndStop;
+    private JTextField EndStopNameInput;
+    private JScrollPane EndStopPane;
+    private JList EndStopNameList;
+    private JDialog NavigationGuideResult;
+    private JLabel NavigationGuideTitle;
+    private JScrollPane NavigationGuidePane;
+    private JList NavigationGuideList;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 
     // 当前用户ID BEGIN
@@ -1026,26 +1171,27 @@ PasswordChangeMouseReleased(e);} catch (Exception ex) {
         });
     }
 
-    private void showAllStopNameInList() {
+    private void showAllStopNameInList(DefaultListModel<String> listModel) {
         // 备选列表展示全部站点
         List<String> stopQuerySelections = UserSearchStop.listStop2listStopName(UserSearchStop.showAllStop()); // 备选列表中选项内容
 
-        stopQueryListModel.clear();
+        listModel.clear();
 
         for (String stopQuerySelection : stopQuerySelections) {
-            stopQueryListModel.addElement(stopQuerySelection);
+            listModel.addElement(stopQuerySelection);
         }
     }
 
     // 结果展示
     private DefaultListModel<String> passByRouteListModel;
 
-    private void initStopSearchResult() {
+    private boolean initStopSearchResult() {
+        String stopName = StopNameInput.getText();
+        if (stopName.isEmpty()) return false;
+        StopResultNameText.setText(stopName);
+
         passByRouteListModel = new DefaultListModel<>();
         PassRouteList.setModel(passByRouteListModel);
-
-        String stopName = StopNameInput.getText();
-        StopResultNameText.setText(stopName);
 
         List<String> routeBasicInfos = UserSearchStop.listRoute2listRouteBasicInformation(UserSearchStop.searchPassByRoute(stopName));  // 经行线路基本信息
 
@@ -1054,6 +1200,8 @@ PasswordChangeMouseReleased(e);} catch (Exception ex) {
         for (String routeBasicInfo : routeBasicInfos) {
             passByRouteListModel.addElement(routeBasicInfo);
         }
+
+        return true;
     }
     // 站点搜索 END
 
@@ -1090,4 +1238,143 @@ PasswordChangeMouseReleased(e);} catch (Exception ex) {
         }
     }
     // 线路搜索 END
+
+    // 路线导航指南 BEGIN
+    private DefaultListModel<String> startStopQueryListModel;
+
+    private void updateStartStopQueryList() {
+        String text = StartStopNameInput.getText();
+
+        if (text == null) {
+            startStopQueryListModel.clear();
+            return;
+        }
+
+        List<String> startStopQueryResults = UserSearchStop.listStop2listStopName(UserSearchStop.searchBySimilarName(text)); // 备选列表内容
+
+        startStopQueryListModel.clear();
+
+        for (String startStopQueryResult : startStopQueryResults) {
+            startStopQueryListModel.addElement(startStopQueryResult);
+        }
+    }
+
+    private void selectStartStopQueryList() {
+        String selectStartStopName = (String) StartStopNameList.getSelectedValue();
+        if (selectStartStopName != null) {
+            StartStopNameInput.setText(selectStartStopName);
+            startStopQueryListModel.clear();
+        }
+    }
+
+    private DefaultListModel<String> endStopQueryListModel;
+
+    private void updateEndStopQueryList() {
+        String text = EndStopNameInput.getText();
+
+        if (text == null) {
+            endStopQueryListModel.clear();
+            return;
+        }
+
+        List<String> endStopQueryResults = UserSearchStop.listStop2listStopName(UserSearchStop.searchBySimilarName(text)); // 备选列表内容
+
+        endStopQueryListModel.clear();
+
+        for (String endStopQueryResult : endStopQueryResults) {
+            endStopQueryListModel.addElement(endStopQueryResult);
+        }
+    }
+
+    private void selectEndStopQueryList() {
+        String selectEndStopName = (String) EndStopNameList.getSelectedValue();
+        if (selectEndStopName != null) {
+            EndStopNameInput.setText(selectEndStopName);
+            endStopQueryListModel.clear();
+        }
+    }
+
+    private void initNavigationDialog() {
+        startStopQueryListModel = new DefaultListModel<>();
+        StartStopNameList.setModel(startStopQueryListModel);
+
+        StartStopNameInput.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                updateStartStopQueryList();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                updateStartStopQueryList();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                updateStartStopQueryList();
+            }
+        });
+
+        StartStopNameList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    selectStartStopQueryList();
+                }
+            }
+        });
+
+        endStopQueryListModel = new DefaultListModel<>();
+        EndStopNameList.setModel(endStopQueryListModel);
+
+        EndStopNameInput.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                updateEndStopQueryList();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                updateEndStopQueryList();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                updateEndStopQueryList();
+            }
+        });
+
+        EndStopNameList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    selectEndStopQueryList();
+                }
+            }
+        });
+    }
+
+    // 展示结果
+    private DefaultListModel<String> navigationGuideModel;
+
+    private boolean initNavigationGuideResult() {
+        String startStopName = StartStopNameInput.getText();
+        String endStopName = EndStopNameInput.getText();
+        if (startStopName.isEmpty() || endStopName.isEmpty()) return false;
+
+        List<String> navigationGuides = NavigationSystem.getNavigationGuide(startStopName, endStopName);
+        String title = navigationGuides.removeFirst();
+
+        NavigationGuideTitle.setText(title);
+
+        navigationGuideModel = new DefaultListModel<>();
+        NavigationGuideList.setModel(navigationGuideModel);
+
+        for (String navigationGuide : navigationGuides) {
+            navigationGuideModel.addElement(navigationGuide);
+        }
+
+        return true;
+    }
+    // 路线导航指南 END
 }

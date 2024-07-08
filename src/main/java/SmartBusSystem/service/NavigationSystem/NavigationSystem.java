@@ -88,7 +88,7 @@ public class NavigationSystem {
 
         List<String> guide = findRoute(startStopId, endStopId);
 
-        String title = "从 " + startStopName + " 到 " + endStopName + " 的导航路线:";
+        String title = "从 " + startStopName + " 到 " + endStopName + " 的导航路线";
         List<String> navigation = new ArrayList<>();
         navigation.add(title);
         navigation.addAll(guide);
