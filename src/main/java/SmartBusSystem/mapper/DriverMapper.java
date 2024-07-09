@@ -13,5 +13,7 @@ public interface DriverMapper {
 
     void InsertDriver(Driver driver);
 
+    void UpdateDriver(Driver driver);
+
     void UpdatePassword(@Param("ID") String ID, @Param("password") String password);
 }

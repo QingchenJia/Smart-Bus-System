@@ -180,6 +180,14 @@ public class LoginUI extends JFrame {
         RecoverDialog.setVisible(true);
     }
 
+    private void DriverEnterSystemMouseReleased(MouseEvent e) {
+        // TODO add your code here
+        DriverPass.dispose();
+        this.dispose();
+        String ID = IdInput.getText();
+        new DriverFunctionUI().setCurrentDriverId(ID);  //打开功能界面 同时记录当前司机ID
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         IdInput = new JFormattedTextField();
@@ -254,19 +262,19 @@ public class LoginUI extends JFrame {
         Id.setText("\u8d26\u53f7:");
         Id.setFont(Id.getFont().deriveFont(Id.getFont().getSize() + 12f));
         contentPane.add(Id);
-        Id.setBounds(new Rectangle(new Point(110, 120), Id.getPreferredSize()));
+        Id.setBounds(new Rectangle(new Point(110, 118), Id.getPreferredSize()));
 
         //---- Password ----
         Password.setText("\u5bc6\u7801:");
         Password.setFont(Password.getFont().deriveFont(Password.getFont().getSize() + 12f));
         contentPane.add(Password);
-        Password.setBounds(new Rectangle(new Point(110, 170), Password.getPreferredSize()));
+        Password.setBounds(new Rectangle(new Point(110, 168), Password.getPreferredSize()));
 
         //---- Code ----
         Code.setText("\u9a8c\u8bc1\u7801:");
         Code.setFont(Code.getFont().deriveFont(Code.getFont().getSize() + 12f));
         contentPane.add(Code);
-        Code.setBounds(new Rectangle(new Point(110, 220), Code.getPreferredSize()));
+        Code.setBounds(new Rectangle(new Point(110, 218), Code.getPreferredSize()));
         contentPane.add(CodeInput);
         CodeInput.setBounds(210, 225, 55, 25);
 
@@ -509,6 +517,12 @@ DriverLoginButtonMouseReleased(e);} catch (Exception ex) {
             DriverEnterSystem.setText("\u8fdb\u5165\u7cfb\u7edf");
             DriverEnterSystem.setFont(DriverEnterSystem.getFont().deriveFont(DriverEnterSystem.getFont().getStyle() | Font.BOLD, DriverEnterSystem.getFont().getSize() + 10f));
             DriverEnterSystem.setFocusPainted(false);
+            DriverEnterSystem.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    DriverEnterSystemMouseReleased(e);
+                }
+            });
             DriverPassContentPane.add(DriverEnterSystem);
             DriverEnterSystem.setBounds(new Rectangle(new Point(40, 35), DriverEnterSystem.getPreferredSize()));
 

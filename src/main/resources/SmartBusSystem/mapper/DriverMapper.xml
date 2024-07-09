@@ -21,6 +21,14 @@
         SET Password=#{password}
         WHERE DID = #{ID};
     </update>
+    <update id="UpdateDriver">
+        UPDATE `driver`
+        SET
+        <if test="name!=null">DName=#{name},</if>
+        <if test="phoneNum!=null">PhoneNum=#{phoneNum},</if>
+        <if test="drivingYears!=null">DrivingYears=#{drivingYears}</if>
+        WHERE DID = #{ID};
+    </update>
     <select id="SelectAll" resultMap="DriverResult">
         SELECT *
         FROM `driver`;

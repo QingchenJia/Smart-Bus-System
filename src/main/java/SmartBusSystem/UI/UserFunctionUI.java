@@ -156,6 +156,13 @@ public class UserFunctionUI extends JFrame {
         if (initNavigationGuideResult()) NavigationGuideResult.setVisible(true);
     }
 
+    private void RefreshHomePageMouseReleased(MouseEvent e) {
+        // TODO add your code here
+        String Id = currentUserId;
+        this.dispose();
+        new UserFunctionUI().setCurrentUserId(Id);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         TopMenu = new JMenuBar();
@@ -164,7 +171,7 @@ public class UserFunctionUI extends JFrame {
         InformationModify = new JMenuItem();
         LoginOut = new JMenuItem();
         ServiceMenu = new JMenu();
-        ReturnHomePage = new JMenuItem();
+        RefreshHomePage = new JMenuItem();
         Direction = new JMenuItem();
         StopQuery = new JMenuItem();
         RouteQuery = new JMenuItem();
@@ -304,12 +311,18 @@ public class UserFunctionUI extends JFrame {
                 ServiceMenu.setText("\u529f\u80fd");
                 ServiceMenu.setFont(ServiceMenu.getFont().deriveFont(ServiceMenu.getFont().getSize() + 4f));
 
-                //---- ReturnHomePage ----
-                ReturnHomePage.setText("\u8fd4\u56de\u4e3b\u9875");
-                ReturnHomePage.setBorderPainted(true);
-                ReturnHomePage.setIconTextGap(0);
-                ReturnHomePage.setFont(ReturnHomePage.getFont().deriveFont(ReturnHomePage.getFont().getSize() + 1f));
-                ServiceMenu.add(ReturnHomePage);
+                //---- RefreshHomePage ----
+                RefreshHomePage.setText("\u5237\u65b0\u4e3b\u9875");
+                RefreshHomePage.setBorderPainted(true);
+                RefreshHomePage.setIconTextGap(0);
+                RefreshHomePage.setFont(RefreshHomePage.getFont().deriveFont(RefreshHomePage.getFont().getSize() + 1f));
+                RefreshHomePage.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        RefreshHomePageMouseReleased(e);
+                    }
+                });
+                ServiceMenu.add(RefreshHomePage);
 
                 //---- Direction ----
                 Direction.setText("\u8def\u5f84\u5bfc\u822a");
@@ -385,6 +398,7 @@ public class UserFunctionUI extends JFrame {
                 cm.getColumn(1).setPreferredWidth(135);
                 cm.getColumn(2).setPreferredWidth(420);
             }
+            RouteGuide.setRowHeight(25);
             TablePane.setViewportView(RouteGuide);
         }
         contentPane.add(TablePane);
@@ -429,27 +443,27 @@ public class UserFunctionUI extends JFrame {
 
             //---- NameText ----
             NameText.setText("\u540d\u79f0");
-            NameText.setFont(NameText.getFont().deriveFont(NameText.getFont().getSize() + 4f));
+            NameText.setFont(NameText.getFont().deriveFont(NameText.getFont().getSize() + 3f));
             TotalViewDialogContentPane.add(NameText);
-            NameText.setBounds(105, 35, 120, 15);
+            NameText.setBounds(105, 32, 120, NameText.getPreferredSize().height);
 
             //---- IdText ----
             IdText.setText("\u8d26\u53f7");
-            IdText.setFont(IdText.getFont().deriveFont(IdText.getFont().getSize() + 4f));
+            IdText.setFont(IdText.getFont().deriveFont(IdText.getFont().getSize() + 3f));
             TotalViewDialogContentPane.add(IdText);
-            IdText.setBounds(105, 60, 120, 15);
+            IdText.setBounds(105, 57, 120, IdText.getPreferredSize().height);
 
             //---- PhoneNumText ----
             PhoneNumText.setText("\u624b\u673a\u53f7");
-            PhoneNumText.setFont(PhoneNumText.getFont().deriveFont(PhoneNumText.getFont().getSize() + 4f));
+            PhoneNumText.setFont(PhoneNumText.getFont().deriveFont(PhoneNumText.getFont().getSize() + 3f));
             TotalViewDialogContentPane.add(PhoneNumText);
-            PhoneNumText.setBounds(125, 85, 100, 15);
+            PhoneNumText.setBounds(125, 82, 100, PhoneNumText.getPreferredSize().height);
 
             //---- AptitudeText ----
             AptitudeText.setText("\u8d44\u8d28");
-            AptitudeText.setFont(AptitudeText.getFont().deriveFont(AptitudeText.getFont().getSize() + 4f));
+            AptitudeText.setFont(AptitudeText.getFont().deriveFont(AptitudeText.getFont().getSize() + 3f));
             TotalViewDialogContentPane.add(AptitudeText);
-            AptitudeText.setBounds(105, 105, 55, AptitudeText.getPreferredSize().height);
+            AptitudeText.setBounds(105, 107, 55, AptitudeText.getPreferredSize().height);
 
             TotalViewDialogContentPane.setPreferredSize(new Dimension(280, 240));
             TotalViewDialog.setSize(280, 240);
@@ -988,8 +1002,8 @@ PasswordChangeMouseReleased(e);} catch (Exception ex) {
             NavigationGuideResultContentPane.add(NavigationGuidePane);
             NavigationGuidePane.setBounds(60, 60, 300, 155);
 
-            NavigationGuideResultContentPane.setPreferredSize(new Dimension(420, 275));
-            NavigationGuideResult.setSize(420, 275);
+            NavigationGuideResultContentPane.setPreferredSize(new Dimension(420, 290));
+            NavigationGuideResult.setSize(420, 290);
             NavigationGuideResult.setLocationRelativeTo(NavigationGuideResult.getOwner());
         }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
@@ -1002,7 +1016,7 @@ PasswordChangeMouseReleased(e);} catch (Exception ex) {
     private JMenuItem InformationModify;
     private JMenuItem LoginOut;
     private JMenu ServiceMenu;
-    private JMenuItem ReturnHomePage;
+    private JMenuItem RefreshHomePage;
     private JMenuItem Direction;
     private JMenuItem StopQuery;
     private JMenuItem RouteQuery;

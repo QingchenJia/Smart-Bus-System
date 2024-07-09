@@ -1,0 +1,398 @@
+JFDML JFormDesigner: "8.2.2.0.382" Java: "17.0.10" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
+			"autoSize": false
+		} ) {
+			name: "this"
+			"$sizePolicy": 1
+			"title": "司机端"
+			"defaultCloseOperation": 3
+			"alwaysOnTop": true
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "Title"
+				"text": "工作排版表"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 13, false )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 235
+				"y": 20
+			} )
+			menuBar: new FormContainer( "javax.swing.JMenuBar", new FormLayoutManager( class javax.swing.JMenuBar ) ) {
+				name: "TopMenu"
+				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+					name: "Me"
+					"text": "关于我"
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 4, false )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "TotalView"
+						"text": "个人总览"
+						"borderPainted": true
+						"iconTextGap": 0
+						"font": &SwingDerivedFont0 new com.jformdesigner.model.SwingDerivedFont( null, 0, 1, false )
+						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "TotalViewMouseReleased", true ) )
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "InformationModify"
+						"text": "信息修改"
+						"borderPainted": true
+						"iconTextGap": 0
+						"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 1, false )
+						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "InformationModifyMouseReleased", true ) )
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "LoginOut"
+						"text": "账号退出"
+						"borderPainted": true
+						"iconTextGap": 0
+						"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 1, false )
+						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "LoginOutMouseReleased", true ) )
+					} )
+				} )
+				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+					name: "ServiceMenu"
+					"text": "功能"
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 4, false )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "RefreshHomePage"
+						"text": "刷新主页"
+						"borderPainted": true
+						"iconTextGap": 0
+						"font": #SwingDerivedFont0
+						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "RefreshHomePageMouseReleased", true ) )
+					} )
+				} )
+			}
+		}, new FormLayoutConstraints( null ) {
+			"size": new java.awt.Dimension( 640, 480 )
+			"location": new java.awt.Point( 5, 0 )
+		} )
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
+			"autoSize": false
+		} ) {
+			name: "TotalViewDialog"
+			"title": "个人总览"
+			"defaultCloseOperation": 2
+			"alwaysOnTop": true
+			"modal": true
+			"$sizePolicy": 1
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "Id"
+				"text": "账号:"
+				"font": &SwingDerivedFont1 new com.jformdesigner.model.SwingDerivedFont( null, 1, 5, false )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 60
+				"y": 55
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "PhoneNum"
+				"text": "手机号:"
+				"font": #SwingDerivedFont1
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 60
+				"y": 80
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "Name"
+				"text": "名称:"
+				"font": #SwingDerivedFont1
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 60
+				"y": 30
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "DrivingYears"
+				"text": "驾龄:"
+				"font": #SwingDerivedFont1
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 60
+				"y": 105
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "NameText"
+				"text": "名称"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 3, false )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 105
+				"y": 32
+				"width": 120
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "IdText"
+				"text": "账号"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 3, false )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 120
+				"x": 105
+				"y": 57
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "PhoneNumText"
+				"text": "手机号"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 3, false )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 100
+				"x": 125
+				"y": 82
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "DrivingYearsText"
+				"text": "驾龄"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 3, false )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 55
+				"x": 105
+				"y": 107
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"size": new java.awt.Dimension( 280, 240 )
+			"location": new java.awt.Point( 5, 495 )
+		} )
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
+			"autoSize": false
+		} ) {
+			name: "InformationModifyDialog"
+			"title": "信息修改"
+			"defaultCloseOperation": 2
+			"alwaysOnTop": true
+			"modal": true
+			"$sizePolicy": 1
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "OldPassword"
+				"text": "原密码:"
+				"font": #SwingDerivedFont1
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 60
+				"y": 145
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "OldPhoneNum"
+				"text": "手机号:"
+				"font": #SwingDerivedFont1
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 60
+				"y": 55
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "OldName"
+				"text": "名称:"
+				"font": #SwingDerivedFont1
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 60
+				"y": 30
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "OldDrivingYears"
+				"text": "驾龄:"
+				"font": #SwingDerivedFont1
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 60
+				"y": 80
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "NewPassword"
+				"text": "新密码:"
+				"font": #SwingDerivedFont1
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 60
+				"y": 170
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "NameInput"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 110
+				"y": 35
+				"width": 120
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "PhoneNumInput"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 105
+				"height": 19
+				"x": 125
+				"y": 60
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "NewPasswordAgain"
+				"text": "确认:"
+				"font": #SwingDerivedFont1
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 60
+				"y": 195
+			} )
+			add( new FormComponent( "javax.swing.JPasswordField" ) {
+				name: "OldPasswordInput"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 125
+				"y": 150
+				"width": 105
+			} )
+			add( new FormComponent( "javax.swing.JPasswordField" ) {
+				name: "NewPasswordInput"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 105
+				"height": 19
+				"x": 125
+				"y": 175
+			} )
+			add( new FormComponent( "javax.swing.JPasswordField" ) {
+				name: "NewPasswordAgainInput"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 120
+				"height": 19
+				"x": 110
+				"y": 200
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "InformationChange"
+				"text": "保存"
+				"font": &SwingDerivedFont2 new com.jformdesigner.model.SwingDerivedFont( null, 1, 1, false )
+				"focusPainted": false
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "InformationChangeMouseReleased", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 110
+				"y": 110
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "PasswordChange"
+				"text": "保存"
+				"font": #SwingDerivedFont2
+				"focusPainted": false
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "PasswordChangeMouseReleased", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 110
+				"y": 225
+			} )
+			add( new FormComponent( "javax.swing.JComboBox" ) {
+				name: "SelectDrivingYears"
+				"model": new javax.swing.DefaultComboBoxModel {
+					selectedItem: "1"
+					addElement( "1" )
+					addElement( "2" )
+					addElement( "3" )
+					addElement( "4" )
+					addElement( "5" )
+					addElement( "6" )
+					addElement( "7" )
+					addElement( "8" )
+					addElement( "9" )
+					addElement( "10" )
+					addElement( "11" )
+					addElement( "12" )
+					addElement( "13" )
+					addElement( "14" )
+					addElement( "15" )
+					addElement( "16" )
+					addElement( "17" )
+					addElement( "18" )
+					addElement( "19" )
+					addElement( "20" )
+				}
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 110
+				"y": 85
+				"width": 45
+				"height": 20
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"size": new java.awt.Dimension( 280, 300 )
+			"location": new java.awt.Point( 5, 752 )
+		} )
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "PasswordDifferent"
+			"title": "错误提醒"
+			"modal": true
+			"alwaysOnTop": true
+			"$sizePolicy": 1
+			"defaultCloseOperation": 2
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "tips2"
+				"text": "前后密码不一致，请重新输入"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 5, false )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 30
+				"y": 30
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"size": new java.awt.Dimension( 280, 120 )
+			"location": new java.awt.Point( 5, 1190 )
+		} )
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "PhoneNumWrong"
+			"title": "错误提醒"
+			"modal": true
+			"alwaysOnTop": true
+			"$sizePolicy": 1
+			"defaultCloseOperation": 2
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "tips3"
+				"text": "手机号格式错误，请重新输入"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 5, false )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 30
+				"y": 30
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"size": new java.awt.Dimension( 280, 120 )
+			"location": new java.awt.Point( 5, 1315 )
+		} )
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "PasswordWrong"
+			"title": "错误提醒"
+			"modal": true
+			"alwaysOnTop": true
+			"$sizePolicy": 1
+			"defaultCloseOperation": 2
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "tips1"
+				"text": "密码格式错误，请重新输入"
+				"font": &SwingDerivedFont3 new com.jformdesigner.model.SwingDerivedFont( null, 1, 5, false )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 30
+				"y": 30
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"size": &Dimension0 new java.awt.Dimension( 280, 120 )
+			"location": new java.awt.Point( 5, 1065 )
+		} )
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "Pass"
+			"title": "保存成功"
+			"modal": true
+			"alwaysOnTop": true
+			"$sizePolicy": 1
+			"defaultCloseOperation": 2
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "PassMessage"
+				"text": "保存成功！"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 6, false )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 30
+				"y": 30
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"size": new java.awt.Dimension( 155, 115 )
+			"location": new java.awt.Point( 5, 1570 )
+		} )
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "OldPasswordWrong"
+			"title": "错误提醒"
+			"modal": true
+			"alwaysOnTop": true
+			"$sizePolicy": 1
+			"defaultCloseOperation": 2
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "tips4"
+				"text": "密码错误，请重新输入"
+				"font": #SwingDerivedFont3
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 30
+				"y": 30
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"size": #Dimension0
+			"location": new java.awt.Point( 5, 1445 )
+		} )
+	}
+}
