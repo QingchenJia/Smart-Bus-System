@@ -1,4 +1,4 @@
-package SmartBusSystem.pojo.TableRow;
+package SmartBusSystem.service.TableRow;
 
 import SmartBusSystem.pojo.Stop;
 

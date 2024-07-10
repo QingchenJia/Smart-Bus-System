@@ -4,8 +4,11 @@
 
 package SmartBusSystem.UI;
 
+import javax.swing.table.*;
+
 import SmartBusSystem.pojo.Driver;
 import SmartBusSystem.service.SecurityProtect;
+import SmartBusSystem.service.TableRow.WorkArrangeRow;
 import SmartBusSystem.service.function.DriverHomePage;
 import SmartBusSystem.service.function.DriverInformationModify;
 
@@ -13,6 +16,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -21,6 +25,15 @@ import java.util.Objects;
 public class DriverFunctionUI extends JFrame {
     public DriverFunctionUI() {
         initComponents();
+        initWorkArrange();
+
+        this.setVisible(true);
+    }
+
+    public DriverFunctionUI(String currentDriverId) {
+        this.currentDriverId = currentDriverId;
+        initComponents();
+        initWorkArrange();
 
         this.setVisible(true);
     }
@@ -29,7 +42,7 @@ public class DriverFunctionUI extends JFrame {
         // TODO add your code here
         String Id = currentDriverId;
         this.dispose();
-        new DriverFunctionUI().setCurrentDriverId(Id);
+        new DriverFunctionUI(Id);
     }
 
     private void TotalViewMouseReleased(MouseEvent e) {
@@ -125,6 +138,8 @@ public class DriverFunctionUI extends JFrame {
         ServiceMenu = new JMenu();
         RefreshHomePage = new JMenuItem();
         Title = new JLabel();
+        TablePane = new JScrollPane();
+        WorkArrange = new JTable();
         TotalViewDialog = new JDialog();
         Id = new JLabel();
         PhoneNum = new JLabel();
@@ -239,10 +254,33 @@ public class DriverFunctionUI extends JFrame {
         setJMenuBar(TopMenu);
 
         //---- Title ----
-        Title.setText("\u5de5\u4f5c\u6392\u7248\u8868");
+        Title.setText("\u5de5\u4f5c\u6392\u73ed\u8868");
         Title.setFont(Title.getFont().deriveFont(Title.getFont().getStyle() | Font.BOLD, Title.getFont().getSize() + 13f));
         contentPane.add(Title);
         Title.setBounds(new Rectangle(new Point(235, 20), Title.getPreferredSize()));
+
+        //======== TablePane ========
+        {
+
+            //---- WorkArrange ----
+            WorkArrange.setModel(new DefaultTableModel(
+                new Object[][] {
+                },
+                new String[] {
+                    "\u65e5\u671f", "\u8f66\u8f86", "\u7ebf\u8def", "\u8fd0\u8425\u65f6\u95f4"
+                }
+            ));
+            {
+                TableColumnModel cm = WorkArrange.getColumnModel();
+                cm.getColumn(0).setPreferredWidth(70);
+                cm.getColumn(1).setPreferredWidth(120);
+                cm.getColumn(2).setPreferredWidth(180);
+                cm.getColumn(3).setPreferredWidth(175);
+            }
+            TablePane.setViewportView(WorkArrange);
+        }
+        contentPane.add(TablePane);
+        TablePane.setBounds(45, 55, 545, 310);
 
         contentPane.setPreferredSize(new Dimension(640, 480));
         setSize(640, 480);
@@ -601,6 +639,8 @@ PasswordChangeMouseReleased(e);} catch (Exception ex) {
     private JMenu ServiceMenu;
     private JMenuItem RefreshHomePage;
     private JLabel Title;
+    private JScrollPane TablePane;
+    private JTable WorkArrange;
     private JDialog TotalViewDialog;
     private JLabel Id;
     private JLabel PhoneNum;
@@ -648,4 +688,22 @@ PasswordChangeMouseReleased(e);} catch (Exception ex) {
         this.currentDriverId = currentDriverId;
     }
     // 当前司机ID END
+
+    // 加载工作排班情况 BEGIN
+    private void initWorkArrange() {
+        // 获取表格模型
+        DefaultTableModel model = (DefaultTableModel) WorkArrange.getModel();
+
+        // 添加新行数据
+        List<WorkArrangeRow> ownWorkArrangeRows = DriverHomePage.getOwnWorkArrangeRow(currentDriverId);
+        for (WorkArrangeRow ownWorkArrangeRow : ownWorkArrangeRows) {
+            String time = ownWorkArrangeRow.getDayOfWeek();
+            String busLicenseNum = ownWorkArrangeRow.getBus().getLicenseNumber();
+            String routeIdAndName = "[" + ownWorkArrangeRow.getRoute().getID() + "]" + ownWorkArrangeRow.getRoute().getName();
+            String workTimeInDay = ownWorkArrangeRow.getRoute().getStartTime() + "->" + ownWorkArrangeRow.getRoute().getEndTime();
+
+            model.addRow(new Object[]{time, busLicenseNum, routeIdAndName, workTimeInDay});
+        }
+    }
+    // 加载工作排班情况 END
 }

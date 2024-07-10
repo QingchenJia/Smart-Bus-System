@@ -14,42 +14,42 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "Id"
 				"text": "账号:"
-				"font": &SwingDerivedFont0 new com.jformdesigner.model.SwingDerivedFont( null, 0, 12, false )
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 11, false )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 40
-				"y": 50
+				"y": 48
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "Password"
 				"text": "密码:"
-				"font": #SwingDerivedFont0
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 11, false )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 40
-				"y": 90
+				"y": 88
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "PhoneNum"
 				"text": "手机号:"
-				"font": #SwingDerivedFont0
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 11, false )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 40
-				"y": 170
+				"y": 168
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "PasswordAgain"
 				"text": "再次输入:"
-				"font": #SwingDerivedFont0
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 11, false )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 40
-				"y": 130
+				"y": 128
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "Aptitude"
 				"text": "资质:"
-				"font": #SwingDerivedFont0
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 11, false )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 40
-				"y": 210
+				"y": 208
 			} )
 			add( new FormComponent( "javax.swing.JFormattedTextField" ) {
 				name: "IdInput"
@@ -94,7 +94,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "Check"
 				"text": "检查"
-				"font": &SwingDerivedFont1 new com.jformdesigner.model.SwingDerivedFont( null, 1, 10, false )
+				"font": &SwingDerivedFont0 new com.jformdesigner.model.SwingDerivedFont( null, 1, 10, false )
 				"focusPainted": false
 				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "CheckMouseReleased", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
@@ -104,7 +104,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "Backward"
 				"text": "返回"
-				"font": #SwingDerivedFont1
+				"font": #SwingDerivedFont0
 				"focusPainted": false
 				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "BackwardMouseReleased", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
@@ -125,7 +125,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "tips1"
 				"text": "账号格式错误，请重新输入"
-				"font": &SwingDerivedFont2 new com.jformdesigner.model.SwingDerivedFont( null, 1, 8, false )
+				"font": &SwingDerivedFont1 new com.jformdesigner.model.SwingDerivedFont( null, 1, 8, false )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 45
 				"y": 30
@@ -144,7 +144,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "tips2"
 				"text": "账号已存在，请重新输入"
-				"font": #SwingDerivedFont2
+				"font": #SwingDerivedFont1
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 45
 				"y": 30
@@ -163,7 +163,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "tips3"
 				"text": "密码格式错误，请重新输入"
-				"font": #SwingDerivedFont2
+				"font": #SwingDerivedFont1
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 45
 				"y": 30
@@ -182,7 +182,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "tips4"
 				"text": "前后密码不一致，请重新输入"
-				"font": #SwingDerivedFont2
+				"font": #SwingDerivedFont1
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 35
 				"y": 30
@@ -201,7 +201,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "tips5"
 				"text": "手机号格式错误，请重新输入"
-				"font": #SwingDerivedFont2
+				"font": #SwingDerivedFont1
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 35
 				"y": 30
@@ -220,7 +220,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "Register"
 				"text": "通过检测！注册"
-				"font": #SwingDerivedFont1
+				"font": #SwingDerivedFont0
 				"focusPainted": false
 				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "RegisterMouseReleased", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {

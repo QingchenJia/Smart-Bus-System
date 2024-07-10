@@ -112,33 +112,33 @@ public class UserRegisterUI extends JFrame {
 
         //---- Id ----
         Id.setText("\u8d26\u53f7:");
-        Id.setFont(Id.getFont().deriveFont(Id.getFont().getSize() + 12f));
+        Id.setFont(Id.getFont().deriveFont(Id.getFont().getStyle() | Font.BOLD, Id.getFont().getSize() + 11f));
         contentPane.add(Id);
-        Id.setBounds(new Rectangle(new Point(40, 50), Id.getPreferredSize()));
+        Id.setBounds(new Rectangle(new Point(40, 48), Id.getPreferredSize()));
 
         //---- Password ----
         Password.setText("\u5bc6\u7801:");
-        Password.setFont(Password.getFont().deriveFont(Password.getFont().getSize() + 12f));
+        Password.setFont(Password.getFont().deriveFont(Password.getFont().getStyle() | Font.BOLD, Password.getFont().getSize() + 11f));
         contentPane.add(Password);
-        Password.setBounds(new Rectangle(new Point(40, 90), Password.getPreferredSize()));
+        Password.setBounds(new Rectangle(new Point(40, 88), Password.getPreferredSize()));
 
         //---- PhoneNum ----
         PhoneNum.setText("\u624b\u673a\u53f7:");
-        PhoneNum.setFont(PhoneNum.getFont().deriveFont(PhoneNum.getFont().getSize() + 12f));
+        PhoneNum.setFont(PhoneNum.getFont().deriveFont(PhoneNum.getFont().getStyle() | Font.BOLD, PhoneNum.getFont().getSize() + 11f));
         contentPane.add(PhoneNum);
-        PhoneNum.setBounds(new Rectangle(new Point(40, 170), PhoneNum.getPreferredSize()));
+        PhoneNum.setBounds(new Rectangle(new Point(40, 168), PhoneNum.getPreferredSize()));
 
         //---- PasswordAgain ----
         PasswordAgain.setText("\u518d\u6b21\u8f93\u5165:");
-        PasswordAgain.setFont(PasswordAgain.getFont().deriveFont(PasswordAgain.getFont().getSize() + 12f));
+        PasswordAgain.setFont(PasswordAgain.getFont().deriveFont(PasswordAgain.getFont().getStyle() | Font.BOLD, PasswordAgain.getFont().getSize() + 11f));
         contentPane.add(PasswordAgain);
-        PasswordAgain.setBounds(new Rectangle(new Point(40, 130), PasswordAgain.getPreferredSize()));
+        PasswordAgain.setBounds(new Rectangle(new Point(40, 128), PasswordAgain.getPreferredSize()));
 
         //---- Aptitude ----
         Aptitude.setText("\u8d44\u8d28:");
-        Aptitude.setFont(Aptitude.getFont().deriveFont(Aptitude.getFont().getSize() + 12f));
+        Aptitude.setFont(Aptitude.getFont().deriveFont(Aptitude.getFont().getStyle() | Font.BOLD, Aptitude.getFont().getSize() + 11f));
         contentPane.add(Aptitude);
-        Aptitude.setBounds(new Rectangle(new Point(40, 210), Aptitude.getPreferredSize()));
+        Aptitude.setBounds(new Rectangle(new Point(40, 208), Aptitude.getPreferredSize()));
         contentPane.add(IdInput);
         IdInput.setBounds(110, 55, 195, 25);
         contentPane.add(PhoneNumIdInput);

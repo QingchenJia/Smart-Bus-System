@@ -1,7 +1,7 @@
 package NavigationSystem;
 
 import SmartBusSystem.pojo.Stop;
-import SmartBusSystem.pojo.TableRow.RouteGuideRow;
+import SmartBusSystem.service.TableRow.RouteGuideRow;
 import SmartBusSystem.service.function.UserHomePage;
 import SmartBusSystem.service.function.UserSearchStop;
 

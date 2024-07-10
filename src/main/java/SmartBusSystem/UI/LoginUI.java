@@ -185,7 +185,7 @@ public class LoginUI extends JFrame {
         DriverPass.dispose();
         this.dispose();
         String ID = IdInput.getText();
-        new DriverFunctionUI().setCurrentDriverId(ID);  //打开功能界面 同时记录当前司机ID
+        new DriverFunctionUI(ID);  //打开功能界面 同时记录当前司机ID
     }
 
     private void initComponents() {
@@ -584,8 +584,8 @@ AdminLoginButtonMouseReleased(e);} catch (Exception ex) {
             AdminLoginDialogContentPane.add(AdminLoginButton);
             AdminLoginButton.setBounds(new Rectangle(new Point(40, 100), AdminLoginButton.getPreferredSize()));
 
-            AdminLoginDialogContentPane.setPreferredSize(new Dimension(215, 180));
-            AdminLoginDialog.setSize(215, 180);
+            AdminLoginDialogContentPane.setPreferredSize(new Dimension(220, 180));
+            AdminLoginDialog.setSize(220, 180);
             AdminLoginDialog.setLocationRelativeTo(AdminLoginDialog.getOwner());
         }
 

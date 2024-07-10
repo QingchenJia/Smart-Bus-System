@@ -10,6 +10,7 @@ import SmartBusSystem.service.register.DriverRegister;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Objects;
 import javax.swing.*;
 
 /**
@@ -61,7 +62,7 @@ public class DriverRegisterUI extends JFrame {
         // TODO add your code here
         String ID = IdInput.getText();
         String password = new String(PasswordInput.getPassword());
-        int drivingYears = Integer.parseInt(DrvingYearsInput.getText());
+        int drivingYears = Integer.parseInt(Objects.requireNonNull(SelectDrivingYears.getSelectedItem()).toString());
         String phoneNum = PhoneNumIdInput.getText();
 
         Driver driver = new Driver();
@@ -88,7 +89,7 @@ public class DriverRegisterUI extends JFrame {
         PasswordAgainInput = new JPasswordField();
         Check = new JButton();
         Backward = new JButton();
-        DrvingYearsInput = new JFormattedTextField();
+        SelectDrivingYears = new JComboBox<>();
         IdWrong = new JDialog();
         tips1 = new JLabel();
         IdExist = new JDialog();
@@ -111,33 +112,33 @@ public class DriverRegisterUI extends JFrame {
 
         //---- Id ----
         Id.setText("\u8d26\u53f7:");
-        Id.setFont(Id.getFont().deriveFont(Id.getFont().getSize() + 12f));
+        Id.setFont(Id.getFont().deriveFont(Id.getFont().getStyle() | Font.BOLD, Id.getFont().getSize() + 11f));
         contentPane.add(Id);
-        Id.setBounds(new Rectangle(new Point(40, 50), Id.getPreferredSize()));
+        Id.setBounds(new Rectangle(new Point(40, 48), Id.getPreferredSize()));
 
         //---- Password ----
         Password.setText("\u5bc6\u7801:");
-        Password.setFont(Password.getFont().deriveFont(Password.getFont().getSize() + 12f));
+        Password.setFont(Password.getFont().deriveFont(Password.getFont().getStyle() | Font.BOLD, Password.getFont().getSize() + 11f));
         contentPane.add(Password);
-        Password.setBounds(new Rectangle(new Point(40, 90), Password.getPreferredSize()));
+        Password.setBounds(new Rectangle(new Point(40, 88), Password.getPreferredSize()));
 
         //---- PhoneNum ----
         PhoneNum.setText("\u624b\u673a\u53f7:");
-        PhoneNum.setFont(PhoneNum.getFont().deriveFont(PhoneNum.getFont().getSize() + 12f));
+        PhoneNum.setFont(PhoneNum.getFont().deriveFont(PhoneNum.getFont().getStyle() | Font.BOLD, PhoneNum.getFont().getSize() + 11f));
         contentPane.add(PhoneNum);
-        PhoneNum.setBounds(new Rectangle(new Point(40, 170), PhoneNum.getPreferredSize()));
+        PhoneNum.setBounds(new Rectangle(new Point(40, 168), PhoneNum.getPreferredSize()));
 
         //---- PasswordAgain ----
         PasswordAgain.setText("\u518d\u6b21\u8f93\u5165:");
-        PasswordAgain.setFont(PasswordAgain.getFont().deriveFont(PasswordAgain.getFont().getSize() + 12f));
+        PasswordAgain.setFont(PasswordAgain.getFont().deriveFont(PasswordAgain.getFont().getStyle() | Font.BOLD, PasswordAgain.getFont().getSize() + 11f));
         contentPane.add(PasswordAgain);
-        PasswordAgain.setBounds(new Rectangle(new Point(40, 130), PasswordAgain.getPreferredSize()));
+        PasswordAgain.setBounds(new Rectangle(new Point(40, 128), PasswordAgain.getPreferredSize()));
 
         //---- DrivingYears ----
         DrivingYears.setText("\u9a7e\u9f84:");
-        DrivingYears.setFont(DrivingYears.getFont().deriveFont(DrivingYears.getFont().getSize() + 12f));
+        DrivingYears.setFont(DrivingYears.getFont().deriveFont(DrivingYears.getFont().getStyle() | Font.BOLD, DrivingYears.getFont().getSize() + 11f));
         contentPane.add(DrivingYears);
-        DrivingYears.setBounds(new Rectangle(new Point(40, 210), DrivingYears.getPreferredSize()));
+        DrivingYears.setBounds(new Rectangle(new Point(40, 208), DrivingYears.getPreferredSize()));
         contentPane.add(IdInput);
         IdInput.setBounds(110, 55, 195, 25);
         contentPane.add(PhoneNumIdInput);
@@ -172,8 +173,32 @@ public class DriverRegisterUI extends JFrame {
         });
         contentPane.add(Backward);
         Backward.setBounds(new Rectangle(new Point(60, 250), Backward.getPreferredSize()));
-        contentPane.add(DrvingYearsInput);
-        DrvingYearsInput.setBounds(110, 215, 35, 25);
+
+        //---- SelectDrivingYears ----
+        SelectDrivingYears.setModel(new DefaultComboBoxModel<>(new String[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20"
+        }));
+        contentPane.add(SelectDrivingYears);
+        SelectDrivingYears.setBounds(105, 215, 70, SelectDrivingYears.getPreferredSize().height);
 
         contentPane.setPreferredSize(new Dimension(360, 340));
         setSize(360, 340);
@@ -401,7 +426,7 @@ RegisterMouseReleased(e);} catch (Exception ex) {
     private JPasswordField PasswordAgainInput;
     private JButton Check;
     private JButton Backward;
-    private JFormattedTextField DrvingYearsInput;
+    private JComboBox<String> SelectDrivingYears;
     private JDialog IdWrong;
     private JLabel tips1;
     private JDialog IdExist;

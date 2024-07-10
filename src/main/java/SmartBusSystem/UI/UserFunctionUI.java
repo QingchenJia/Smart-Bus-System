@@ -4,7 +4,7 @@
 
 package SmartBusSystem.UI;
 
-import SmartBusSystem.pojo.TableRow.RouteGuideRow;
+import SmartBusSystem.service.TableRow.RouteGuideRow;
 import SmartBusSystem.pojo.User;
 import SmartBusSystem.service.NavigationSystem.NavigationSystem;
 import SmartBusSystem.service.SecurityProtect;
