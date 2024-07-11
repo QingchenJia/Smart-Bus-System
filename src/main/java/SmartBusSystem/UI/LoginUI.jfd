@@ -305,8 +305,8 @@ new FormModel {
 				"y": 100
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"location": new java.awt.Point( 340, 360 )
-			"size": new java.awt.Dimension( 220, 180 )
+			"location": new java.awt.Point( 325, 365 )
+			"size": new java.awt.Dimension( 220, 185 )
 		} )
 		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
 			name: "UserPass"

@@ -24,4 +24,10 @@
         FROM `schedule`
         WHERE DID = #{DID};
     </select>
+    <select id="SelectByDayOfWeek" resultMap="ScheduleResult">
+        SELECT *
+        FROM `schedule`
+        WHERE Time = #{dayOfWeek}
+        ORDER BY DID;
+    </select>
 </mapper>

@@ -1,0 +1,104 @@
+JFDML JFormDesigner: "8.2.2.0.382" Java: "17.0.10" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
+			"autoSize": false
+		} ) {
+			name: "this"
+			"$sizePolicy": 1
+			"title": "管理员"
+			"defaultCloseOperation": 3
+			"alwaysOnTop": true
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "Title"
+				"text": "工作排班表"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 13, false )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 235
+				"y": 20
+			} )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "TablePane"
+				add( new FormComponent( "javax.swing.JTable" ) {
+					name: "AllWorkArrange"
+					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector, new java.util.Vector {
+						add( "日期" )
+						add( "司机" )
+						add( "车辆" )
+						add( "线路" )
+						add( "运营时间" )
+					}, new java.util.Vector {
+						add( null )
+						add( null )
+						add( null )
+						add( null )
+						add( null )
+					}, new java.util.Vector {
+						add( false )
+						add( null )
+						add( null )
+						add( null )
+						add( null )
+					}, new java.util.Vector {
+						add( new com.jformdesigner.model.SwingTableColumn( null, 60, 0, 0, true ) )
+						add( new com.jformdesigner.model.SwingTableColumn( null, 70, 0, 0, true ) )
+						add( new com.jformdesigner.model.SwingTableColumn( null, 105, 0, 0, true ) )
+						add( new com.jformdesigner.model.SwingTableColumn( null, 160, 0, 0, true ) )
+						add( new com.jformdesigner.model.SwingTableColumn( null, 160, 0, 0, true ) )
+					} )
+				} )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 545
+				"height": 310
+				"x": 45
+				"y": 55
+			} )
+			menuBar: new FormContainer( "javax.swing.JMenuBar", new FormLayoutManager( class javax.swing.JMenuBar ) ) {
+				name: "TopMenu"
+				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+					name: "Me"
+					"text": "关于我"
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 4, false )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "TotalView"
+						"text": "个人总览"
+						"borderPainted": true
+						"iconTextGap": 0
+						"font": &SwingDerivedFont0 new com.jformdesigner.model.SwingDerivedFont( null, 0, 1, false )
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "InformationModify"
+						"text": "信息修改"
+						"borderPainted": true
+						"iconTextGap": 0
+						"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 1, false )
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "LoginOut"
+						"text": "账号退出"
+						"borderPainted": true
+						"iconTextGap": 0
+						"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 1, false )
+					} )
+				} )
+				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+					name: "ServiceMenu"
+					"text": "功能"
+					"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 4, false )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "RefreshHomePage"
+						"text": "刷新主页"
+						"borderPainted": true
+						"iconTextGap": 0
+						"font": #SwingDerivedFont0
+					} )
+				} )
+			}
+		}, new FormLayoutConstraints( null ) {
+			"size": new java.awt.Dimension( 640, 480 )
+			"location": new java.awt.Point( 0, 0 )
+		} )
+	}
+}

@@ -23,9 +23,9 @@ public class DriverHomePage {
         return driver;
     }
 
-    public static Bus queryBusByRouteId(String routeId) {
+    public static Bus queryBusById(String licenseNum) {
         BusMapper busMapper = DatabaseOperation.session.getMapper(BusMapper.class);
-        Bus bus = busMapper.SelectByLicenseNumber(routeId);
+        Bus bus = busMapper.SelectByLicenseNumber(licenseNum);
         System.out.println("检索车辆->" + bus);
         return bus;
     }
@@ -43,13 +43,15 @@ public class DriverHomePage {
 
         for (Schedule schedule : schedules) {
             String licenseNumber = schedule.getLicenseNumber();
-            Bus bus = queryBusByRouteId(licenseNumber);
+            Bus bus = queryBusById(licenseNumber);
 
             String routeId = bus.getRID();
             Route route = queryRouteById(routeId);
 
+            Driver driver = queryCurrentDriverInformation(currentId);
+
             String dayOfWeek = schedule.getTime();
-            workArrangeRows.add(new WorkArrangeRow(dayOfWeek, bus, route));
+            workArrangeRows.add(new WorkArrangeRow(dayOfWeek, bus, route, driver));
         }
 
         return workArrangeRows;

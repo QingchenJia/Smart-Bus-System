@@ -114,6 +114,8 @@ public class LoginUI extends JFrame {
         }
 
         AdminLoginDialog.dispose();
+        this.dispose();
+        new AdminFunctionUI();
     }
 
     private void UserEnterSystemMouseReleased(MouseEvent e) {
@@ -584,8 +586,8 @@ AdminLoginButtonMouseReleased(e);} catch (Exception ex) {
             AdminLoginDialogContentPane.add(AdminLoginButton);
             AdminLoginButton.setBounds(new Rectangle(new Point(40, 100), AdminLoginButton.getPreferredSize()));
 
-            AdminLoginDialogContentPane.setPreferredSize(new Dimension(220, 180));
-            AdminLoginDialog.setSize(220, 180);
+            AdminLoginDialogContentPane.setPreferredSize(new Dimension(220, 185));
+            AdminLoginDialog.setSize(220, 185);
             AdminLoginDialog.setLocationRelativeTo(AdminLoginDialog.getOwner());
         }
 

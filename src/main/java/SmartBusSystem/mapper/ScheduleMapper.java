@@ -11,4 +11,6 @@ public interface ScheduleMapper {
     void InsertSchedule(Schedule schedule);
 
     List<Schedule> SelectByDriverID(@Param("DID") String DID);
+
+    List<Schedule> SelectByDayOfWeek(@Param("dayOfWeek") String dayOfWeek);
 }
