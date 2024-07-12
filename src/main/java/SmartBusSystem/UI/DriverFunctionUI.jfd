@@ -34,10 +34,10 @@ new FormModel {
 						add( null )
 						add( null )
 					}, new java.util.Vector {
-						add( null )
-						add( null )
-						add( null )
-						add( null )
+						add( false )
+						add( false )
+						add( false )
+						add( false )
 					}, new java.util.Vector {
 						add( new com.jformdesigner.model.SwingTableColumn( null, 70, 0, 0, true ) )
 						add( new com.jformdesigner.model.SwingTableColumn( null, 120, 0, 0, true ) )

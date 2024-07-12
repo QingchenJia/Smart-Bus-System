@@ -269,7 +269,15 @@ public class DriverFunctionUI extends JFrame {
                 new String[] {
                     "\u65e5\u671f", "\u8f66\u8f86", "\u7ebf\u8def", "\u8fd0\u8425\u65f6\u95f4"
                 }
-            ));
+            ) {
+                boolean[] columnEditable = new boolean[] {
+                    false, false, false, false
+                };
+                @Override
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return columnEditable[columnIndex];
+                }
+            });
             {
                 TableColumnModel cm = WorkArrange.getColumnModel();
                 cm.getColumn(0).setPreferredWidth(70);

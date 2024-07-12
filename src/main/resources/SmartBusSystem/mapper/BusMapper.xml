@@ -11,9 +11,15 @@
         INSERT INTO `bus`
         VALUES (#{licenseNumber}, #{status});
     </insert>
+    <update id="UpdateBusStatus">
+        UPDATE `bus`
+        SET Status=#{status}
+        WHERE LicenseNumber = #{licenseNumber};
+    </update>
     <select id="SelectAll" resultMap="BusResult">
         SELECT *
-        FROM `bus`;
+        FROM `bus`
+        ORDER BY LicenseNumber;
     </select>
     <select id="SelectByLicenseNumber" resultMap="BusResult">
         SELECT *
