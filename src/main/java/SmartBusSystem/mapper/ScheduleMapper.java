@@ -13,4 +13,8 @@ public interface ScheduleMapper {
     List<Schedule> SelectByDriverID(@Param("DID") String DID);
 
     List<Schedule> SelectByDayOfWeek(@Param("dayOfWeek") String dayOfWeek);
+
+    void UpdateSchedule(Schedule schedule);
+
+    void DeleteSchedule(@Param("DID") String DID, @Param("dayOfWeek") String dayOfWeek);
 }

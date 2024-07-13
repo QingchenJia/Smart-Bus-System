@@ -12,6 +12,20 @@
         INSERT INTO `schedule`
         VALUES (DID = #{DID}, Time = #{time}, LicenseNumber = #{licenseNumber});
     </insert>
+    <update id="UpdateSchedule">
+        UPDATE `schedule` SET
+        <if test="licenseNumber!=null">LicenseNumber=#{licenseNumber}</if>
+        <where>
+            <if test="Time!=null">Time=#{time}</if>
+            <if test="DID!=null">AND DID=#{DID};</if>
+        </where>
+    </update>
+    <delete id="DeleteSchedule">
+        DELETE
+        FROM `schedule`
+        WHERE DID = #{DID}
+          AND Time = #{dayOfWeek};
+    </delete>
     <select id="SelectById" resultMap="ScheduleResult">
         SELECT * FROM `schedule`
         <where>
