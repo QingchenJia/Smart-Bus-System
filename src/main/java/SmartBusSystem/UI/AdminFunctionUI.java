@@ -5,13 +5,15 @@
 package SmartBusSystem.UI;
 
 import SmartBusSystem.pojo.Bus;
+import SmartBusSystem.pojo.Route;
 import SmartBusSystem.service.TableRow.WorkArrangeRow;
 import SmartBusSystem.service.function.AdminHomePage;
-import SmartBusSystem.service.function.AdminSearchBus;
+import SmartBusSystem.service.function.AdminEditBus;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
+import java.util.Objects;
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -43,7 +45,7 @@ public class AdminFunctionUI extends JFrame {
         Bus bus = new Bus();
         bus.setLicenseNumber(BusResultLicenseNumText.getText());
         bus.setStatus(SelectBusStatus.isSelected() ? 1 : 0);
-        AdminSearchBus.updateBusStatus(bus);
+        AdminEditBus.updateBusStatus(bus);
 
         Pass.setVisible(true);
         BusSearchResult.dispose();
@@ -61,6 +63,44 @@ public class AdminFunctionUI extends JFrame {
         new AdminFunctionUI();
     }
 
+    private void AddBusMouseReleased(MouseEvent e) {
+        // TODO add your code here
+        showAllRouteId();
+        BusAddDialog.setVisible(true);
+    }
+
+    private void AddBusButtonMouseReleased(MouseEvent e) {
+        // TODO add your code here
+        String licenseNum = NewBusLicenseNumberInput.getText();
+        String routeId = ((String) Objects.requireNonNull(NewSelectRouteId.getSelectedItem())).split("路")[0];
+        int status = NewSelectBusStatus.isSelected() ? 1 : 0;
+
+        if (!AdminEditBus.checkLicenseNumber(licenseNum)) {
+            LicenseNumberWrong.setVisible(true);
+            return;
+        }
+        if (AdminEditBus.containBus(licenseNum)) {
+            BusExistDialog.setVisible(true);
+            return;
+        }
+
+        Bus bus = new Bus(licenseNum, status, routeId);
+        AdminEditBus.addNewBus(bus);
+
+        Pass.setVisible(true);
+        BusAddDialog.dispose();
+    }
+
+    private void DeleteBusButtonMouseReleased(MouseEvent e) {
+        // TODO add your code here
+        String licenseNum = BusResultLicenseNumText.getText();
+        AdminEditBus.deleteBus(licenseNum);
+
+        Pass.setVisible(true);
+        BusSearchResult.dispose();
+        showAllBusLicenseNum();
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         TopMenu = new JMenuBar();
@@ -68,7 +108,9 @@ public class AdminFunctionUI extends JFrame {
         LoginOut = new JMenuItem();
         ServiceMenu = new JMenu();
         RefreshHomePage = new JMenuItem();
+        menu1 = new JMenu();
         QueryBus = new JMenuItem();
+        AddBus = new JMenuItem();
         Title = new JLabel();
         TablePane = new JScrollPane();
         AllWorkArrange = new JTable();
@@ -84,8 +126,21 @@ public class AdminFunctionUI extends JFrame {
         BelongRouteIdText = new JLabel();
         BusInformationModifyButton = new JButton();
         SelectBusStatus = new JCheckBox();
+        DeleteBusButton = new JButton();
         Pass = new JDialog();
         PassMessage = new JLabel();
+        BusAddDialog = new JDialog();
+        NewBusLicenseNum = new JLabel();
+        NewBusStatus = new JLabel();
+        NewBelongRoute = new JLabel();
+        NewSelectBusStatus = new JCheckBox();
+        NewBusLicenseNumberInput = new JTextField();
+        NewSelectRouteId = new JComboBox();
+        AddBusButton = new JButton();
+        LicenseNumberWrong = new JDialog();
+        PassMessage2 = new JLabel();
+        BusExistDialog = new JDialog();
+        PassMessage3 = new JLabel();
 
         //======== this ========
         setTitle("\u7ba1\u7406\u5458\u7aef");
@@ -135,17 +190,38 @@ public class AdminFunctionUI extends JFrame {
                 });
                 ServiceMenu.add(RefreshHomePage);
 
-                //---- QueryBus ----
-                QueryBus.setText("\u8f66\u8f86\u67e5\u8be2");
-                QueryBus.setFont(QueryBus.getFont().deriveFont(QueryBus.getFont().getSize() + 1f));
-                QueryBus.setIconTextGap(0);
-                QueryBus.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseReleased(MouseEvent e) {
-                        QueryBusMouseReleased(e);
-                    }
-                });
-                ServiceMenu.add(QueryBus);
+                //======== menu1 ========
+                {
+                    menu1.setText("\u5173\u4e8e\u8f66\u8f86");
+                    menu1.setFocusable(false);
+                    menu1.setIconTextGap(0);
+                    menu1.setFont(menu1.getFont().deriveFont(menu1.getFont().getSize() + 1f));
+
+                    //---- QueryBus ----
+                    QueryBus.setText("\u8f66\u8f86\u67e5\u8be2");
+                    QueryBus.setIconTextGap(0);
+                    QueryBus.setFont(QueryBus.getFont().deriveFont(QueryBus.getFont().getSize() + 1f));
+                    QueryBus.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+                            QueryBusMouseReleased(e);
+                        }
+                    });
+                    menu1.add(QueryBus);
+
+                    //---- AddBus ----
+                    AddBus.setText("\u8f66\u8f86\u65b0\u589e");
+                    AddBus.setFont(AddBus.getFont().deriveFont(AddBus.getFont().getSize() + 1f));
+                    AddBus.setIconTextGap(0);
+                    AddBus.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+                            AddBusMouseReleased(e);
+                        }
+                    });
+                    menu1.add(AddBus);
+                }
+                ServiceMenu.add(menu1);
             }
             TopMenu.add(ServiceMenu);
         }
@@ -277,7 +353,7 @@ public class AdminFunctionUI extends JFrame {
                 }
             });
             BusSearchResultContentPane.add(BusInformationModifyButton);
-            BusInformationModifyButton.setBounds(100, 130, BusInformationModifyButton.getPreferredSize().width, 24);
+            BusInformationModifyButton.setBounds(145, 130, BusInformationModifyButton.getPreferredSize().width, 24);
 
             //---- SelectBusStatus ----
             SelectBusStatus.setText("\u6b63\u5e38");
@@ -285,6 +361,19 @@ public class AdminFunctionUI extends JFrame {
             SelectBusStatus.setFocusPainted(false);
             BusSearchResultContentPane.add(SelectBusStatus);
             SelectBusStatus.setBounds(new Rectangle(new Point(110, 90), SelectBusStatus.getPreferredSize()));
+
+            //---- DeleteBusButton ----
+            DeleteBusButton.setText("\u5220\u9664");
+            DeleteBusButton.setFocusPainted(false);
+            DeleteBusButton.setFont(DeleteBusButton.getFont().deriveFont(DeleteBusButton.getFont().getStyle() | Font.BOLD, DeleteBusButton.getFont().getSize() + 3f));
+            DeleteBusButton.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    DeleteBusButtonMouseReleased(e);
+                }
+            });
+            BusSearchResultContentPane.add(DeleteBusButton);
+            DeleteBusButton.setBounds(55, 130, DeleteBusButton.getPreferredSize().width, 24);
 
             BusSearchResultContentPane.setPreferredSize(new Dimension(290, 204));
             BusSearchResult.setSize(290, 204);
@@ -323,6 +412,128 @@ public class AdminFunctionUI extends JFrame {
             Pass.setSize(155, 115);
             Pass.setLocationRelativeTo(Pass.getOwner());
         }
+
+        //======== BusAddDialog ========
+        {
+            BusAddDialog.setTitle("\u8f66\u8f86\u65b0\u589e");
+            BusAddDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            BusAddDialog.setAlwaysOnTop(true);
+            BusAddDialog.setModal(true);
+            var BusAddDialogContentPane = BusAddDialog.getContentPane();
+            BusAddDialogContentPane.setLayout(null);
+
+            //---- NewBusLicenseNum ----
+            NewBusLicenseNum.setText("\u8f66\u724c\u53f7:");
+            NewBusLicenseNum.setFont(NewBusLicenseNum.getFont().deriveFont(NewBusLicenseNum.getFont().getStyle() | Font.BOLD, NewBusLicenseNum.getFont().getSize() + 5f));
+            BusAddDialogContentPane.add(NewBusLicenseNum);
+            NewBusLicenseNum.setBounds(new Rectangle(new Point(45, 30), NewBusLicenseNum.getPreferredSize()));
+
+            //---- NewBusStatus ----
+            NewBusStatus.setText("\u72b6\u6001:");
+            NewBusStatus.setFont(NewBusStatus.getFont().deriveFont(NewBusStatus.getFont().getStyle() | Font.BOLD, NewBusStatus.getFont().getSize() + 5f));
+            BusAddDialogContentPane.add(NewBusStatus);
+            NewBusStatus.setBounds(new Rectangle(new Point(45, 90), NewBusStatus.getPreferredSize()));
+
+            //---- NewBelongRoute ----
+            NewBelongRoute.setText("\u6240\u5c5e\u7ebf\u8def:");
+            NewBelongRoute.setFont(NewBelongRoute.getFont().deriveFont(NewBelongRoute.getFont().getStyle() | Font.BOLD, NewBelongRoute.getFont().getSize() + 5f));
+            BusAddDialogContentPane.add(NewBelongRoute);
+            NewBelongRoute.setBounds(new Rectangle(new Point(45, 60), NewBelongRoute.getPreferredSize()));
+
+            //---- NewSelectBusStatus ----
+            NewSelectBusStatus.setText("\u6b63\u5e38");
+            NewSelectBusStatus.setFont(NewSelectBusStatus.getFont().deriveFont(NewSelectBusStatus.getFont().getStyle() | Font.BOLD, NewSelectBusStatus.getFont().getSize() + 3f));
+            NewSelectBusStatus.setFocusPainted(false);
+            BusAddDialogContentPane.add(NewSelectBusStatus);
+            NewSelectBusStatus.setBounds(new Rectangle(new Point(90, 90), NewSelectBusStatus.getPreferredSize()));
+            BusAddDialogContentPane.add(NewBusLicenseNumberInput);
+            NewBusLicenseNumberInput.setBounds(115, 30, 120, 20);
+            BusAddDialogContentPane.add(NewSelectRouteId);
+            NewSelectRouteId.setBounds(130, 60, 105, 20);
+
+            //---- AddBusButton ----
+            AddBusButton.setText("\u65b0\u589e");
+            AddBusButton.setFocusPainted(false);
+            AddBusButton.setFont(AddBusButton.getFont().deriveFont(AddBusButton.getFont().getStyle() | Font.BOLD, AddBusButton.getFont().getSize() + 3f));
+            AddBusButton.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    AddBusButtonMouseReleased(e);
+                }
+            });
+            BusAddDialogContentPane.add(AddBusButton);
+            AddBusButton.setBounds(115, 130, AddBusButton.getPreferredSize().width, 24);
+
+            BusAddDialogContentPane.setPreferredSize(new Dimension(300, 204));
+            BusAddDialog.setSize(300, 204);
+            BusAddDialog.setLocationRelativeTo(BusAddDialog.getOwner());
+        }
+
+        //======== LicenseNumberWrong ========
+        {
+            LicenseNumberWrong.setTitle("\u9519\u8bef\u4fe1\u606f");
+            LicenseNumberWrong.setModal(true);
+            LicenseNumberWrong.setAlwaysOnTop(true);
+            LicenseNumberWrong.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            var LicenseNumberWrongContentPane = LicenseNumberWrong.getContentPane();
+            LicenseNumberWrongContentPane.setLayout(null);
+
+            //---- PassMessage2 ----
+            PassMessage2.setText("\u8f66\u724c\u53f7\u683c\u5f0f\u9519\u8bef\uff01\u8bf7\u91cd\u65b0\u8f93\u5165");
+            PassMessage2.setFont(PassMessage2.getFont().deriveFont(PassMessage2.getFont().getStyle() | Font.BOLD, PassMessage2.getFont().getSize() + 6f));
+            LicenseNumberWrongContentPane.add(PassMessage2);
+            PassMessage2.setBounds(new Rectangle(new Point(25, 30), PassMessage2.getPreferredSize()));
+
+            {
+                // compute preferred size
+                Dimension preferredSize = new Dimension();
+                for(int i = 0; i < LicenseNumberWrongContentPane.getComponentCount(); i++) {
+                    Rectangle bounds = LicenseNumberWrongContentPane.getComponent(i).getBounds();
+                    preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
+                    preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
+                }
+                Insets insets = LicenseNumberWrongContentPane.getInsets();
+                preferredSize.width += insets.right;
+                preferredSize.height += insets.bottom;
+                LicenseNumberWrongContentPane.setMinimumSize(preferredSize);
+                LicenseNumberWrongContentPane.setPreferredSize(preferredSize);
+            }
+            LicenseNumberWrong.setSize(300, 115);
+            LicenseNumberWrong.setLocationRelativeTo(LicenseNumberWrong.getOwner());
+        }
+
+        //======== BusExistDialog ========
+        {
+            BusExistDialog.setTitle("\u9519\u8bef\u4fe1\u606f");
+            BusExistDialog.setModal(true);
+            BusExistDialog.setAlwaysOnTop(true);
+            BusExistDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            var BusExistDialogContentPane = BusExistDialog.getContentPane();
+            BusExistDialogContentPane.setLayout(null);
+
+            //---- PassMessage3 ----
+            PassMessage3.setText("\u6b64\u8f66\u8f86\u5df2\u5b58\u5728\uff01\u8bf7\u91cd\u65b0\u8f93\u5165");
+            PassMessage3.setFont(PassMessage3.getFont().deriveFont(PassMessage3.getFont().getStyle() | Font.BOLD, PassMessage3.getFont().getSize() + 6f));
+            BusExistDialogContentPane.add(PassMessage3);
+            PassMessage3.setBounds(new Rectangle(new Point(25, 30), PassMessage3.getPreferredSize()));
+
+            {
+                // compute preferred size
+                Dimension preferredSize = new Dimension();
+                for(int i = 0; i < BusExistDialogContentPane.getComponentCount(); i++) {
+                    Rectangle bounds = BusExistDialogContentPane.getComponent(i).getBounds();
+                    preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
+                    preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
+                }
+                Insets insets = BusExistDialogContentPane.getInsets();
+                preferredSize.width += insets.right;
+                preferredSize.height += insets.bottom;
+                BusExistDialogContentPane.setMinimumSize(preferredSize);
+                BusExistDialogContentPane.setPreferredSize(preferredSize);
+            }
+            BusExistDialog.setSize(300, 115);
+            BusExistDialog.setLocationRelativeTo(BusExistDialog.getOwner());
+        }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
 
@@ -332,7 +543,9 @@ public class AdminFunctionUI extends JFrame {
     private JMenuItem LoginOut;
     private JMenu ServiceMenu;
     private JMenuItem RefreshHomePage;
+    private JMenu menu1;
     private JMenuItem QueryBus;
+    private JMenuItem AddBus;
     private JLabel Title;
     private JScrollPane TablePane;
     private JTable AllWorkArrange;
@@ -348,8 +561,21 @@ public class AdminFunctionUI extends JFrame {
     private JLabel BelongRouteIdText;
     private JButton BusInformationModifyButton;
     private JCheckBox SelectBusStatus;
+    private JButton DeleteBusButton;
     private JDialog Pass;
     private JLabel PassMessage;
+    private JDialog BusAddDialog;
+    private JLabel NewBusLicenseNum;
+    private JLabel NewBusStatus;
+    private JLabel NewBelongRoute;
+    private JCheckBox NewSelectBusStatus;
+    private JTextField NewBusLicenseNumberInput;
+    private JComboBox NewSelectRouteId;
+    private JButton AddBusButton;
+    private JDialog LicenseNumberWrong;
+    private JLabel PassMessage2;
+    private JDialog BusExistDialog;
+    private JLabel PassMessage3;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 
     // 初始化工作安排表 BEGIN
@@ -371,7 +597,8 @@ public class AdminFunctionUI extends JFrame {
 
     // 车辆查询 BEGIN
     private void showAllBusLicenseNum() {
-        List<String> busLicenseNumbers = AdminSearchBus.listBus2listBusLicenseNumber(AdminSearchBus.queryAllBus());
+        SelectBusLicenseNum.removeAllItems();
+        List<String> busLicenseNumbers = AdminEditBus.listBus2listBusLicenseNumber(AdminEditBus.queryAllBus());
         for (String busLicenseNumber : busLicenseNumbers) {
             SelectBusLicenseNum.addItem(busLicenseNumber);
         }
@@ -379,11 +606,20 @@ public class AdminFunctionUI extends JFrame {
 
     private void initBusSearchResult() {    // 初始化查询结果
         String licenseNum = (String) SelectBusLicenseNum.getSelectedItem();
-        Bus bus = AdminSearchBus.queryBusById(licenseNum);
+        Bus bus = AdminEditBus.queryBusById(licenseNum);
 
         BusResultLicenseNumText.setText(bus.getLicenseNumber());
         BelongRouteIdText.setText(bus.getRID());
         SelectBusStatus.setSelected(bus.getStatus() == 1);
     }
     // 车辆查询 END
+
+    // 车辆新增 BEGIN
+    private void showAllRouteId() {
+        List<String> routeIds = AdminEditBus.listRoute2listRouteId(AdminEditBus.queryRouteStatusIsOne());
+        for (String routeId : routeIds) {
+            NewSelectRouteId.addItem(routeId);
+        }
+    }
+    // 车辆新增 END
 }

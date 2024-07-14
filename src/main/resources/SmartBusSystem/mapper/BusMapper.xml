@@ -6,16 +6,22 @@
     <resultMap id="BusResult" type="SmartBusSystem.pojo.Bus">
         <id column="LicenseNumber" property="licenseNumber"/>
         <result column="Status" property="status"/>
+        <result column="RID" property="RID"/>
     </resultMap>
     <insert id="InsertBus">
         INSERT INTO `bus`
-        VALUES (#{licenseNumber}, #{status});
+        VALUES (#{licenseNumber}, #{status}, #{RID});
     </insert>
     <update id="UpdateBusStatus">
         UPDATE `bus`
         SET Status=#{status}
         WHERE LicenseNumber = #{licenseNumber};
     </update>
+    <delete id="DeleteBus">
+        DELETE
+        FROM `bus`
+        WHERE LicenseNumber = #{licenseNumber};
+    </delete>
     <select id="SelectAll" resultMap="BusResult">
         SELECT *
         FROM `bus`

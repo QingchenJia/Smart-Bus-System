@@ -35,4 +35,9 @@
           AND Status = 1
         ORDER BY `route`.RID;
     </select>
+    <select id="SelectStatusIsOne" resultMap="RouteResult">
+        SELECT *
+        FROM `route`
+        WHERE Status = 1;
+    </select>
 </mapper>

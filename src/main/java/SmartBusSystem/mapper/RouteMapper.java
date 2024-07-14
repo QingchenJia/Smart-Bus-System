@@ -13,4 +13,6 @@ public interface RouteMapper {
     void InsertRoute(Route route);
 
     List<Route> SelectRoutePassByStop(@Param("passByStopName") String stopName);
+
+    List<Route> SelectStatusIsOne();
 }
