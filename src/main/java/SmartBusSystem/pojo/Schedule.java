@@ -1,24 +1,16 @@
 package SmartBusSystem.pojo;
 
 public class Schedule {
-    private String licenseNumber;
     private String DID;
-    private String time;
+    private String Time;
+    private String licenseNumber;
 
     public Schedule() {
     }
 
-    public Schedule(String licenseNumber, String DID, String time) {
-        this.licenseNumber = licenseNumber;
+    public Schedule(String DID, String time, String licenseNumber) {
         this.DID = DID;
-        this.time = time;
-    }
-
-    public String getLicenseNumber() {
-        return licenseNumber;
-    }
-
-    public void setLicenseNumber(String licenseNumber) {
+        Time = time;
         this.licenseNumber = licenseNumber;
     }
 
@@ -31,19 +23,27 @@ public class Schedule {
     }
 
     public String getTime() {
-        return time;
+        return Time;
     }
 
     public void setTime(String time) {
-        this.time = time;
+        Time = time;
     }
 
     @Override
     public String toString() {
         return "Schedule{" +
-                "licenseNumber='" + licenseNumber + '\'' +
-                ", DID='" + DID + '\'' +
-                ", time='" + time + '\'' +
+                "DID='" + DID + '\'' +
+                ", Time='" + Time + '\'' +
+                ", licenseNumber='" + licenseNumber + '\'' +
                 '}';
+    }
+
+    public String getLicenseNumber() {
+        return licenseNumber;
+    }
+
+    public void setLicenseNumber(String licenseNumber) {
+        this.licenseNumber = licenseNumber;
     }
 }

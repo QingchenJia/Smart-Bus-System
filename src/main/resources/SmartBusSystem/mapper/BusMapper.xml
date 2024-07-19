@@ -32,4 +32,13 @@
         FROM `bus`
         WHERE LicenseNumber = #{licenseNumber};
     </select>
+    <select id="SelectBusAvailable" resultMap="BusResult">
+        SELECT *
+        FROM `bus`
+        WHERE LicenseNumber NOT IN
+        (SELECT LicenseNumber
+        FROM `schedule`
+        WHERE
+        <if test="time!=null">Time = #{time}</if>)
+    </select>
 </mapper>

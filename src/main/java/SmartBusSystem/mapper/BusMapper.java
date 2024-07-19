@@ -10,6 +10,8 @@ public interface BusMapper {
 
     Bus SelectByLicenseNumber(@Param("licenseNumber") String licenseNumber);
 
+    List<Bus> SelectBusAvailable(@Param("time") String dayOfWeek);
+
     void InsertBus(Bus bus);
 
     void UpdateBusStatus(Bus bus);

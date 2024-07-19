@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="SmartBusSystem.mapper.ScheduleMapper">
     <resultMap id="ScheduleResult" type="SmartBusSystem.pojo.Schedule">
-        <id column="Time" property="time"/>
         <id column="DID" property="DID"/>
+        <id column="Time" property="time"/>
         <result column="LicenseNumber" property="licenseNumber"/>
     </resultMap>
     <insert id="InsertSchedule">
@@ -29,8 +29,8 @@
     <select id="SelectById" resultMap="ScheduleResult">
         SELECT * FROM `schedule`
         <where>
-            <if test="Time!=null">Time=#{time}</if>
-            <if test="DID!=null">AND DID=#{DID};</if>
+            <if test="DID!=null">DID=#{DID}</if>
+            <if test="Time!=null">AND Time=#{time};</if>
         </where>
     </select>
     <select id="SelectByDriverID" resultMap="ScheduleResult">

@@ -6,7 +6,9 @@ package SmartBusSystem.UI;
 
 import SmartBusSystem.pojo.Bus;
 import SmartBusSystem.pojo.Route;
+import SmartBusSystem.pojo.Schedule;
 import SmartBusSystem.service.TableRow.WorkArrangeRow;
+import SmartBusSystem.service.function.AdminEditSchedule;
 import SmartBusSystem.service.function.AdminHomePage;
 import SmartBusSystem.service.function.AdminEditBus;
 
@@ -101,6 +103,20 @@ public class AdminFunctionUI extends JFrame {
         showAllBusLicenseNum();
     }
 
+    private void QueryScheduleMouseReleased(MouseEvent e) {
+        // TODO add your code here
+        showAllDriverId();
+        showAllTime();
+
+        QueryScheduleDialog.setVisible(true);
+    }
+
+    private void SearchScheduleButtonMouseReleased(MouseEvent e) {
+        // TODO add your code here
+        initQueryScheduleResult();
+        ScheduleSearchResult.setVisible(true);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         TopMenu = new JMenuBar();
@@ -108,15 +124,18 @@ public class AdminFunctionUI extends JFrame {
         LoginOut = new JMenuItem();
         ServiceMenu = new JMenu();
         RefreshHomePage = new JMenuItem();
-        menu1 = new JMenu();
+        AboutBus = new JMenu();
         QueryBus = new JMenuItem();
         AddBus = new JMenuItem();
+        AboutSchedule = new JMenu();
+        QuerySchedule = new JMenuItem();
+        AddSchedule = new JMenuItem();
         Title = new JLabel();
         TablePane = new JScrollPane();
         AllWorkArrange = new JTable();
         QueryBusDialog = new JDialog();
         BusLicenseNum = new JLabel();
-        SelectBusLicenseNum = new JComboBox();
+        BusSelectBusLicenseNum = new JComboBox();
         SearchBusButton = new JButton();
         BusSearchResult = new JDialog();
         BusResultLicenseNum = new JLabel();
@@ -141,6 +160,21 @@ public class AdminFunctionUI extends JFrame {
         PassMessage2 = new JLabel();
         BusExistDialog = new JDialog();
         PassMessage3 = new JLabel();
+        ScheduleSearchResult = new JDialog();
+        ScheduleResultDIID = new JLabel();
+        ScheduleResultLicenseNum = new JLabel();
+        ScheduleResultTime = new JLabel();
+        ScheduleSelectBusLicenseNum = new JComboBox();
+        ScheduleResultDIDText = new JLabel();
+        ScheduleResultTimeText = new JLabel();
+        DeleteScheduleButton = new JButton();
+        ScheduleInformationModifyButton = new JButton();
+        QueryScheduleDialog = new JDialog();
+        DID = new JLabel();
+        SelectDID = new JComboBox();
+        SearchScheduleButton = new JButton();
+        Time = new JLabel();
+        SelectTime = new JComboBox();
 
         //======== this ========
         setTitle("\u7ba1\u7406\u5458\u7aef");
@@ -190,12 +224,12 @@ public class AdminFunctionUI extends JFrame {
                 });
                 ServiceMenu.add(RefreshHomePage);
 
-                //======== menu1 ========
+                //======== AboutBus ========
                 {
-                    menu1.setText("\u5173\u4e8e\u8f66\u8f86");
-                    menu1.setFocusable(false);
-                    menu1.setIconTextGap(0);
-                    menu1.setFont(menu1.getFont().deriveFont(menu1.getFont().getSize() + 1f));
+                    AboutBus.setText("\u5173\u4e8e\u8f66\u8f86");
+                    AboutBus.setFocusable(false);
+                    AboutBus.setIconTextGap(0);
+                    AboutBus.setFont(AboutBus.getFont().deriveFont(AboutBus.getFont().getSize() + 1f));
 
                     //---- QueryBus ----
                     QueryBus.setText("\u8f66\u8f86\u67e5\u8be2");
@@ -207,7 +241,7 @@ public class AdminFunctionUI extends JFrame {
                             QueryBusMouseReleased(e);
                         }
                     });
-                    menu1.add(QueryBus);
+                    AboutBus.add(QueryBus);
 
                     //---- AddBus ----
                     AddBus.setText("\u8f66\u8f86\u65b0\u589e");
@@ -219,9 +253,35 @@ public class AdminFunctionUI extends JFrame {
                             AddBusMouseReleased(e);
                         }
                     });
-                    menu1.add(AddBus);
+                    AboutBus.add(AddBus);
                 }
-                ServiceMenu.add(menu1);
+                ServiceMenu.add(AboutBus);
+
+                //======== AboutSchedule ========
+                {
+                    AboutSchedule.setText("\u5173\u4e8e\u6392\u73ed");
+                    AboutSchedule.setFont(AboutSchedule.getFont().deriveFont(AboutSchedule.getFont().getSize() + 1f));
+                    AboutSchedule.setIconTextGap(0);
+
+                    //---- QuerySchedule ----
+                    QuerySchedule.setText("\u6392\u73ed\u67e5\u8be2");
+                    QuerySchedule.setFont(QuerySchedule.getFont().deriveFont(QuerySchedule.getFont().getSize() + 1f));
+                    QuerySchedule.setIconTextGap(0);
+                    QuerySchedule.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+                            QueryScheduleMouseReleased(e);
+                        }
+                    });
+                    AboutSchedule.add(QuerySchedule);
+
+                    //---- AddSchedule ----
+                    AddSchedule.setText("\u6392\u73ed\u65b0\u589e");
+                    AddSchedule.setFont(AddSchedule.getFont().deriveFont(AddSchedule.getFont().getSize() + 1f));
+                    AddSchedule.setIconTextGap(0);
+                    AboutSchedule.add(AddSchedule);
+                }
+                ServiceMenu.add(AboutSchedule);
             }
             TopMenu.add(ServiceMenu);
         }
@@ -282,8 +342,8 @@ public class AdminFunctionUI extends JFrame {
             BusLicenseNum.setFont(BusLicenseNum.getFont().deriveFont(BusLicenseNum.getFont().getStyle() | Font.BOLD, BusLicenseNum.getFont().getSize() + 5f));
             QueryBusDialogContentPane.add(BusLicenseNum);
             BusLicenseNum.setBounds(35, 30, BusLicenseNum.getPreferredSize().width, 20);
-            QueryBusDialogContentPane.add(SelectBusLicenseNum);
-            SelectBusLicenseNum.setBounds(105, 30, 120, 20);
+            QueryBusDialogContentPane.add(BusSelectBusLicenseNum);
+            BusSelectBusLicenseNum.setBounds(105, 30, 120, 20);
 
             //---- SearchBusButton ----
             SearchBusButton.setText("\u641c\u7d22");
@@ -353,7 +413,7 @@ public class AdminFunctionUI extends JFrame {
                 }
             });
             BusSearchResultContentPane.add(BusInformationModifyButton);
-            BusInformationModifyButton.setBounds(145, 130, BusInformationModifyButton.getPreferredSize().width, 24);
+            BusInformationModifyButton.setBounds(new Rectangle(new Point(145, 130), BusInformationModifyButton.getPreferredSize()));
 
             //---- SelectBusStatus ----
             SelectBusStatus.setText("\u6b63\u5e38");
@@ -373,10 +433,10 @@ public class AdminFunctionUI extends JFrame {
                 }
             });
             BusSearchResultContentPane.add(DeleteBusButton);
-            DeleteBusButton.setBounds(55, 130, DeleteBusButton.getPreferredSize().width, 24);
+            DeleteBusButton.setBounds(new Rectangle(new Point(55, 130), DeleteBusButton.getPreferredSize()));
 
-            BusSearchResultContentPane.setPreferredSize(new Dimension(290, 204));
-            BusSearchResult.setSize(290, 204);
+            BusSearchResultContentPane.setPreferredSize(new Dimension(290, 209));
+            BusSearchResult.setSize(290, 209);
             BusSearchResult.setLocationRelativeTo(BusSearchResult.getOwner());
         }
 
@@ -462,10 +522,10 @@ public class AdminFunctionUI extends JFrame {
                 }
             });
             BusAddDialogContentPane.add(AddBusButton);
-            AddBusButton.setBounds(115, 130, AddBusButton.getPreferredSize().width, 24);
+            AddBusButton.setBounds(new Rectangle(new Point(115, 130), AddBusButton.getPreferredSize()));
 
-            BusAddDialogContentPane.setPreferredSize(new Dimension(300, 204));
-            BusAddDialog.setSize(300, 204);
+            BusAddDialogContentPane.setPreferredSize(new Dimension(300, 210));
+            BusAddDialog.setSize(300, 210);
             BusAddDialog.setLocationRelativeTo(BusAddDialog.getOwner());
         }
 
@@ -534,6 +594,111 @@ public class AdminFunctionUI extends JFrame {
             BusExistDialog.setSize(300, 115);
             BusExistDialog.setLocationRelativeTo(BusExistDialog.getOwner());
         }
+
+        //======== ScheduleSearchResult ========
+        {
+            ScheduleSearchResult.setTitle("\u6392\u73ed\u4fe1\u606f");
+            ScheduleSearchResult.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            ScheduleSearchResult.setAlwaysOnTop(true);
+            ScheduleSearchResult.setModal(true);
+            var ScheduleSearchResultContentPane = ScheduleSearchResult.getContentPane();
+            ScheduleSearchResultContentPane.setLayout(null);
+
+            //---- ScheduleResultDIID ----
+            ScheduleResultDIID.setText("\u53f8\u673a:");
+            ScheduleResultDIID.setFont(ScheduleResultDIID.getFont().deriveFont(ScheduleResultDIID.getFont().getStyle() | Font.BOLD, ScheduleResultDIID.getFont().getSize() + 5f));
+            ScheduleSearchResultContentPane.add(ScheduleResultDIID);
+            ScheduleResultDIID.setBounds(new Rectangle(new Point(60, 30), ScheduleResultDIID.getPreferredSize()));
+
+            //---- ScheduleResultLicenseNum ----
+            ScheduleResultLicenseNum.setText("\u8f66\u724c\u53f7:");
+            ScheduleResultLicenseNum.setFont(ScheduleResultLicenseNum.getFont().deriveFont(ScheduleResultLicenseNum.getFont().getStyle() | Font.BOLD, ScheduleResultLicenseNum.getFont().getSize() + 5f));
+            ScheduleSearchResultContentPane.add(ScheduleResultLicenseNum);
+            ScheduleResultLicenseNum.setBounds(new Rectangle(new Point(60, 90), ScheduleResultLicenseNum.getPreferredSize()));
+
+            //---- ScheduleResultTime ----
+            ScheduleResultTime.setText("\u65f6\u95f4:");
+            ScheduleResultTime.setFont(ScheduleResultTime.getFont().deriveFont(ScheduleResultTime.getFont().getStyle() | Font.BOLD, ScheduleResultTime.getFont().getSize() + 5f));
+            ScheduleSearchResultContentPane.add(ScheduleResultTime);
+            ScheduleResultTime.setBounds(new Rectangle(new Point(60, 60), ScheduleResultTime.getPreferredSize()));
+
+            //---- ScheduleSelectBusLicenseNum ----
+            ScheduleSelectBusLicenseNum.setFont(ScheduleSelectBusLicenseNum.getFont().deriveFont(ScheduleSelectBusLicenseNum.getFont().getSize() + 3f));
+            ScheduleSearchResultContentPane.add(ScheduleSelectBusLicenseNum);
+            ScheduleSelectBusLicenseNum.setBounds(130, 90, 105, ScheduleSelectBusLicenseNum.getPreferredSize().height);
+
+            //---- ScheduleResultDIDText ----
+            ScheduleResultDIDText.setText("\u53f8\u673a");
+            ScheduleResultDIDText.setFont(ScheduleResultDIDText.getFont().deriveFont(ScheduleResultDIDText.getFont().getSize() + 3f));
+            ScheduleSearchResultContentPane.add(ScheduleResultDIDText);
+            ScheduleResultDIDText.setBounds(110, 36, 140, 16);
+
+            //---- ScheduleResultTimeText ----
+            ScheduleResultTimeText.setText("\u65f6\u95f4");
+            ScheduleResultTimeText.setFont(ScheduleResultTimeText.getFont().deriveFont(ScheduleResultTimeText.getFont().getSize() + 3f));
+            ScheduleSearchResultContentPane.add(ScheduleResultTimeText);
+            ScheduleResultTimeText.setBounds(110, 64, 120, 17);
+
+            //---- DeleteScheduleButton ----
+            DeleteScheduleButton.setText("\u5220\u9664");
+            DeleteScheduleButton.setFocusPainted(false);
+            DeleteScheduleButton.setFont(DeleteScheduleButton.getFont().deriveFont(DeleteScheduleButton.getFont().getStyle() | Font.BOLD, DeleteScheduleButton.getFont().getSize() + 3f));
+            ScheduleSearchResultContentPane.add(DeleteScheduleButton);
+            DeleteScheduleButton.setBounds(new Rectangle(new Point(55, 130), DeleteScheduleButton.getPreferredSize()));
+
+            //---- ScheduleInformationModifyButton ----
+            ScheduleInformationModifyButton.setText("\u4fdd\u5b58");
+            ScheduleInformationModifyButton.setFocusPainted(false);
+            ScheduleInformationModifyButton.setFont(ScheduleInformationModifyButton.getFont().deriveFont(ScheduleInformationModifyButton.getFont().getStyle() | Font.BOLD, ScheduleInformationModifyButton.getFont().getSize() + 3f));
+            ScheduleSearchResultContentPane.add(ScheduleInformationModifyButton);
+            ScheduleInformationModifyButton.setBounds(new Rectangle(new Point(145, 130), ScheduleInformationModifyButton.getPreferredSize()));
+
+            ScheduleSearchResultContentPane.setPreferredSize(new Dimension(290, 220));
+            ScheduleSearchResult.setSize(290, 220);
+            ScheduleSearchResult.setLocationRelativeTo(ScheduleSearchResult.getOwner());
+        }
+
+        //======== QueryScheduleDialog ========
+        {
+            QueryScheduleDialog.setTitle("\u6392\u73ed\u67e5\u8be2");
+            QueryScheduleDialog.setAlwaysOnTop(true);
+            QueryScheduleDialog.setModal(true);
+            var QueryScheduleDialogContentPane = QueryScheduleDialog.getContentPane();
+            QueryScheduleDialogContentPane.setLayout(null);
+
+            //---- DID ----
+            DID.setText("\u53f8\u673a:");
+            DID.setFont(DID.getFont().deriveFont(DID.getFont().getStyle() | Font.BOLD, DID.getFont().getSize() + 5f));
+            QueryScheduleDialogContentPane.add(DID);
+            DID.setBounds(35, 30, DID.getPreferredSize().width, 20);
+            QueryScheduleDialogContentPane.add(SelectDID);
+            SelectDID.setBounds(90, 30, 120, 20);
+
+            //---- SearchScheduleButton ----
+            SearchScheduleButton.setText("\u641c\u7d22");
+            SearchScheduleButton.setFocusPainted(false);
+            SearchScheduleButton.setFont(SearchScheduleButton.getFont().deriveFont(SearchScheduleButton.getFont().getStyle() | Font.BOLD, SearchScheduleButton.getFont().getSize() + 3f));
+            SearchScheduleButton.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    SearchScheduleButtonMouseReleased(e);
+                }
+            });
+            QueryScheduleDialogContentPane.add(SearchScheduleButton);
+            SearchScheduleButton.setBounds(90, 100, SearchScheduleButton.getPreferredSize().width, 24);
+
+            //---- Time ----
+            Time.setText("\u65f6\u95f4:");
+            Time.setFont(Time.getFont().deriveFont(Time.getFont().getStyle() | Font.BOLD, Time.getFont().getSize() + 5f));
+            QueryScheduleDialogContentPane.add(Time);
+            Time.setBounds(35, 60, 62, 20);
+            QueryScheduleDialogContentPane.add(SelectTime);
+            SelectTime.setBounds(90, 60, 120, 20);
+
+            QueryScheduleDialogContentPane.setPreferredSize(new Dimension(255, 180));
+            QueryScheduleDialog.setSize(255, 180);
+            QueryScheduleDialog.setLocationRelativeTo(QueryScheduleDialog.getOwner());
+        }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
 
@@ -543,15 +708,18 @@ public class AdminFunctionUI extends JFrame {
     private JMenuItem LoginOut;
     private JMenu ServiceMenu;
     private JMenuItem RefreshHomePage;
-    private JMenu menu1;
+    private JMenu AboutBus;
     private JMenuItem QueryBus;
     private JMenuItem AddBus;
+    private JMenu AboutSchedule;
+    private JMenuItem QuerySchedule;
+    private JMenuItem AddSchedule;
     private JLabel Title;
     private JScrollPane TablePane;
     private JTable AllWorkArrange;
     private JDialog QueryBusDialog;
     private JLabel BusLicenseNum;
-    private JComboBox SelectBusLicenseNum;
+    private JComboBox BusSelectBusLicenseNum;
     private JButton SearchBusButton;
     private JDialog BusSearchResult;
     private JLabel BusResultLicenseNum;
@@ -576,6 +744,21 @@ public class AdminFunctionUI extends JFrame {
     private JLabel PassMessage2;
     private JDialog BusExistDialog;
     private JLabel PassMessage3;
+    private JDialog ScheduleSearchResult;
+    private JLabel ScheduleResultDIID;
+    private JLabel ScheduleResultLicenseNum;
+    private JLabel ScheduleResultTime;
+    private JComboBox ScheduleSelectBusLicenseNum;
+    private JLabel ScheduleResultDIDText;
+    private JLabel ScheduleResultTimeText;
+    private JButton DeleteScheduleButton;
+    private JButton ScheduleInformationModifyButton;
+    private JDialog QueryScheduleDialog;
+    private JLabel DID;
+    private JComboBox SelectDID;
+    private JButton SearchScheduleButton;
+    private JLabel Time;
+    private JComboBox SelectTime;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 
     // 初始化工作安排表 BEGIN
@@ -597,15 +780,15 @@ public class AdminFunctionUI extends JFrame {
 
     // 车辆查询 BEGIN
     private void showAllBusLicenseNum() {
-        SelectBusLicenseNum.removeAllItems();
+        BusSelectBusLicenseNum.removeAllItems();
         List<String> busLicenseNumbers = AdminEditBus.listBus2listBusLicenseNumber(AdminEditBus.queryAllBus());
         for (String busLicenseNumber : busLicenseNumbers) {
-            SelectBusLicenseNum.addItem(busLicenseNumber);
+            BusSelectBusLicenseNum.addItem(busLicenseNumber);
         }
     }
 
     private void initBusSearchResult() {    // 初始化查询结果
-        String licenseNum = (String) SelectBusLicenseNum.getSelectedItem();
+        String licenseNum = (String) BusSelectBusLicenseNum.getSelectedItem();
         Bus bus = AdminEditBus.queryBusById(licenseNum);
 
         BusResultLicenseNumText.setText(bus.getLicenseNumber());
@@ -622,4 +805,46 @@ public class AdminFunctionUI extends JFrame {
         }
     }
     // 车辆新增 END
+
+    // 排班查询 BEGIN
+    private void showAllDriverId() {
+        List<String> driverIds = AdminEditSchedule.listDriver2listDriverId(AdminEditSchedule.queryAllDriver());
+        for (String driverId : driverIds) {
+            SelectDID.addItem(driverId);
+        }
+    }
+
+    private void showAllTime() {
+        for (String day : AdminHomePage.dayOfWeek) {
+            SelectTime.addItem(day);
+        }
+    }
+
+    private void showAllBusAvailable(String dayOfWeek) {
+        ScheduleSelectBusLicenseNum.removeAllItems();
+
+        List<String> busLicenseNumbers = AdminEditSchedule.listBus2listBusLicenseNumber(AdminEditSchedule.queryBusAvailable(dayOfWeek));
+        for (String busLicenseNumber : busLicenseNumbers) {
+            ScheduleSelectBusLicenseNum.addItem(busLicenseNumber);
+        }
+    }
+
+    private void initQueryScheduleResult() {
+        String DID = (String) SelectDID.getSelectedItem();
+        String time = (String) SelectTime.getSelectedItem();
+
+        Schedule schedule = new Schedule();
+        schedule.setDID(DID);
+        schedule.setTime(time);
+
+        Schedule scheduleResult = AdminEditSchedule.queryScheduleById(schedule);
+
+        ScheduleResultDIDText.setText(scheduleResult.getDID());
+        ScheduleResultTimeText.setText(scheduleResult.getTime());
+
+        showAllBusAvailable(time);
+        ScheduleSelectBusLicenseNum.addItem(scheduleResult.getLicenseNumber());
+        ScheduleSelectBusLicenseNum.setSelectedItem(scheduleResult.getLicenseNumber());
+    }
+    // 排班查询 END
 }
