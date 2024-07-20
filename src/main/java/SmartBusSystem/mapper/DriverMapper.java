@@ -11,6 +11,9 @@ public interface DriverMapper {
 
     Driver SelectById(String ID);
 
+    List<Driver> SelectDriverAvailable(@Param("time") String time);
+    List<Driver> SelectDriverIsArranged(@Param("time") String time);
+
     void InsertDriver(Driver driver);
 
     void UpdateDriver(Driver driver);

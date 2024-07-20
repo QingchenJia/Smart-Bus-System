@@ -39,13 +39,12 @@ public class UserFunctionUI extends JFrame {
     }
 
     private void LoginOutMouseReleased(MouseEvent e) {
-        // TODO add your code here
         this.dispose();
         new LoginUI();
     }
 
     private void TotalViewMouseReleased(MouseEvent e) {
-        // TODO add your code here
+
         String currentUserId = this.getCurrentUserId();
         User currentUser = UserHomePage.queryCurrentUserInformation(currentUserId);
         NameText.setText(currentUser.getName());
@@ -57,7 +56,7 @@ public class UserFunctionUI extends JFrame {
     }
 
     private void InformationModifyMouseReleased(MouseEvent e) {
-        // TODO add your code here
+
         String currentUserId = this.getCurrentUserId();
         User currentUser = UserHomePage.queryCurrentUserInformation(currentUserId);
         NameInput.setText(currentUser.getName());
@@ -68,7 +67,7 @@ public class UserFunctionUI extends JFrame {
     }
 
     private void InformationChangeMouseReleased(MouseEvent e) {
-        // TODO add your code here
+
         String ID = currentUserId;
         String name = NameInput.getText();
 
@@ -92,7 +91,7 @@ public class UserFunctionUI extends JFrame {
     }
 
     private void PasswordChangeMouseReleased(MouseEvent e) throws Exception {
-        // TODO add your code here
+
         String ID = currentUserId;
         String oldPassword = new String(OldPasswordInput.getPassword());
         String newPassword = new String(NewPasswordInput.getPassword());
@@ -122,42 +121,35 @@ public class UserFunctionUI extends JFrame {
     }
 
     private void StopQueryMouseReleased(MouseEvent e) {
-        // TODO add your code here
         showAllStopNameInList(stopQueryListModel);
         StopQueryDialog.setVisible(true);
     }
 
     private void SearchStopMouseReleased(MouseEvent e) {
-        // TODO add your code here
         if (initStopSearchResult()) StopSearchResult.setVisible(true);
     }
 
     private void RouteQueryMouseReleased(MouseEvent e) {
-        // TODO add your code here
         showAllRouteIdInBox();
         RouteQueryDialog.setVisible(true);
     }
 
     private void SearchRouteMouseReleased(MouseEvent e) {
-        // TODO add your code here
         initRouteSearchResult();
         RouteSearchResult.setVisible(true);
     }
 
     private void DirectionMouseReleased(MouseEvent e) {
-        // TODO add your code here
         showAllStopNameInList(startStopQueryListModel);
         showAllStopNameInList(endStopQueryListModel);
         NavigationGuideDialog.setVisible(true);
     }
 
     private void NavigationButtonMouseReleased(MouseEvent e) {
-        // TODO add your code here
         if (initNavigationGuideResult()) NavigationGuideResult.setVisible(true);
     }
 
     private void RefreshHomePageMouseReleased(MouseEvent e) {
-        // TODO add your code here
         String Id = currentUserId;
         this.dispose();
         new UserFunctionUI().setCurrentUserId(Id);

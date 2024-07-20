@@ -38,4 +38,18 @@
         FROM `driver`
         WHERE DID = #{ID};
     </select>
+    <select id="SelectDriverAvailable" resultMap="DriverResult">
+        SELECT *
+        FROM `driver`
+        WHERE DID NOT IN
+              (SELECT DID
+               FROM `schedule`
+               WHERE Time = #{time})
+    </select>
+    <select id="SelectDriverIsArranged" resultMap="DriverResult">
+        SELECT DID, Time, LicenseNumber
+        FROM `schedule`
+        WHERE Time = #{time}
+        ORDER BY DID;
+    </select>
 </mapper>

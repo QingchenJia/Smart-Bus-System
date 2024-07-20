@@ -10,15 +10,24 @@
     </resultMap>
     <insert id="InsertSchedule">
         INSERT INTO `schedule`
-        VALUES (DID = #{DID}, Time = #{time}, LicenseNumber = #{licenseNumber});
+        VALUES (#{DID}, #{time}, #{licenseNumber});
     </insert>
     <update id="UpdateSchedule">
-        UPDATE `schedule` SET
-        <if test="licenseNumber!=null">LicenseNumber=#{licenseNumber}</if>
-        <where>
-            <if test="Time!=null">Time=#{time}</if>
-            <if test="DID!=null">AND DID=#{DID};</if>
-        </where>
+        <choose>
+            <when test="Time != null and DID != null">
+                UPDATE `schedule`
+                <set>
+                    <if test="licenseNumber != null">LicenseNumber = #{licenseNumber},</if>
+                </set>
+                <where>
+                    <if test="Time != null">Time = #{time}</if>
+                    <if test="DID != null">AND DID = #{DID};</if>
+                </where>
+            </when>
+            <otherwise>
+                SELECT 1
+            </otherwise>
+        </choose>
     </update>
     <delete id="DeleteSchedule">
         DELETE

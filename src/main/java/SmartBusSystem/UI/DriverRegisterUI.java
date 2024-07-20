@@ -23,7 +23,6 @@ public class DriverRegisterUI extends JFrame {
     }
 
     private void CheckMouseReleased(MouseEvent e) {
-        // TODO add your code here
         String ID = IdInput.getText();
         String password = new String(PasswordInput.getPassword());
         String passwordAgain = new String(PasswordAgainInput.getPassword());
@@ -53,13 +52,11 @@ public class DriverRegisterUI extends JFrame {
     }
 
     private void BackwardMouseReleased(MouseEvent e) {
-        // TODO add your code here
         this.dispose();
         new LoginUI();
     }
 
     private void RegisterMouseReleased(MouseEvent e) throws Exception {
-        // TODO add your code here
         String ID = IdInput.getText();
         String password = new String(PasswordInput.getPassword());
         int drivingYears = Integer.parseInt(Objects.requireNonNull(SelectDrivingYears.getSelectedItem()).toString());

@@ -27,24 +27,20 @@ public class LoginUI extends JFrame {
     }
 
     private void RegisterMouseReleased(MouseEvent e) {
-        // TODO add your code here
         RegisterSelect.setVisible(true);
     }
 
     private void UserRegisterMouseReleased(MouseEvent e) {
-        // TODO add your code here
         RegisterSelect.dispose();
         this.dispose();
         new UserRegisterUI();
     }
 
     private void RightCodeMouseReleased(MouseEvent e) {
-        // TODO add your code here
         RightCode.setText(VerifyCode.getVerifyCode());
     }
 
     private void UserLoginButtonMouseReleased(MouseEvent e) throws Exception {
-        // TODO add your code here
         String ID = IdInput.getText();
         String password = new String(PasswordInput.getPassword());
         String code = CodeInput.getText();
@@ -67,7 +63,6 @@ public class LoginUI extends JFrame {
     }
 
     private void DriverLoginButtonMouseReleased(MouseEvent e) throws Exception {
-        // TODO add your code here
         String ID = IdInput.getText();
         String password = new String(PasswordInput.getPassword());
         String code = CodeInput.getText();
@@ -90,19 +85,16 @@ public class LoginUI extends JFrame {
     }
 
     private void DriverRegisterMouseReleased(MouseEvent e) {
-        // TODO add your code here
         RegisterSelect.dispose();
         this.dispose();
         new DriverRegisterUI();
     }
 
     private void AdminEnterMouseReleased(MouseEvent e) {
-        // TODO add your code here
         AdminLoginDialog.setVisible(true);
     }
 
     private void AdminLoginButtonMouseReleased(MouseEvent e) throws Exception {
-        // TODO add your code here
         String ID = AdminIdInput.getText();
         String password = new String(AdminPasswordInput.getPassword());
 
@@ -119,7 +111,6 @@ public class LoginUI extends JFrame {
     }
 
     private void UserEnterSystemMouseReleased(MouseEvent e) {
-        // TODO add your code here
         UserPass.dispose();
         this.dispose();
         String ID = IdInput.getText();
@@ -127,7 +118,6 @@ public class LoginUI extends JFrame {
     }
 
     private void RecoverButtonMouseReleased(MouseEvent e) throws Exception {
-        // TODO add your code here
         String ID = RecoverIdInput.getText();
         String phoneNum = RecoverPhoneNumInput.getText();
         String newPassword = new String(NewPasswordInput.getPassword());
@@ -178,13 +168,10 @@ public class LoginUI extends JFrame {
     }
 
     private void RecoverMouseReleased(MouseEvent e) {
-        // TODO add your code here
         RecoverDialog.setVisible(true);
     }
 
-    private void DriverEnterSystemMouseReleased(MouseEvent e) {
-        // TODO add your code here
-        DriverPass.dispose();
+    private void DriverEnterSystemMouseReleased(MouseEvent e) {DriverPass.dispose();
         this.dispose();
         String ID = IdInput.getText();
         new DriverFunctionUI(ID);  //打开功能界面 同时记录当前司机ID

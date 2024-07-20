@@ -30,6 +30,14 @@ public class Schedule {
         Time = time;
     }
 
+    public String getLicenseNumber() {
+        return licenseNumber;
+    }
+
+    public void setLicenseNumber(String licenseNumber) {
+        this.licenseNumber = licenseNumber;
+    }
+
     @Override
     public String toString() {
         return "Schedule{" +
@@ -37,13 +45,5 @@ public class Schedule {
                 ", Time='" + Time + '\'' +
                 ", licenseNumber='" + licenseNumber + '\'' +
                 '}';
-    }
-
-    public String getLicenseNumber() {
-        return licenseNumber;
-    }
-
-    public void setLicenseNumber(String licenseNumber) {
-        this.licenseNumber = licenseNumber;
     }
 }

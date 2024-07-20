@@ -8,6 +8,7 @@ import SmartBusSystem.pojo.Driver;
 import SmartBusSystem.pojo.Schedule;
 import SmartBusSystem.service.DatabaseOperation;
 
+import java.util.Dictionary;
 import java.util.List;
 
 public class AdminEditSchedule {
@@ -29,6 +30,13 @@ public class AdminEditSchedule {
         return drivers;
     }
 
+    public static List<Driver> queryDriverIsArrangedOnTheDay(String time) {
+        DriverMapper driverMapper = DatabaseOperation.session.getMapper(DriverMapper.class);
+        List<Driver> drivers = driverMapper.SelectDriverIsArranged(time);
+        System.out.println("在班司机->" + drivers);
+        return drivers;
+    }
+
     public static List<String> listDriver2listDriverId(List<Driver> drivers) {
         return drivers.stream().map(Driver::getID).toList();
     }
@@ -38,5 +46,30 @@ public class AdminEditSchedule {
         Schedule scheduleResult = scheduleMapper.SelectById(schedule);
         System.out.println("查询排班->" + scheduleResult);
         return scheduleResult;
+    }
+
+    public static void deleteScheduleById(String DID, String dayOfWeek) {
+        ScheduleMapper scheduleMapper = DatabaseOperation.session.getMapper(ScheduleMapper.class);
+        scheduleMapper.DeleteSchedule(DID, dayOfWeek);
+        DatabaseOperation.session.commit();
+    }
+
+    public static void addNewSchedule(Schedule schedule) {
+        ScheduleMapper scheduleMapper = DatabaseOperation.session.getMapper(ScheduleMapper.class);
+        scheduleMapper.InsertSchedule(schedule);
+        DatabaseOperation.session.commit();
+    }
+
+    public static void updateSchedule(Schedule schedule) {
+        ScheduleMapper scheduleMapper = DatabaseOperation.session.getMapper(ScheduleMapper.class);
+        scheduleMapper.UpdateSchedule(schedule);
+        DatabaseOperation.session.commit();
+    }
+
+    public static List<Driver> queryDriverAvailable(String time) {
+        DriverMapper driverMapper = DatabaseOperation.session.getMapper(DriverMapper.class);
+        List<Driver> drivers = driverMapper.SelectDriverAvailable(time);
+        System.out.println("可用司机->" + drivers);
+        return drivers;
     }
 }

@@ -120,6 +120,7 @@ new FormModel {
 							"text": "排班新增"
 							"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 1, false )
 							"iconTextGap": 0
+							addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "AddScheduleMouseReleased", true ) )
 						} )
 					} )
 				} )
@@ -397,7 +398,7 @@ new FormModel {
 				"font": #SwingDerivedFont0
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 60
-				"y": 30
+				"y": 60
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "ScheduleResultLicenseNum"
@@ -413,7 +414,8 @@ new FormModel {
 				"font": #SwingDerivedFont0
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 60
-				"y": 60
+				"y": 30
+				"height": 18
 			} )
 			add( new FormComponent( "javax.swing.JComboBox" ) {
 				name: "ScheduleSelectBusLicenseNum"
@@ -431,7 +433,7 @@ new FormModel {
 				"width": 140
 				"height": 16
 				"x": 110
-				"y": 36
+				"y": 65
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "ScheduleResultTimeText"
@@ -441,13 +443,14 @@ new FormModel {
 				"width": 120
 				"height": 17
 				"x": 110
-				"y": 64
+				"y": 35
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "DeleteScheduleButton"
 				"text": "删除"
 				"focusPainted": false
 				"font": #SwingDerivedFont1
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "DeleteScheduleButtonMouseReleased", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 55
 				"y": 130
@@ -457,6 +460,7 @@ new FormModel {
 				"text": "保存"
 				"focusPainted": false
 				"font": #SwingDerivedFont1
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "ScheduleInformationModifyButtonMouseReleased", true ) )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"x": 145
 				"y": 130
@@ -480,7 +484,7 @@ new FormModel {
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"height": 20
 				"x": 35
-				"y": 30
+				"y": 60
 			} )
 			add( new FormComponent( "javax.swing.JComboBox" ) {
 				name: "SelectDID"
@@ -488,7 +492,7 @@ new FormModel {
 				"width": 120
 				"height": 20
 				"x": 90
-				"y": 30
+				"y": 60
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "SearchScheduleButton"
@@ -506,10 +510,9 @@ new FormModel {
 				"text": "时间:"
 				"font": #SwingDerivedFont0
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"width": 62
 				"height": 20
 				"x": 35
-				"y": 60
+				"y": 30
 			} )
 			add( new FormComponent( "javax.swing.JComboBox" ) {
 				name: "SelectTime"
@@ -517,11 +520,82 @@ new FormModel {
 				"width": 120
 				"height": 20
 				"x": 90
-				"y": 60
+				"y": 30
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"size": new java.awt.Dimension( 255, 180 )
 			"location": new java.awt.Point( 0, 1030 )
+		} )
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
+			"autoSize": false
+		} ) {
+			name: "AddNewScheduleDialog"
+			"title": "排班新增"
+			"defaultCloseOperation": 2
+			"alwaysOnTop": true
+			"modal": true
+			"$sizePolicy": 1
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "AddScheduleDID"
+				"text": "司机:"
+				"font": #SwingDerivedFont0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 60
+				"y": 60
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "AddScheduleLicenseNum"
+				"text": "车牌号:"
+				"font": #SwingDerivedFont0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 60
+				"y": 90
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "AddScheduleTime"
+				"text": "时间:"
+				"font": #SwingDerivedFont0
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 60
+				"y": 30
+			} )
+			add( new FormComponent( "javax.swing.JComboBox" ) {
+				name: "SelectScheduleLicenseNum"
+				"font": #SwingDerivedFont3
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 105
+				"x": 130
+				"y": 90
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "AddScheduleButton"
+				"text": "新增"
+				"focusPainted": false
+				"font": #SwingDerivedFont1
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "AddScheduleButtonMouseReleased", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 105
+				"y": 130
+			} )
+			add( new FormComponent( "javax.swing.JComboBox" ) {
+				name: "SelectAddScheduleDID"
+				"font": #SwingDerivedFont3
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 105
+				"x": 115
+				"y": 60
+			} )
+			add( new FormComponent( "javax.swing.JComboBox" ) {
+				name: "SelectAddScheduleTime"
+				"font": #SwingDerivedFont3
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 105
+				"x": 115
+				"y": 30
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"size": new java.awt.Dimension( 290, 210 )
+			"location": new java.awt.Point( 320, 1230 )
 		} )
 	}
 }

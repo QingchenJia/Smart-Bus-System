@@ -5,6 +5,7 @@
 package SmartBusSystem.UI;
 
 import SmartBusSystem.pojo.Bus;
+import SmartBusSystem.pojo.Driver;
 import SmartBusSystem.pojo.Route;
 import SmartBusSystem.pojo.Schedule;
 import SmartBusSystem.service.TableRow.WorkArrangeRow;
@@ -26,24 +27,23 @@ public class AdminFunctionUI extends JFrame {
     public AdminFunctionUI() {
         initComponents();
         initAllWorkArrange();
+        initAddNewScheduleDialog();
+        initScheduleQueryDialog();
 
         this.setVisible(true);
     }
 
     private void QueryBusMouseReleased(MouseEvent e) {
-        // TODO add your code here
         showAllBusLicenseNum();
         QueryBusDialog.setVisible(true);
     }
 
     private void SearchBusButtonMouseReleased(MouseEvent e) {
-        // TODO add your code here
         initBusSearchResult();
         BusSearchResult.setVisible(true);
     }
 
     private void BusInformationModifyButtonMouseReleased(MouseEvent e) {
-        // TODO add your code here
         Bus bus = new Bus();
         bus.setLicenseNumber(BusResultLicenseNumText.getText());
         bus.setStatus(SelectBusStatus.isSelected() ? 1 : 0);
@@ -54,25 +54,21 @@ public class AdminFunctionUI extends JFrame {
     }
 
     private void LoginOutMouseReleased(MouseEvent e) {
-        // TODO add your code here
         this.dispose();
         new LoginUI();
     }
 
     private void RefreshHomePageMouseReleased(MouseEvent e) {
-        // TODO add your code here
         this.dispose();
         new AdminFunctionUI();
     }
 
     private void AddBusMouseReleased(MouseEvent e) {
-        // TODO add your code here
         showAllRouteId();
         BusAddDialog.setVisible(true);
     }
 
     private void AddBusButtonMouseReleased(MouseEvent e) {
-        // TODO add your code here
         String licenseNum = NewBusLicenseNumberInput.getText();
         String routeId = ((String) Objects.requireNonNull(NewSelectRouteId.getSelectedItem())).split("路")[0];
         int status = NewSelectBusStatus.isSelected() ? 1 : 0;
@@ -94,7 +90,6 @@ public class AdminFunctionUI extends JFrame {
     }
 
     private void DeleteBusButtonMouseReleased(MouseEvent e) {
-        // TODO add your code here
         String licenseNum = BusResultLicenseNumText.getText();
         AdminEditBus.deleteBus(licenseNum);
 
@@ -104,17 +99,58 @@ public class AdminFunctionUI extends JFrame {
     }
 
     private void QueryScheduleMouseReleased(MouseEvent e) {
-        // TODO add your code here
-        showAllDriverId();
-        showAllTime();
+        showAllTime(SelectTime);
 
         QueryScheduleDialog.setVisible(true);
     }
 
     private void SearchScheduleButtonMouseReleased(MouseEvent e) {
-        // TODO add your code here
         initQueryScheduleResult();
         ScheduleSearchResult.setVisible(true);
+    }
+
+    private void ScheduleInformationModifyButtonMouseReleased(MouseEvent e) {
+        String DID = ScheduleResultDIDText.getText();
+        String time = ScheduleResultTimeText.getText();
+        String licenseNum = (String) ScheduleSelectBusLicenseNum.getSelectedItem();
+
+        Schedule schedule = new Schedule(DID, time, licenseNum);
+
+        AdminEditSchedule.updateSchedule(schedule);
+
+        Pass.setVisible(true);
+        ScheduleSearchResult.dispose();
+    }
+
+    private void DeleteScheduleButtonMouseReleased(MouseEvent e) {
+        String DID = ScheduleResultDIDText.getText();
+        String time = ScheduleResultTimeText.getText();
+
+        AdminEditSchedule.deleteScheduleById(DID, time);
+
+        showDriverIsArrangedOnTheDay(time);
+
+        Pass.setVisible(true);
+        ScheduleSearchResult.dispose();
+    }
+
+    private void AddScheduleMouseReleased(MouseEvent e) {
+        showAllTime(SelectAddScheduleTime);
+
+        AddNewScheduleDialog.setVisible(true);
+    }
+
+    private void AddScheduleButtonMouseReleased(MouseEvent e) {
+        String DID = (String) SelectAddScheduleDID.getSelectedItem();
+        String time = (String) SelectAddScheduleTime.getSelectedItem();
+        String licenseNum = (String) SelectScheduleLicenseNum.getSelectedItem();
+
+        Schedule schedule = new Schedule(DID, time, licenseNum);
+
+        AdminEditSchedule.addNewSchedule(schedule);
+
+        Pass.setVisible(true);
+        AddNewScheduleDialog.dispose();
     }
 
     private void initComponents() {
@@ -175,6 +211,14 @@ public class AdminFunctionUI extends JFrame {
         SearchScheduleButton = new JButton();
         Time = new JLabel();
         SelectTime = new JComboBox();
+        AddNewScheduleDialog = new JDialog();
+        AddScheduleDID = new JLabel();
+        AddScheduleLicenseNum = new JLabel();
+        AddScheduleTime = new JLabel();
+        SelectScheduleLicenseNum = new JComboBox();
+        AddScheduleButton = new JButton();
+        SelectAddScheduleDID = new JComboBox();
+        SelectAddScheduleTime = new JComboBox();
 
         //======== this ========
         setTitle("\u7ba1\u7406\u5458\u7aef");
@@ -279,6 +323,12 @@ public class AdminFunctionUI extends JFrame {
                     AddSchedule.setText("\u6392\u73ed\u65b0\u589e");
                     AddSchedule.setFont(AddSchedule.getFont().deriveFont(AddSchedule.getFont().getSize() + 1f));
                     AddSchedule.setIconTextGap(0);
+                    AddSchedule.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+                            AddScheduleMouseReleased(e);
+                        }
+                    });
                     AboutSchedule.add(AddSchedule);
                 }
                 ServiceMenu.add(AboutSchedule);
@@ -608,7 +658,7 @@ public class AdminFunctionUI extends JFrame {
             ScheduleResultDIID.setText("\u53f8\u673a:");
             ScheduleResultDIID.setFont(ScheduleResultDIID.getFont().deriveFont(ScheduleResultDIID.getFont().getStyle() | Font.BOLD, ScheduleResultDIID.getFont().getSize() + 5f));
             ScheduleSearchResultContentPane.add(ScheduleResultDIID);
-            ScheduleResultDIID.setBounds(new Rectangle(new Point(60, 30), ScheduleResultDIID.getPreferredSize()));
+            ScheduleResultDIID.setBounds(new Rectangle(new Point(60, 60), ScheduleResultDIID.getPreferredSize()));
 
             //---- ScheduleResultLicenseNum ----
             ScheduleResultLicenseNum.setText("\u8f66\u724c\u53f7:");
@@ -620,7 +670,7 @@ public class AdminFunctionUI extends JFrame {
             ScheduleResultTime.setText("\u65f6\u95f4:");
             ScheduleResultTime.setFont(ScheduleResultTime.getFont().deriveFont(ScheduleResultTime.getFont().getStyle() | Font.BOLD, ScheduleResultTime.getFont().getSize() + 5f));
             ScheduleSearchResultContentPane.add(ScheduleResultTime);
-            ScheduleResultTime.setBounds(new Rectangle(new Point(60, 60), ScheduleResultTime.getPreferredSize()));
+            ScheduleResultTime.setBounds(60, 30, ScheduleResultTime.getPreferredSize().width, 18);
 
             //---- ScheduleSelectBusLicenseNum ----
             ScheduleSelectBusLicenseNum.setFont(ScheduleSelectBusLicenseNum.getFont().deriveFont(ScheduleSelectBusLicenseNum.getFont().getSize() + 3f));
@@ -631,18 +681,24 @@ public class AdminFunctionUI extends JFrame {
             ScheduleResultDIDText.setText("\u53f8\u673a");
             ScheduleResultDIDText.setFont(ScheduleResultDIDText.getFont().deriveFont(ScheduleResultDIDText.getFont().getSize() + 3f));
             ScheduleSearchResultContentPane.add(ScheduleResultDIDText);
-            ScheduleResultDIDText.setBounds(110, 36, 140, 16);
+            ScheduleResultDIDText.setBounds(110, 65, 140, 16);
 
             //---- ScheduleResultTimeText ----
             ScheduleResultTimeText.setText("\u65f6\u95f4");
             ScheduleResultTimeText.setFont(ScheduleResultTimeText.getFont().deriveFont(ScheduleResultTimeText.getFont().getSize() + 3f));
             ScheduleSearchResultContentPane.add(ScheduleResultTimeText);
-            ScheduleResultTimeText.setBounds(110, 64, 120, 17);
+            ScheduleResultTimeText.setBounds(110, 35, 120, 17);
 
             //---- DeleteScheduleButton ----
             DeleteScheduleButton.setText("\u5220\u9664");
             DeleteScheduleButton.setFocusPainted(false);
             DeleteScheduleButton.setFont(DeleteScheduleButton.getFont().deriveFont(DeleteScheduleButton.getFont().getStyle() | Font.BOLD, DeleteScheduleButton.getFont().getSize() + 3f));
+            DeleteScheduleButton.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    DeleteScheduleButtonMouseReleased(e);
+                }
+            });
             ScheduleSearchResultContentPane.add(DeleteScheduleButton);
             DeleteScheduleButton.setBounds(new Rectangle(new Point(55, 130), DeleteScheduleButton.getPreferredSize()));
 
@@ -650,6 +706,12 @@ public class AdminFunctionUI extends JFrame {
             ScheduleInformationModifyButton.setText("\u4fdd\u5b58");
             ScheduleInformationModifyButton.setFocusPainted(false);
             ScheduleInformationModifyButton.setFont(ScheduleInformationModifyButton.getFont().deriveFont(ScheduleInformationModifyButton.getFont().getStyle() | Font.BOLD, ScheduleInformationModifyButton.getFont().getSize() + 3f));
+            ScheduleInformationModifyButton.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    ScheduleInformationModifyButtonMouseReleased(e);
+                }
+            });
             ScheduleSearchResultContentPane.add(ScheduleInformationModifyButton);
             ScheduleInformationModifyButton.setBounds(new Rectangle(new Point(145, 130), ScheduleInformationModifyButton.getPreferredSize()));
 
@@ -670,9 +732,9 @@ public class AdminFunctionUI extends JFrame {
             DID.setText("\u53f8\u673a:");
             DID.setFont(DID.getFont().deriveFont(DID.getFont().getStyle() | Font.BOLD, DID.getFont().getSize() + 5f));
             QueryScheduleDialogContentPane.add(DID);
-            DID.setBounds(35, 30, DID.getPreferredSize().width, 20);
+            DID.setBounds(35, 60, DID.getPreferredSize().width, 20);
             QueryScheduleDialogContentPane.add(SelectDID);
-            SelectDID.setBounds(90, 30, 120, 20);
+            SelectDID.setBounds(90, 60, 120, 20);
 
             //---- SearchScheduleButton ----
             SearchScheduleButton.setText("\u641c\u7d22");
@@ -691,13 +753,73 @@ public class AdminFunctionUI extends JFrame {
             Time.setText("\u65f6\u95f4:");
             Time.setFont(Time.getFont().deriveFont(Time.getFont().getStyle() | Font.BOLD, Time.getFont().getSize() + 5f));
             QueryScheduleDialogContentPane.add(Time);
-            Time.setBounds(35, 60, 62, 20);
+            Time.setBounds(35, 30, Time.getPreferredSize().width, 20);
             QueryScheduleDialogContentPane.add(SelectTime);
-            SelectTime.setBounds(90, 60, 120, 20);
+            SelectTime.setBounds(90, 30, 120, 20);
 
             QueryScheduleDialogContentPane.setPreferredSize(new Dimension(255, 180));
             QueryScheduleDialog.setSize(255, 180);
             QueryScheduleDialog.setLocationRelativeTo(QueryScheduleDialog.getOwner());
+        }
+
+        //======== AddNewScheduleDialog ========
+        {
+            AddNewScheduleDialog.setTitle("\u6392\u73ed\u65b0\u589e");
+            AddNewScheduleDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            AddNewScheduleDialog.setAlwaysOnTop(true);
+            AddNewScheduleDialog.setModal(true);
+            var AddNewScheduleDialogContentPane = AddNewScheduleDialog.getContentPane();
+            AddNewScheduleDialogContentPane.setLayout(null);
+
+            //---- AddScheduleDID ----
+            AddScheduleDID.setText("\u53f8\u673a:");
+            AddScheduleDID.setFont(AddScheduleDID.getFont().deriveFont(AddScheduleDID.getFont().getStyle() | Font.BOLD, AddScheduleDID.getFont().getSize() + 5f));
+            AddNewScheduleDialogContentPane.add(AddScheduleDID);
+            AddScheduleDID.setBounds(new Rectangle(new Point(60, 60), AddScheduleDID.getPreferredSize()));
+
+            //---- AddScheduleLicenseNum ----
+            AddScheduleLicenseNum.setText("\u8f66\u724c\u53f7:");
+            AddScheduleLicenseNum.setFont(AddScheduleLicenseNum.getFont().deriveFont(AddScheduleLicenseNum.getFont().getStyle() | Font.BOLD, AddScheduleLicenseNum.getFont().getSize() + 5f));
+            AddNewScheduleDialogContentPane.add(AddScheduleLicenseNum);
+            AddScheduleLicenseNum.setBounds(new Rectangle(new Point(60, 90), AddScheduleLicenseNum.getPreferredSize()));
+
+            //---- AddScheduleTime ----
+            AddScheduleTime.setText("\u65f6\u95f4:");
+            AddScheduleTime.setFont(AddScheduleTime.getFont().deriveFont(AddScheduleTime.getFont().getStyle() | Font.BOLD, AddScheduleTime.getFont().getSize() + 5f));
+            AddNewScheduleDialogContentPane.add(AddScheduleTime);
+            AddScheduleTime.setBounds(new Rectangle(new Point(60, 30), AddScheduleTime.getPreferredSize()));
+
+            //---- SelectScheduleLicenseNum ----
+            SelectScheduleLicenseNum.setFont(SelectScheduleLicenseNum.getFont().deriveFont(SelectScheduleLicenseNum.getFont().getSize() + 3f));
+            AddNewScheduleDialogContentPane.add(SelectScheduleLicenseNum);
+            SelectScheduleLicenseNum.setBounds(130, 90, 105, SelectScheduleLicenseNum.getPreferredSize().height);
+
+            //---- AddScheduleButton ----
+            AddScheduleButton.setText("\u65b0\u589e");
+            AddScheduleButton.setFocusPainted(false);
+            AddScheduleButton.setFont(AddScheduleButton.getFont().deriveFont(AddScheduleButton.getFont().getStyle() | Font.BOLD, AddScheduleButton.getFont().getSize() + 3f));
+            AddScheduleButton.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    AddScheduleButtonMouseReleased(e);
+                }
+            });
+            AddNewScheduleDialogContentPane.add(AddScheduleButton);
+            AddScheduleButton.setBounds(new Rectangle(new Point(105, 130), AddScheduleButton.getPreferredSize()));
+
+            //---- SelectAddScheduleDID ----
+            SelectAddScheduleDID.setFont(SelectAddScheduleDID.getFont().deriveFont(SelectAddScheduleDID.getFont().getSize() + 3f));
+            AddNewScheduleDialogContentPane.add(SelectAddScheduleDID);
+            SelectAddScheduleDID.setBounds(115, 60, 105, SelectAddScheduleDID.getPreferredSize().height);
+
+            //---- SelectAddScheduleTime ----
+            SelectAddScheduleTime.setFont(SelectAddScheduleTime.getFont().deriveFont(SelectAddScheduleTime.getFont().getSize() + 3f));
+            AddNewScheduleDialogContentPane.add(SelectAddScheduleTime);
+            SelectAddScheduleTime.setBounds(115, 30, 105, SelectAddScheduleTime.getPreferredSize().height);
+
+            AddNewScheduleDialogContentPane.setPreferredSize(new Dimension(290, 210));
+            AddNewScheduleDialog.setSize(290, 210);
+            AddNewScheduleDialog.setLocationRelativeTo(AddNewScheduleDialog.getOwner());
         }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
@@ -759,6 +881,14 @@ public class AdminFunctionUI extends JFrame {
     private JButton SearchScheduleButton;
     private JLabel Time;
     private JComboBox SelectTime;
+    private JDialog AddNewScheduleDialog;
+    private JLabel AddScheduleDID;
+    private JLabel AddScheduleLicenseNum;
+    private JLabel AddScheduleTime;
+    private JComboBox SelectScheduleLicenseNum;
+    private JButton AddScheduleButton;
+    private JComboBox SelectAddScheduleDID;
+    private JComboBox SelectAddScheduleTime;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 
     // 初始化工作安排表 BEGIN
@@ -807,25 +937,39 @@ public class AdminFunctionUI extends JFrame {
     // 车辆新增 END
 
     // 排班查询 BEGIN
-    private void showAllDriverId() {
-        List<String> driverIds = AdminEditSchedule.listDriver2listDriverId(AdminEditSchedule.queryAllDriver());
+    private void initScheduleQueryDialog() {
+        SelectTime.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String time = (String) SelectTime.getSelectedItem();
+                showDriverIsArrangedOnTheDay(time);
+            }
+        });
+    }
+
+    private void showDriverIsArrangedOnTheDay(String time) {
+        SelectDID.removeAllItems();
+
+        List<String> driverIds = AdminEditSchedule.listDriver2listDriverId(AdminEditSchedule.queryDriverIsArrangedOnTheDay(time));
         for (String driverId : driverIds) {
             SelectDID.addItem(driverId);
         }
     }
 
-    private void showAllTime() {
+    private void showAllTime(JComboBox jComboBox) {
+        jComboBox.removeAllItems();
+
         for (String day : AdminHomePage.dayOfWeek) {
-            SelectTime.addItem(day);
+            jComboBox.addItem(day);
         }
     }
 
-    private void showAllBusAvailable(String dayOfWeek) {
-        ScheduleSelectBusLicenseNum.removeAllItems();
+    private void showAllBusAvailable(String time, JComboBox jComboBox) {
+        jComboBox.removeAllItems();
 
-        List<String> busLicenseNumbers = AdminEditSchedule.listBus2listBusLicenseNumber(AdminEditSchedule.queryBusAvailable(dayOfWeek));
+        List<String> busLicenseNumbers = AdminEditSchedule.listBus2listBusLicenseNumber(AdminEditSchedule.queryBusAvailable(time));
         for (String busLicenseNumber : busLicenseNumbers) {
-            ScheduleSelectBusLicenseNum.addItem(busLicenseNumber);
+            jComboBox.addItem(busLicenseNumber);
         }
     }
 
@@ -842,9 +986,32 @@ public class AdminFunctionUI extends JFrame {
         ScheduleResultDIDText.setText(scheduleResult.getDID());
         ScheduleResultTimeText.setText(scheduleResult.getTime());
 
-        showAllBusAvailable(time);
+        showAllBusAvailable(time, ScheduleSelectBusLicenseNum);
         ScheduleSelectBusLicenseNum.addItem(scheduleResult.getLicenseNumber());
         ScheduleSelectBusLicenseNum.setSelectedItem(scheduleResult.getLicenseNumber());
     }
     // 排班查询 END
+
+    // 排班新增 BEGIN
+    private void initAddNewScheduleDialog() {
+        SelectAddScheduleTime.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String time = (String) SelectAddScheduleTime.getSelectedItem();
+                showDriverAvailable(time);
+                showAllBusAvailable(time, SelectScheduleLicenseNum);
+            }
+        });
+    }
+
+    private void showDriverAvailable(String time) {
+        List<String> driverIds = AdminEditSchedule.listDriver2listDriverId(AdminEditSchedule.queryDriverAvailable(time));
+
+        SelectAddScheduleDID.removeAllItems();
+
+        for (String driverId : driverIds) {
+            SelectAddScheduleDID.addItem(driverId);
+        }
+    }
+    // 排班新增 END
 }

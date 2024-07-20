@@ -39,14 +39,12 @@ public class DriverFunctionUI extends JFrame {
     }
 
     private void RefreshHomePageMouseReleased(MouseEvent e) {
-        // TODO add your code here
         String Id = currentDriverId;
         this.dispose();
         new DriverFunctionUI(Id);
     }
 
     private void TotalViewMouseReleased(MouseEvent e) {
-        // TODO add your code here
         String currentId = this.getCurrentDriverId();
         Driver driver = DriverHomePage.queryCurrentDriverInformation(currentId);
         NameText.setText(driver.getName());
@@ -58,7 +56,6 @@ public class DriverFunctionUI extends JFrame {
     }
 
     private void InformationModifyMouseReleased(MouseEvent e) {
-        // TODO add your code here
         String currentId = this.getCurrentDriverId();
         Driver driver = DriverHomePage.queryCurrentDriverInformation(currentId);
         NameInput.setText(driver.getName());
@@ -69,7 +66,6 @@ public class DriverFunctionUI extends JFrame {
     }
 
     private void InformationChangeMouseReleased(MouseEvent e) {
-        // TODO add your code here
         String ID = currentDriverId;
         String name = NameInput.getText();
 
@@ -93,7 +89,6 @@ public class DriverFunctionUI extends JFrame {
     }
 
     private void PasswordChangeMouseReleased(MouseEvent e) throws Exception {
-        // TODO add your code here
         String ID = currentDriverId;
         String oldPassword = new String(OldPasswordInput.getPassword());
         String newPassword = new String(NewPasswordInput.getPassword());
@@ -123,7 +118,6 @@ public class DriverFunctionUI extends JFrame {
     }
 
     private void LoginOutMouseReleased(MouseEvent e) {
-        // TODO add your code here
         this.dispose();
         new LoginUI();
     }
