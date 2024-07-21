@@ -9,8 +9,8 @@
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
                 <property name="url" value="jdbc:mysql:///smartbussystem?useSSL=true"/>
-                <property name="username" value="root"/>
-                <property name="password" value="jqc004118"/>
+                <property name="username" value="root"/>    <!--本地MySql用户名-->
+                <property name="password" value="jqc004118"/>   <!--本地MySql密码-->
             </dataSource>
         </environment>
     </environments>
