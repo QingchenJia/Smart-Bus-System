@@ -9,8 +9,15 @@ import SmartBusSystem.service.DatabaseOperation;
 import java.util.List;
 
 public class AdminEditBus {
+    private static final BusMapper busMapper;
+    private static final RouteMapper routeMapper;
+
+    static {
+        busMapper = DatabaseOperation.session.getMapper(BusMapper.class);
+        routeMapper = DatabaseOperation.session.getMapper(RouteMapper.class);
+    }
+
     public static List<Bus> queryAllBus() {
-        BusMapper busMapper = DatabaseOperation.session.getMapper(BusMapper.class);
         List<Bus> buses = busMapper.SelectAll();
         System.out.println("全部车辆->" + buses);
         return buses;
@@ -25,7 +32,6 @@ public class AdminEditBus {
     }
 
     public static void updateBusStatus(Bus bus) {
-        BusMapper busMapper = DatabaseOperation.session.getMapper(BusMapper.class);
         busMapper.UpdateBusStatus(bus);
         DatabaseOperation.session.commit();
     }
@@ -36,7 +42,6 @@ public class AdminEditBus {
     }
 
     public static List<Route> queryRouteStatusIsOne() {
-        RouteMapper routeMapper = DatabaseOperation.session.getMapper(RouteMapper.class);
         List<Route> routes = routeMapper.SelectStatusIsOne();
         System.out.println("正常路线->" + routes);
         return routes;
@@ -47,7 +52,6 @@ public class AdminEditBus {
     }
 
     public static void addNewBus(Bus bus) {
-        BusMapper busMapper = DatabaseOperation.session.getMapper(BusMapper.class);
         busMapper.InsertBus(bus);
         DatabaseOperation.session.commit();
     }
@@ -57,7 +61,6 @@ public class AdminEditBus {
     }
 
     public static void deleteBus(String licenseNum) {
-        BusMapper busMapper = DatabaseOperation.session.getMapper(BusMapper.class);
         busMapper.DeleteBus(licenseNum);
         DatabaseOperation.session.commit();
     }

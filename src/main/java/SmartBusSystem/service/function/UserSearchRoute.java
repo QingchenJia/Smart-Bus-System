@@ -2,6 +2,7 @@ package SmartBusSystem.service.function;
 
 import SmartBusSystem.mapper.RouteMapper;
 import SmartBusSystem.mapper.StopMapper;
+import SmartBusSystem.mapper.UserMapper;
 import SmartBusSystem.pojo.Route;
 import SmartBusSystem.pojo.Stop;
 import SmartBusSystem.service.DatabaseOperation;
@@ -9,8 +10,14 @@ import SmartBusSystem.service.DatabaseOperation;
 import java.util.List;
 
 public class UserSearchRoute {
+    private static final StopMapper stopMapper;
+    private static final RouteMapper routeMapper;
+
+    static {
+        stopMapper = DatabaseOperation.session.getMapper(StopMapper.class);
+        routeMapper = DatabaseOperation.session.getMapper(RouteMapper.class);
+    }
     public static List<Route> showAllRoute() {
-        RouteMapper routeMapper = DatabaseOperation.session.getMapper(RouteMapper.class);
         List<Route> routes = routeMapper.SelectAll();
         System.out.println("全部线路->" + routes);
         return routes;
@@ -21,14 +28,12 @@ public class UserSearchRoute {
     }
 
     public static Route getRouteById(String ID) {
-        RouteMapper routeMapper = DatabaseOperation.session.getMapper(RouteMapper.class);
         Route route = routeMapper.SelectById(ID);
         System.out.println("查询线路->" + route);
         return route;
     }
 
     public static List<Stop> searchPassByStop(String RID) {
-        StopMapper stopMapper = DatabaseOperation.session.getMapper(StopMapper.class);
         List<Stop> stops = stopMapper.SelectStopOrderInRoute(RID);
         System.out.println("途径站点->" + stops);
         return stops;

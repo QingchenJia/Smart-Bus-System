@@ -5,6 +5,12 @@ import SmartBusSystem.pojo.Driver;
 import SmartBusSystem.service.DatabaseOperation;
 
 public class DriverRegister {
+    private static final DriverMapper driverMapper;
+
+    static {
+        driverMapper = DatabaseOperation.session.getMapper(DriverMapper.class);
+    }
+
     public static boolean containDriver(String ID) {
         DriverMapper driverMapper = DatabaseOperation.session.getMapper(DriverMapper.class);
         Driver driver = driverMapper.SelectById(ID);
@@ -25,7 +31,6 @@ public class DriverRegister {
     }
 
     public static void register(Driver driver) {
-        DriverMapper driverMapper = DatabaseOperation.session.getMapper(DriverMapper.class);
         driverMapper.InsertDriver(driver);
         DatabaseOperation.session.commit();
     }

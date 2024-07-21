@@ -5,8 +5,13 @@ import SmartBusSystem.pojo.User;
 import SmartBusSystem.service.DatabaseOperation;
 
 public class UserRegister {
+    public static final UserMapper userMapper;
+
+    static {
+        userMapper = DatabaseOperation.session.getMapper(UserMapper.class);
+    }
+
     public static boolean containUser(String ID) {
-        UserMapper userMapper = DatabaseOperation.session.getMapper(UserMapper.class);
         User user = userMapper.SelectById(ID);
         System.out.println("检索用户->" + user);   // 控制台展示查询结果
         return user != null;
@@ -25,7 +30,6 @@ public class UserRegister {
     }
 
     public static void register(User user) {
-        UserMapper userMapper = DatabaseOperation.session.getMapper(UserMapper.class);
         userMapper.InsertUser(user);
         DatabaseOperation.session.commit();
     }

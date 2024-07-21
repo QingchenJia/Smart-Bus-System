@@ -9,8 +9,15 @@ import SmartBusSystem.service.DatabaseOperation;
 import java.util.List;
 
 public class UserSearchStop {
+    private static final StopMapper stopMapper;
+    private static final RouteMapper routeMapper;
+
+    static {
+        stopMapper = DatabaseOperation.session.getMapper(StopMapper.class);
+        routeMapper = DatabaseOperation.session.getMapper(RouteMapper.class);
+    }
+
     public static List<Stop> searchBySimilarName(String similarName) {
-        StopMapper stopMapper = DatabaseOperation.session.getMapper(StopMapper.class);
         List<Stop> stops = stopMapper.SelectStopBySimilarName(similarName);
         System.out.println("模糊匹配->" + stops);
         return stops;
@@ -21,14 +28,12 @@ public class UserSearchStop {
     }
 
     public static List<Stop> showAllStop() {
-        StopMapper stopMapper = DatabaseOperation.session.getMapper(StopMapper.class);
         List<Stop> stops = stopMapper.SelectAll();
         System.out.println("全部站点->" + stops);
         return stops;
     }
 
     public static List<Route> searchPassByRoute(String stopName) {
-        RouteMapper routeMapper = DatabaseOperation.session.getMapper(RouteMapper.class);
         List<Route> routes = routeMapper.SelectRoutePassByStop(stopName);
         System.out.println("经行路线->" + routes);
         return routes;
@@ -43,7 +48,6 @@ public class UserSearchStop {
     }
 
     public static Stop getStopByName(String name) {
-        StopMapper stopMapper = DatabaseOperation.session.getMapper(StopMapper.class);
         Stop stop = stopMapper.SelectByName(name);
         System.out.println("查询站点->" + stop);
         return stop;

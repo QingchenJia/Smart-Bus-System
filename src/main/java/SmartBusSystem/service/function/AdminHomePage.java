@@ -1,6 +1,5 @@
 package SmartBusSystem.service.function;
 
-import SmartBusSystem.mapper.DriverMapper;
 import SmartBusSystem.mapper.ScheduleMapper;
 import SmartBusSystem.pojo.Bus;
 import SmartBusSystem.pojo.Driver;
@@ -15,15 +14,16 @@ import java.util.List;
 
 public class AdminHomePage {
     public static List<String> dayOfWeek = new ArrayList<>();
+    private static final ScheduleMapper scheduleMapper;
 
     static {
         Collections.addAll(dayOfWeek, "星期1", "星期2", "星期3", "星期4", "星期5", "星期6", "星期7");
+        scheduleMapper = DatabaseOperation.session.getMapper(ScheduleMapper.class);
     }
 
     public static List<WorkArrangeRow> getAllWorkArrange() {
         List<WorkArrangeRow> allWorkArrange = new ArrayList<>();
 
-        ScheduleMapper scheduleMapper = DatabaseOperation.session.getMapper(ScheduleMapper.class);
         for (String day : dayOfWeek) {
             List<Schedule> schedules = scheduleMapper.SelectByDayOfWeek(day);
 
