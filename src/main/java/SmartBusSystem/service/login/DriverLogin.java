@@ -10,12 +10,17 @@ import SmartBusSystem.service.register.DriverRegister;
 import SmartBusSystem.service.register.UserRegister;
 
 public class DriverLogin {
+    private static final DriverMapper driverMapper;
+
+    static {
+        driverMapper = DatabaseOperation.session.getMapper(DriverMapper.class);
+    }
+
     public static boolean verifyID(String ID) {
         return DriverRegister.containDriver(ID);
     }
 
     public static boolean verifyPassword(String ID, String password) throws Exception {
-        DriverMapper driverMapper = DatabaseOperation.session.getMapper(DriverMapper.class);
         Driver driver = driverMapper.SelectById(ID);
         System.out.println("验证密码->" + driver);  // 控制台展示查询结果
         return password.equals(SecurityProtect.decrypt(driver.getPassword()));

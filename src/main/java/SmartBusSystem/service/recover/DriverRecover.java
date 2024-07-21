@@ -7,12 +7,17 @@ import SmartBusSystem.service.login.DriverLogin;
 import SmartBusSystem.service.register.DriverRegister;
 
 public class DriverRecover {
+    private static final DriverMapper driverMapper;
+
+    static {
+        driverMapper = DatabaseOperation.session.getMapper(DriverMapper.class);
+    }
+
     public static boolean verifyID(String ID) {
         return DriverLogin.verifyID(ID);
     }
 
     public static boolean verifyPhoneNum(String ID, String phoneNum) {
-        DriverMapper driverMapper = DatabaseOperation.session.getMapper(DriverMapper.class);
         Driver driver = driverMapper.SelectById(ID);
         System.out.println("验证手机号->" + driver);   // 控制台展示查询结果
         return phoneNum.equals(driver.getPhoneNum());
@@ -23,7 +28,6 @@ public class DriverRecover {
     }
 
     public static void resetPassword(String ID, String newPassword) {
-        DriverMapper driverMapper = DatabaseOperation.session.getMapper(DriverMapper.class);
         driverMapper.UpdatePassword(ID, newPassword);
         DatabaseOperation.session.commit();
     }

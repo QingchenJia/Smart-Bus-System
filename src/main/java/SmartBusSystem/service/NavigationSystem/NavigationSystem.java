@@ -34,7 +34,6 @@ public class NavigationSystem {
     }
 
     public static List<String> findRoute(String startStopId, String endStopId) {
-        // BFS setup
         Queue<String> queue = new LinkedList<>();
         Map<String, String> prev = new HashMap<>();
         queue.add(startStopId);
@@ -53,7 +52,6 @@ public class NavigationSystem {
             }
         }
 
-        // Construct path
         List<String> path = new ArrayList<>();
         if (!prev.containsKey(endStopId)) {
             return Collections.singletonList("无法找到路径");
@@ -64,7 +62,6 @@ public class NavigationSystem {
         }
         Collections.reverse(path);
 
-        // Generate detailed route
         List<String> detailedRoute = new ArrayList<>();
         for (int i = 0; i < path.size() - 1; i++) {
             String from = path.get(i);

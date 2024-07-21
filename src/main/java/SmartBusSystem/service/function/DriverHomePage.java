@@ -16,15 +16,23 @@ import java.util.Collections;
 import java.util.List;
 
 public class DriverHomePage {
+    private static final BusMapper busMapper;
+    private static final DriverMapper driverMapper;
+    private static final ScheduleMapper scheduleMapper;
+
+    static {
+        busMapper = DatabaseOperation.session.getMapper(BusMapper.class);
+        driverMapper = DatabaseOperation.session.getMapper(DriverMapper.class);
+        scheduleMapper = DatabaseOperation.session.getMapper(ScheduleMapper.class);
+    }
+
     public static Driver queryCurrentDriverInformation(String DID) {
-        DriverMapper driverMapper = DatabaseOperation.session.getMapper(DriverMapper.class);
         Driver driver = driverMapper.SelectById(DID);
         System.out.println("当前司机->" + driver);
         return driver;
     }
 
     public static Bus queryBusById(String licenseNum) {
-        BusMapper busMapper = DatabaseOperation.session.getMapper(BusMapper.class);
         Bus bus = busMapper.SelectByLicenseNumber(licenseNum);
         System.out.println("检索车辆->" + bus);
         return bus;
@@ -35,7 +43,6 @@ public class DriverHomePage {
     }
 
     public static List<WorkArrangeRow> getOwnWorkArrangeRow(String currentId) {
-        ScheduleMapper scheduleMapper = DatabaseOperation.session.getMapper(ScheduleMapper.class);
         List<Schedule> schedules = scheduleMapper.SelectByDriverID(currentId);
         System.out.println("工作安排->" + schedules);
 
