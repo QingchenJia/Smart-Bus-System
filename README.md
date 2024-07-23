@@ -16,7 +16,6 @@ Import `slf4j`logs, and print the log information in the console.
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!--项目信息-->
     <groupId>edu.qingchenjia</groupId>
     <artifactId>demo</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -67,6 +66,36 @@ Import `slf4j`logs, and print the log information in the console.
             <version>1.78.1</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <archive>
+                                <manifest>
+                                    <!--填写你的main方法所在的主类-->
+                                    <mainClass>
+                                        SmartBusSystem.App
+                                    </mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
 ```
 
