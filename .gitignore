@@ -58,3 +58,4 @@ tags
 # Persistent undo
 [._]*.un~
 >>>>>>> b70a73844b10288a1be138a7bddd08875c0a3196
+/src/test/
