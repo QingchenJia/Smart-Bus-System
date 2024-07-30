@@ -55,6 +55,15 @@ new FormModel {
 				"x": 45
 				"y": 55
 			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "ExportToExcel"
+				"text": "导出"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 3, 0, false )
+				addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseReleased", "ExportTableMouseReleased", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 565
+				"y": 30
+			} )
 			menuBar: new FormContainer( "javax.swing.JMenuBar", new FormLayoutManager( class javax.swing.JMenuBar ) ) {
 				name: "TopMenu"
 				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
