@@ -8,6 +8,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import javax.swing.*;
 import javax.swing.table.TableModel;
+import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -16,7 +17,7 @@ public class ExportTable {
     private final static Workbook workbook = new XSSFWorkbook();
     private final static Sheet sheet = workbook.createSheet();
 
-    public static void JTable2Excel(TableModel tableModel, String excelName) throws IOException {
+    public static void JTable2Excel(TableModel tableModel, String excelName, Frame frame) throws IOException {
         // 创建表头行
         Row headRow = sheet.createRow(0);
         for (int col = 0; col < tableModel.getColumnCount(); col++) {
@@ -26,7 +27,7 @@ public class ExportTable {
 
         // 填充表格数据
         for (int row = 0; row < tableModel.getRowCount(); row++) {
-            Row dataRow = sheet.createRow(row);
+            Row dataRow = sheet.createRow(row + 1);
             for (int col = 0; col < tableModel.getColumnCount(); col++) {
                 Cell cell = dataRow.createCell(col);
                 Object value = tableModel.getValueAt(row, col);
@@ -44,8 +45,8 @@ public class ExportTable {
             sheet.autoSizeColumn(col);
         }
 
-        FileOutputStream excelExport = new FileOutputStream(new File("data/" + excelName + ".xlsx"));
+        FileOutputStream excelExport = new FileOutputStream(new File("data/export-excel/" + excelName + ".xlsx"));
         workbook.write(excelExport);
-        JOptionPane.showMessageDialog(null, "导出成功!");
+        JOptionPane.showMessageDialog(frame, "导出成功!");
     }
 }
