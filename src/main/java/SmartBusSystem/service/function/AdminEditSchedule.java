@@ -6,7 +6,7 @@ import SmartBusSystem.mapper.ScheduleMapper;
 import SmartBusSystem.pojo.Bus;
 import SmartBusSystem.pojo.Driver;
 import SmartBusSystem.pojo.Schedule;
-import SmartBusSystem.service.DatabaseOperation;
+import SmartBusSystem.service.tool.DatabaseOperation;
 
 import java.util.List;
 

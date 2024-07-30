@@ -4,7 +4,7 @@ import SmartBusSystem.mapper.BusMapper;
 import SmartBusSystem.mapper.RouteMapper;
 import SmartBusSystem.pojo.Bus;
 import SmartBusSystem.pojo.Route;
-import SmartBusSystem.service.DatabaseOperation;
+import SmartBusSystem.service.tool.DatabaseOperation;
 
 import java.util.List;
 

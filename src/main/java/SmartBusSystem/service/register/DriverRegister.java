@@ -2,7 +2,7 @@ package SmartBusSystem.service.register;
 
 import SmartBusSystem.mapper.DriverMapper;
 import SmartBusSystem.pojo.Driver;
-import SmartBusSystem.service.DatabaseOperation;
+import SmartBusSystem.service.tool.DatabaseOperation;
 
 public class DriverRegister {
     private static final DriverMapper driverMapper;

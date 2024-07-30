@@ -2,7 +2,7 @@ package SmartBusSystem.service.register;
 
 import SmartBusSystem.mapper.UserMapper;
 import SmartBusSystem.pojo.User;
-import SmartBusSystem.service.DatabaseOperation;
+import SmartBusSystem.service.tool.DatabaseOperation;
 
 public class UserRegister {
     public static final UserMapper userMapper;

@@ -1,4 +1,4 @@
-package SmartBusSystem.service;
+package SmartBusSystem.service.tool;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;

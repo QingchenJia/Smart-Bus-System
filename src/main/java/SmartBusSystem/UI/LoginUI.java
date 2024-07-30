@@ -4,7 +4,7 @@
 
 package SmartBusSystem.UI;
 
-import SmartBusSystem.service.SecurityProtect;
+import SmartBusSystem.service.tool.SecurityProtect;
 import SmartBusSystem.service.login.AdminLogin;
 import SmartBusSystem.service.login.DriverLogin;
 import SmartBusSystem.service.login.UserLogin;

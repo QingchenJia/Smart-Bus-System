@@ -53,7 +53,8 @@ public class RouteGuideRow {
             tempStopName.append(stop.getName()).append("-");
         }
 
-        return new String(tempStopName);
+        String stringStopName = new String(tempStopName);
+        return stringStopName.substring(0, stringStopName.length() - 1);
     }
 
     public void addStop(Stop stop) {

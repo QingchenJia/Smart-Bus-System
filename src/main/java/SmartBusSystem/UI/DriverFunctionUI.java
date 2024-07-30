@@ -7,7 +7,7 @@ package SmartBusSystem.UI;
 import javax.swing.table.*;
 
 import SmartBusSystem.pojo.Driver;
-import SmartBusSystem.service.SecurityProtect;
+import SmartBusSystem.service.tool.SecurityProtect;
 import SmartBusSystem.service.TableRow.WorkArrangeRow;
 import SmartBusSystem.service.function.DriverHomePage;
 import SmartBusSystem.service.function.DriverInformationModify;

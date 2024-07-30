@@ -5,7 +5,7 @@
 package SmartBusSystem.UI;
 
 import SmartBusSystem.pojo.Driver;
-import SmartBusSystem.service.SecurityProtect;
+import SmartBusSystem.service.tool.SecurityProtect;
 import SmartBusSystem.service.register.DriverRegister;
 
 import java.awt.*;

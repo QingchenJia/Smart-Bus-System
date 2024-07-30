@@ -2,7 +2,7 @@ package SmartBusSystem.service.function;
 
 import SmartBusSystem.mapper.UserMapper;
 import SmartBusSystem.pojo.User;
-import SmartBusSystem.service.DatabaseOperation;
+import SmartBusSystem.service.tool.DatabaseOperation;
 import SmartBusSystem.service.login.UserLogin;
 import SmartBusSystem.service.register.UserRegister;
 
