@@ -5,20 +5,24 @@
 package SmartBusSystem.UI;
 
 import SmartBusSystem.pojo.Bus;
-import SmartBusSystem.pojo.Driver;
-import SmartBusSystem.pojo.Route;
 import SmartBusSystem.pojo.Schedule;
 import SmartBusSystem.service.TableRow.WorkArrangeRow;
+import SmartBusSystem.service.function.AdminEditBus;
 import SmartBusSystem.service.function.AdminEditSchedule;
 import SmartBusSystem.service.function.AdminHomePage;
-import SmartBusSystem.service.function.AdminEditBus;
+import SmartBusSystem.service.tool.ExportTable;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
-import javax.swing.*;
-import javax.swing.table.*;
 
 /**
  * @author 87948
@@ -153,6 +157,10 @@ public class AdminFunctionUI extends JFrame {
         AddNewScheduleDialog.dispose();
     }
 
+    private void ExportTableMouseReleased(MouseEvent e) throws IOException {
+        ExportTable.JTable2Excel(AllWorkArrange.getModel(), "工作排班表", this);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         TopMenu = new JMenuBar();
@@ -169,6 +177,7 @@ public class AdminFunctionUI extends JFrame {
         Title = new JLabel();
         TablePane = new JScrollPane();
         AllWorkArrange = new JTable();
+        ExportToExcel = new JLabel();
         QueryBusDialog = new JDialog();
         BusLicenseNum = new JLabel();
         BusSelectBusLicenseNum = new JComboBox();
@@ -374,6 +383,21 @@ public class AdminFunctionUI extends JFrame {
         }
         contentPane.add(TablePane);
         TablePane.setBounds(45, 55, 545, 310);
+
+        //---- ExportToExcel ----
+        ExportToExcel.setText("\u5bfc\u51fa");
+        ExportToExcel.setFont(ExportToExcel.getFont().deriveFont(Font.BOLD|Font.ITALIC));
+        ExportToExcel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                try {
+ExportTableMouseReleased(e);} catch (IOException ex) {
+    throw new RuntimeException(ex);
+}
+            }
+        });
+        contentPane.add(ExportToExcel);
+        ExportToExcel.setBounds(new Rectangle(new Point(565, 30), ExportToExcel.getPreferredSize()));
 
         contentPane.setPreferredSize(new Dimension(640, 480));
         setSize(640, 480);
@@ -839,6 +863,7 @@ public class AdminFunctionUI extends JFrame {
     private JLabel Title;
     private JScrollPane TablePane;
     private JTable AllWorkArrange;
+    private JLabel ExportToExcel;
     private JDialog QueryBusDialog;
     private JLabel BusLicenseNum;
     private JComboBox BusSelectBusLicenseNum;

@@ -4,18 +4,20 @@
 
 package SmartBusSystem.UI;
 
-import javax.swing.table.*;
-
 import SmartBusSystem.pojo.Driver;
-import SmartBusSystem.service.tool.SecurityProtect;
 import SmartBusSystem.service.TableRow.WorkArrangeRow;
 import SmartBusSystem.service.function.DriverHomePage;
 import SmartBusSystem.service.function.DriverInformationModify;
+import SmartBusSystem.service.tool.ExportTable;
+import SmartBusSystem.service.tool.SecurityProtect;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -122,6 +124,10 @@ public class DriverFunctionUI extends JFrame {
         new LoginUI();
     }
 
+    private void ExportToExcelMouseReleased(MouseEvent e) throws IOException {
+        ExportTable.JTable2Excel(WorkArrange.getModel(), currentDriverId + "个人工作排班表", this);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         TopMenu = new JMenuBar();
@@ -134,6 +140,7 @@ public class DriverFunctionUI extends JFrame {
         Title = new JLabel();
         TablePane = new JScrollPane();
         WorkArrange = new JTable();
+        ExportToExcel = new JLabel();
         TotalViewDialog = new JDialog();
         Id = new JLabel();
         PhoneNum = new JLabel();
@@ -283,6 +290,21 @@ public class DriverFunctionUI extends JFrame {
         }
         contentPane.add(TablePane);
         TablePane.setBounds(45, 55, 545, 310);
+
+        //---- ExportToExcel ----
+        ExportToExcel.setText("\u5bfc\u51fa");
+        ExportToExcel.setFont(ExportToExcel.getFont().deriveFont(Font.BOLD|Font.ITALIC));
+        ExportToExcel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                try {
+ExportToExcelMouseReleased(e);} catch (IOException ex) {
+    throw new RuntimeException(ex);
+}
+            }
+        });
+        contentPane.add(ExportToExcel);
+        ExportToExcel.setBounds(new Rectangle(new Point(565, 30), ExportToExcel.getPreferredSize()));
 
         contentPane.setPreferredSize(new Dimension(640, 480));
         setSize(640, 480);
@@ -643,6 +665,7 @@ PasswordChangeMouseReleased(e);} catch (Exception ex) {
     private JLabel Title;
     private JScrollPane TablePane;
     private JTable WorkArrange;
+    private JLabel ExportToExcel;
     private JDialog TotalViewDialog;
     private JLabel Id;
     private JLabel PhoneNum;

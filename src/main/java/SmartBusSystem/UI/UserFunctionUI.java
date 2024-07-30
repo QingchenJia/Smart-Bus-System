@@ -4,14 +4,15 @@
 
 package SmartBusSystem.UI;
 
-import SmartBusSystem.service.TableRow.RouteGuideRow;
 import SmartBusSystem.pojo.User;
 import SmartBusSystem.service.NavigationSystem.NavigationSystem;
-import SmartBusSystem.service.tool.SecurityProtect;
+import SmartBusSystem.service.TableRow.RouteGuideRow;
 import SmartBusSystem.service.function.UserHomePage;
 import SmartBusSystem.service.function.UserInformationModify;
 import SmartBusSystem.service.function.UserSearchRoute;
 import SmartBusSystem.service.function.UserSearchStop;
+import SmartBusSystem.service.tool.ExportTable;
+import SmartBusSystem.service.tool.SecurityProtect;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -21,6 +22,7 @@ import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.sql.Time;
 import java.util.List;
 import java.util.Objects;
@@ -155,6 +157,10 @@ public class UserFunctionUI extends JFrame {
         new UserFunctionUI().setCurrentUserId(Id);
     }
 
+    private void thisMouseReleased(MouseEvent e) throws IOException {
+        ExportTable.JTable2Excel(RouteGuide.getModel(), "公交线路指南", this);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents  @formatter:off
         TopMenu = new JMenuBar();
@@ -170,6 +176,7 @@ public class UserFunctionUI extends JFrame {
         Title = new JLabel();
         TablePane = new JScrollPane();
         RouteGuide = new JTable();
+        ExportToExcel = new JLabel();
         TotalViewDialog = new JDialog();
         Id = new JLabel();
         PhoneNum = new JLabel();
@@ -217,7 +224,7 @@ public class UserFunctionUI extends JFrame {
         PassRouteListPane = new JScrollPane();
         PassRouteList = new JList();
         RouteQueryDialog = new JDialog();
-        StopName2 = new JLabel();
+        QueryStopName = new JLabel();
         SelectRouteId = new JComboBox();
         SearchRoute = new JButton();
         RouteSearchResult = new JDialog();
@@ -246,6 +253,15 @@ public class UserFunctionUI extends JFrame {
         //======== this ========
         setTitle("\u4e58\u5ba2\u7aef");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                try {
+thisMouseReleased(e);} catch (IOException ex) {
+    throw new RuntimeException(ex);
+}
+            }
+        });
         var contentPane = getContentPane();
         contentPane.setLayout(null);
 
@@ -395,6 +411,12 @@ public class UserFunctionUI extends JFrame {
         }
         contentPane.add(TablePane);
         TablePane.setBounds(20, 55, 590, 320);
+
+        //---- ExportToExcel ----
+        ExportToExcel.setText("\u5bfc\u51fa");
+        ExportToExcel.setFont(ExportToExcel.getFont().deriveFont(Font.BOLD|Font.ITALIC));
+        contentPane.add(ExportToExcel);
+        ExportToExcel.setBounds(new Rectangle(new Point(585, 30), ExportToExcel.getPreferredSize()));
 
         contentPane.setPreferredSize(new Dimension(640, 480));
         setSize(640, 480);
@@ -821,11 +843,11 @@ PasswordChangeMouseReleased(e);} catch (Exception ex) {
             var RouteQueryDialogContentPane = RouteQueryDialog.getContentPane();
             RouteQueryDialogContentPane.setLayout(null);
 
-            //---- StopName2 ----
-            StopName2.setText("\u7ebf\u8def\u540d\u79f0:");
-            StopName2.setFont(StopName2.getFont().deriveFont(StopName2.getFont().getStyle() | Font.BOLD, StopName2.getFont().getSize() + 5f));
-            RouteQueryDialogContentPane.add(StopName2);
-            StopName2.setBounds(new Rectangle(new Point(40, 30), StopName2.getPreferredSize()));
+            //---- QueryStopName ----
+            QueryStopName.setText("\u7ebf\u8def\u540d\u79f0:");
+            QueryStopName.setFont(QueryStopName.getFont().deriveFont(QueryStopName.getFont().getStyle() | Font.BOLD, QueryStopName.getFont().getSize() + 5f));
+            RouteQueryDialogContentPane.add(QueryStopName);
+            QueryStopName.setBounds(new Rectangle(new Point(40, 30), QueryStopName.getPreferredSize()));
             RouteQueryDialogContentPane.add(SelectRouteId);
             SelectRouteId.setBounds(125, 30, 90, SelectRouteId.getPreferredSize().height);
 
@@ -1015,6 +1037,7 @@ PasswordChangeMouseReleased(e);} catch (Exception ex) {
     private JLabel Title;
     private JScrollPane TablePane;
     private JTable RouteGuide;
+    private JLabel ExportToExcel;
     private JDialog TotalViewDialog;
     private JLabel Id;
     private JLabel PhoneNum;
@@ -1062,7 +1085,7 @@ PasswordChangeMouseReleased(e);} catch (Exception ex) {
     private JScrollPane PassRouteListPane;
     private JList PassRouteList;
     private JDialog RouteQueryDialog;
-    private JLabel StopName2;
+    private JLabel QueryStopName;
     private JComboBox SelectRouteId;
     private JButton SearchRoute;
     private JDialog RouteSearchResult;
