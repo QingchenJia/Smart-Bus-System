@@ -6,8 +6,9 @@ A smart public transport system that integrates passengers, drivers, and adminis
 #### 软件架构
 
 This project uses `Maven` to build the project. 
-Import `MyBatis` to connect to a MySQL database.
-Import `slf4j`logs, and print the log information in the console.
+Import `MyBatis` to connect to a `MySQL` database.
+Import `slf4j` logs, and print the log information in the console.
+Import `poi-ooxml` to export tables.
 
 #### 基本功能
 
@@ -17,7 +18,7 @@ Passengers can change their personal information and change their password. Quer
 Drivers are able to query and modify personal information and change passwords. Be able to keep track of their schedule.
 Administrators are able to make edits to the vehicle and make changes to the driver's schedule.
 
-In particular, in order to ensure the basic security of the password, the project uses the AES symmetric encryption algorithm to perform the ciphertext conversion.
+In particular, in order to ensure the basic security of the password, the project uses the AES symmetric encryption algorithm to perform the ciphertext conversion. In addition, the table export function is supported, and the export file can be found in the `data/export-excel` directory.
 
 
 #### 使用说明
