@@ -1,4 +1,4 @@
-CREATE SCHEMA smartbussystem;
+CREATE SCHEMA if not exists smartbussystem;
 
 USE smartbussystem;
 
