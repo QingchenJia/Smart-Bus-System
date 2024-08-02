@@ -6,9 +6,10 @@ A smart public transport system that integrates passengers, drivers, and adminis
 #### 软件架构
 
 This project uses `Maven` to build the project. 
-Import `MyBatis` to connect to a `MySQL` database.
+Import `mybatis` to connect to a `MySQL` database.
 Import `slf4j` logs, and print the log information in the console.
-Import `poi-ooxml` to export tables.
+Import `poi-ooxml` to export tables to local directory.
+Import `bouncycastle` for information security protection.
 
 #### 基本功能
 
