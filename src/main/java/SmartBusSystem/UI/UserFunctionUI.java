@@ -92,16 +92,19 @@ public class UserFunctionUI extends JFrame {
         Pass.setVisible(true);
     }
 
-    private void PasswordChangeMouseReleased(MouseEvent e) throws Exception {
-
+    private void PasswordChangeMouseReleased(MouseEvent e){
         String ID = currentUserId;
         String oldPassword = new String(OldPasswordInput.getPassword());
         String newPassword = new String(NewPasswordInput.getPassword());
         String newPasswordAgain = new String(NewPasswordAgainInput.getPassword());
 
-        if (!UserInformationModify.oldPasswordIsRight(ID, oldPassword)) {
-            OldPasswordWrong.setVisible(true);
-            return;
+        try {
+            if (!UserInformationModify.oldPasswordIsRight(ID, oldPassword)) {
+                OldPasswordWrong.setVisible(true);
+                return;
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
         }
         if (!UserInformationModify.checkPassword(newPassword)) {
             PasswordWrong.setVisible(true);
@@ -112,7 +115,12 @@ public class UserFunctionUI extends JFrame {
             return;
         }
 
-        String newPasswordResult = SecurityProtect.encrypt(newPassword);
+        String newPasswordResult = null;
+        try {
+            newPasswordResult = SecurityProtect.encrypt(newPassword);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
 
         UserInformationModify.updateUserNewPassword(ID, newPasswordResult);
 
@@ -157,8 +165,12 @@ public class UserFunctionUI extends JFrame {
         new UserFunctionUI().setCurrentUserId(Id);
     }
 
-    private void thisMouseReleased(MouseEvent e) throws IOException {
-        ExportTable.JTable2Excel(RouteGuide.getModel(), "公交线路指南", this);
+    private void ExportToExcelMouseReleased(MouseEvent e) {
+        try {
+            ExportTable.JTable2Excel(RouteGuide.getModel(), "公交线路指南", this);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     private void initComponents() {
@@ -253,15 +265,6 @@ public class UserFunctionUI extends JFrame {
         //======== this ========
         setTitle("\u4e58\u5ba2\u7aef");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                try {
-thisMouseReleased(e);} catch (IOException ex) {
-    throw new RuntimeException(ex);
-}
-            }
-        });
         var contentPane = getContentPane();
         contentPane.setLayout(null);
 
@@ -415,6 +418,12 @@ thisMouseReleased(e);} catch (IOException ex) {
         //---- ExportToExcel ----
         ExportToExcel.setText("\u5bfc\u51fa");
         ExportToExcel.setFont(ExportToExcel.getFont().deriveFont(Font.BOLD|Font.ITALIC));
+        ExportToExcel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                ExportToExcelMouseReleased(e);
+            }
+        });
         contentPane.add(ExportToExcel);
         ExportToExcel.setBounds(new Rectangle(new Point(585, 30), ExportToExcel.getPreferredSize()));
 
@@ -565,10 +574,7 @@ thisMouseReleased(e);} catch (IOException ex) {
             PasswordChange.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseReleased(MouseEvent e) {
-                    try {
-PasswordChangeMouseReleased(e);} catch (Exception ex) {
-    throw new RuntimeException(ex);
-}
+                    PasswordChangeMouseReleased(e);
                 }
             });
             InformationModifyDialogContentPane.add(PasswordChange);

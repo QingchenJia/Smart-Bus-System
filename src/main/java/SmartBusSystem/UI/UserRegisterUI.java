@@ -5,8 +5,8 @@
 package SmartBusSystem.UI;
 
 import SmartBusSystem.pojo.User;
-import SmartBusSystem.service.tool.SecurityProtect;
 import SmartBusSystem.service.register.UserRegister;
+import SmartBusSystem.service.tool.SecurityProtect;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,7 +56,7 @@ public class UserRegisterUI extends JFrame {
         new LoginUI();
     }
 
-    private void RegisterMouseReleased(MouseEvent e) throws Exception {
+    private void RegisterMouseReleased(MouseEvent e) {
         String ID = IdInput.getText();
         String password = new String(PasswordInput.getPassword());
         String phoneNum = PhoneNumIdInput.getText();
@@ -64,7 +64,11 @@ public class UserRegisterUI extends JFrame {
 
         User user = new User();
         user.setID(ID);
-        user.setPassword(SecurityProtect.encrypt(password));
+        try {
+            user.setPassword(SecurityProtect.encrypt(password));
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
         user.setPhoneNum(phoneNum);
         user.setAptitude(aptitude);
 
@@ -362,10 +366,7 @@ public class UserRegisterUI extends JFrame {
             Register.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseReleased(MouseEvent e) {
-                    try {
-RegisterMouseReleased(e);} catch (Exception ex) {
-    throw new RuntimeException(ex);
-}
+                    RegisterMouseReleased(e);
                 }
             });
             PassContentPane.add(Register);

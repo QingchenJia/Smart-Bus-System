@@ -90,15 +90,19 @@ public class DriverFunctionUI extends JFrame {
         Pass.setVisible(true);
     }
 
-    private void PasswordChangeMouseReleased(MouseEvent e) throws Exception {
+    private void PasswordChangeMouseReleased(MouseEvent e) {
         String ID = currentDriverId;
         String oldPassword = new String(OldPasswordInput.getPassword());
         String newPassword = new String(NewPasswordInput.getPassword());
         String newPasswordAgain = new String(NewPasswordAgainInput.getPassword());
 
-        if (!DriverInformationModify.oldPasswordIsRight(ID, oldPassword)) {
-            OldPasswordWrong.setVisible(true);
-            return;
+        try {
+            if (!DriverInformationModify.oldPasswordIsRight(ID, oldPassword)) {
+                OldPasswordWrong.setVisible(true);
+                return;
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
         }
         if (!DriverInformationModify.checkPassword(newPassword)) {
             PasswordWrong.setVisible(true);
@@ -109,7 +113,12 @@ public class DriverFunctionUI extends JFrame {
             return;
         }
 
-        String newPasswordResult = SecurityProtect.encrypt(newPassword);
+        String newPasswordResult = null;
+        try {
+            newPasswordResult = SecurityProtect.encrypt(newPassword);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
 
         DriverInformationModify.updateDriverNewPassword(ID, newPasswordResult);
 
@@ -124,8 +133,12 @@ public class DriverFunctionUI extends JFrame {
         new LoginUI();
     }
 
-    private void ExportToExcelMouseReleased(MouseEvent e) throws IOException {
-        ExportTable.JTable2Excel(WorkArrange.getModel(), currentDriverId + "个人工作排班表", this);
+    private void ExportToExcelMouseReleased(MouseEvent e) {
+        try {
+            ExportTable.JTable2Excel(WorkArrange.getModel(), currentDriverId + "个人工作排班表", this);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     private void initComponents() {
@@ -297,10 +310,7 @@ public class DriverFunctionUI extends JFrame {
         ExportToExcel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-                try {
-ExportToExcelMouseReleased(e);} catch (IOException ex) {
-    throw new RuntimeException(ex);
-}
+                ExportToExcelMouseReleased(e);
             }
         });
         contentPane.add(ExportToExcel);
@@ -447,11 +457,7 @@ ExportToExcelMouseReleased(e);} catch (IOException ex) {
             PasswordChange.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseReleased(MouseEvent e) {
-                    try {
-PasswordChangeMouseReleased(e);} catch (Exception ex) {
-    throw new RuntimeException(ex);
-}
-                }
+                    PasswordChangeMouseReleased(e);}
             });
             InformationModifyDialogContentPane.add(PasswordChange);
             PasswordChange.setBounds(new Rectangle(new Point(110, 225), PasswordChange.getPreferredSize()));

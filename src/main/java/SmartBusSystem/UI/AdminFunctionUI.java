@@ -157,8 +157,12 @@ public class AdminFunctionUI extends JFrame {
         AddNewScheduleDialog.dispose();
     }
 
-    private void ExportTableMouseReleased(MouseEvent e) throws IOException {
-        ExportTable.JTable2Excel(AllWorkArrange.getModel(), "工作排班表", this);
+    private void ExportTableMouseReleased(MouseEvent e){
+        try {
+            ExportTable.JTable2Excel(AllWorkArrange.getModel(), "工作排班表", this);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     private void initComponents() {
@@ -390,10 +394,7 @@ public class AdminFunctionUI extends JFrame {
         ExportToExcel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-                try {
-ExportTableMouseReleased(e);} catch (IOException ex) {
-    throw new RuntimeException(ex);
-}
+                ExportTableMouseReleased(e);
             }
         });
         contentPane.add(ExportToExcel);

@@ -5,13 +5,14 @@
 package SmartBusSystem.UI;
 
 import SmartBusSystem.pojo.Driver;
-import SmartBusSystem.service.tool.SecurityProtect;
 import SmartBusSystem.service.register.DriverRegister;
+import SmartBusSystem.service.tool.SecurityProtect;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.Objects;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Objects;
 
 /**
  * @author 87948
@@ -56,7 +57,7 @@ public class DriverRegisterUI extends JFrame {
         new LoginUI();
     }
 
-    private void RegisterMouseReleased(MouseEvent e) throws Exception {
+    private void RegisterMouseReleased(MouseEvent e) {
         String ID = IdInput.getText();
         String password = new String(PasswordInput.getPassword());
         int drivingYears = Integer.parseInt(Objects.requireNonNull(SelectDrivingYears.getSelectedItem()).toString());
@@ -64,7 +65,11 @@ public class DriverRegisterUI extends JFrame {
 
         Driver driver = new Driver();
         driver.setID(ID);
-        driver.setPassword(SecurityProtect.encrypt(password));
+        try {
+            driver.setPassword(SecurityProtect.encrypt(password));
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
         driver.setDrivingYears(drivingYears);
         driver.setPhoneNum(phoneNum);
 
@@ -382,12 +387,10 @@ public class DriverRegisterUI extends JFrame {
             Register.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseReleased(MouseEvent e) {
-                    try {
-RegisterMouseReleased(e);} catch (Exception ex) {
-    throw new RuntimeException(ex);
-}
+                    RegisterMouseReleased(e);}
+
                 }
-            });
+            );
             PassContentPane.add(Register);
             Register.setBounds(new Rectangle(new Point(70, 25), Register.getPreferredSize()));
 

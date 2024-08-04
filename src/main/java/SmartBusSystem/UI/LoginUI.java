@@ -4,18 +4,19 @@
 
 package SmartBusSystem.UI;
 
-import SmartBusSystem.service.tool.SecurityProtect;
 import SmartBusSystem.service.login.AdminLogin;
 import SmartBusSystem.service.login.DriverLogin;
 import SmartBusSystem.service.login.UserLogin;
 import SmartBusSystem.service.login.VerifyCode;
 import SmartBusSystem.service.recover.DriverRecover;
 import SmartBusSystem.service.recover.UserRecover;
+import SmartBusSystem.service.tool.SecurityProtect;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.Objects;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Objects;
 
 /**
  * @author 87948
@@ -40,7 +41,7 @@ public class LoginUI extends JFrame {
         RightCode.setText(VerifyCode.getVerifyCode());
     }
 
-    private void UserLoginButtonMouseReleased(MouseEvent e) throws Exception {
+    private void UserLoginButtonMouseReleased(MouseEvent e) {
         String ID = IdInput.getText();
         String password = new String(PasswordInput.getPassword());
         String code = CodeInput.getText();
@@ -50,9 +51,13 @@ public class LoginUI extends JFrame {
             IdNoExist.setVisible(true);
             return;
         }
-        if (!UserLogin.verifyPassword(ID, password)) {
-            PasswordWrong.setVisible(true);
-            return;
+        try {
+            if (!UserLogin.verifyPassword(ID, password)) {
+                PasswordWrong.setVisible(true);
+                return;
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
         }
         if (!UserLogin.verifyVerifyCode(code, rightCode)) {
             CodeWrong.setVisible(true);
@@ -62,7 +67,7 @@ public class LoginUI extends JFrame {
         UserPass.setVisible(true);
     }
 
-    private void DriverLoginButtonMouseReleased(MouseEvent e) throws Exception {
+    private void DriverLoginButtonMouseReleased(MouseEvent e) {
         String ID = IdInput.getText();
         String password = new String(PasswordInput.getPassword());
         String code = CodeInput.getText();
@@ -72,9 +77,13 @@ public class LoginUI extends JFrame {
             IdNoExist.setVisible(true);
             return;
         }
-        if (!DriverLogin.verifyPassword(ID, password)) {
-            PasswordWrong.setVisible(true);
-            return;
+        try {
+            if (!DriverLogin.verifyPassword(ID, password)) {
+                PasswordWrong.setVisible(true);
+                return;
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
         }
         if (!DriverLogin.verifyVerifyCode(code, rightCode)) {
             CodeWrong.setVisible(true);
@@ -94,15 +103,19 @@ public class LoginUI extends JFrame {
         AdminLoginDialog.setVisible(true);
     }
 
-    private void AdminLoginButtonMouseReleased(MouseEvent e) throws Exception {
+    private void AdminLoginButtonMouseReleased(MouseEvent e) {
         String ID = AdminIdInput.getText();
         String password = new String(AdminPasswordInput.getPassword());
 
         if (!AdminLogin.verifyID(ID)) {
             return;
         }
-        if (!AdminLogin.verifyPassword(ID, password)) {
-            return;
+        try {
+            if (!AdminLogin.verifyPassword(ID, password)) {
+                return;
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
         }
 
         AdminLoginDialog.dispose();
@@ -117,14 +130,19 @@ public class LoginUI extends JFrame {
         new UserFunctionUI().setCurrentUserId(ID);  //打开功能界面 同时记录当前用户ID
     }
 
-    private void RecoverButtonMouseReleased(MouseEvent e) throws Exception {
+    private void RecoverButtonMouseReleased(MouseEvent e) {
         String ID = RecoverIdInput.getText();
         String phoneNum = RecoverPhoneNumInput.getText();
         String newPassword = new String(NewPasswordInput.getPassword());
         String newPasswordAgain = new String(NewPasswordAgainInput.getPassword());
         String role = Objects.requireNonNull(RoleSelect.getSelectedItem()).toString();
 
-        String newPasswordResult = SecurityProtect.encrypt(newPassword);
+        String newPasswordResult = null;
+        try {
+            newPasswordResult = SecurityProtect.encrypt(newPassword);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
 
         if (role.equals("乘客")) {
             if (!UserRecover.verifyID(ID)) {
@@ -171,7 +189,8 @@ public class LoginUI extends JFrame {
         RecoverDialog.setVisible(true);
     }
 
-    private void DriverEnterSystemMouseReleased(MouseEvent e) {DriverPass.dispose();
+    private void DriverEnterSystemMouseReleased(MouseEvent e) {
+        DriverPass.dispose();
         this.dispose();
         String ID = IdInput.getText();
         new DriverFunctionUI(ID);  //打开功能界面 同时记录当前司机ID
@@ -286,10 +305,7 @@ public class LoginUI extends JFrame {
         UserLoginButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-                try {
-UserLoginButtonMouseReleased(e);} catch (Exception ex) {
-    throw new RuntimeException(ex);
-}
+                UserLoginButtonMouseReleased(e);
             }
         });
         contentPane.add(UserLoginButton);
@@ -302,10 +318,7 @@ UserLoginButtonMouseReleased(e);} catch (Exception ex) {
         DriverLoginButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
-                try {
-DriverLoginButtonMouseReleased(e);} catch (Exception ex) {
-    throw new RuntimeException(ex);
-}
+                DriverLoginButtonMouseReleased(e);
             }
         });
         contentPane.add(DriverLoginButton);
@@ -564,10 +577,7 @@ DriverLoginButtonMouseReleased(e);} catch (Exception ex) {
             AdminLoginButton.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseReleased(MouseEvent e) {
-                    try {
-AdminLoginButtonMouseReleased(e);} catch (Exception ex) {
-    throw new RuntimeException(ex);
-}
+                    AdminLoginButtonMouseReleased(e);
                 }
             });
             AdminLoginDialogContentPane.add(AdminLoginButton);
@@ -679,10 +689,7 @@ AdminLoginButtonMouseReleased(e);} catch (Exception ex) {
             RecoverButton.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseReleased(MouseEvent e) {
-                    try {
-RecoverButtonMouseReleased(e);} catch (Exception ex) {
-    throw new RuntimeException(ex);
-}
+                    RecoverButtonMouseReleased(e);
                 }
             });
             RecoverDialogContentPane.add(RecoverButton);
