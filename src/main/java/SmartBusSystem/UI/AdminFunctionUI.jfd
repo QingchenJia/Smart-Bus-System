@@ -279,7 +279,7 @@ new FormModel {
 				"y": 30
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"size": new java.awt.Dimension( 155, 115 )
+			"size": &Dimension0 new java.awt.Dimension( 155, 115 )
 			"location": new java.awt.Point( 295, 505 )
 		} )
 		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
@@ -370,7 +370,7 @@ new FormModel {
 				"y": 30
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"size": &Dimension0 new java.awt.Dimension( 300, 115 )
+			"size": &Dimension1 new java.awt.Dimension( 300, 115 )
 			"location": new java.awt.Point( 320, 895 )
 		} )
 		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
@@ -389,7 +389,7 @@ new FormModel {
 				"y": 30
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"size": #Dimension0
+			"size": #Dimension1
 			"location": new java.awt.Point( 0, 895 )
 		} )
 		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
@@ -605,6 +605,44 @@ new FormModel {
 		}, new FormLayoutConstraints( null ) {
 			"size": new java.awt.Dimension( 290, 210 )
 			"location": new java.awt.Point( 320, 1230 )
+		} )
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "ExportSuccess"
+			"title": "导出成功"
+			"modal": true
+			"alwaysOnTop": true
+			"$sizePolicy": 1
+			"defaultCloseOperation": 2
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "esm"
+				"text": "导出成功！"
+				"font": #SwingDerivedFont5
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 30
+				"y": 30
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"size": #Dimension0
+			"location": new java.awt.Point( 0, 1470 )
+		} )
+		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "ExportFail"
+			"title": "导出失败"
+			"modal": true
+			"alwaysOnTop": true
+			"$sizePolicy": 1
+			"defaultCloseOperation": 2
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "efm"
+				"text": "导出失败！"
+				"font": #SwingDerivedFont5
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 30
+				"y": 30
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"size": #Dimension0
+			"location": new java.awt.Point( 175, 1470 )
 		} )
 	}
 }

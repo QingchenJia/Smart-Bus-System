@@ -137,8 +137,11 @@ public class DriverFunctionUI extends JFrame {
         try {
             ExportTable.JTable2Excel(WorkArrange.getModel(), currentDriverId + "个人工作排班表", this);
         } catch (IOException ex) {
+            ExportFail.setVisible(true);
             throw new RuntimeException(ex);
         }
+
+        ExportSuccess.setVisible(true);
     }
 
     private void initComponents() {
@@ -188,6 +191,10 @@ public class DriverFunctionUI extends JFrame {
         PassMessage = new JLabel();
         OldPasswordWrong = new JDialog();
         tips4 = new JLabel();
+        ExportSuccess = new JDialog();
+        esm = new JLabel();
+        ExportFail = new JDialog();
+        efm = new JLabel();
 
         //======== this ========
         setTitle("\u53f8\u673a\u7aef");
@@ -457,7 +464,8 @@ public class DriverFunctionUI extends JFrame {
             PasswordChange.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseReleased(MouseEvent e) {
-                    PasswordChangeMouseReleased(e);}
+                    PasswordChangeMouseReleased(e);
+                }
             });
             InformationModifyDialogContentPane.add(PasswordChange);
             PasswordChange.setBounds(new Rectangle(new Point(110, 225), PasswordChange.getPreferredSize()));
@@ -657,6 +665,72 @@ public class DriverFunctionUI extends JFrame {
             OldPasswordWrong.setSize(280, 120);
             OldPasswordWrong.setLocationRelativeTo(OldPasswordWrong.getOwner());
         }
+
+        //======== ExportSuccess ========
+        {
+            ExportSuccess.setTitle("\u5bfc\u51fa\u6210\u529f");
+            ExportSuccess.setModal(true);
+            ExportSuccess.setAlwaysOnTop(true);
+            ExportSuccess.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            var ExportSuccessContentPane = ExportSuccess.getContentPane();
+            ExportSuccessContentPane.setLayout(null);
+
+            //---- esm ----
+            esm.setText("\u5bfc\u51fa\u6210\u529f\uff01");
+            esm.setFont(esm.getFont().deriveFont(esm.getFont().getStyle() | Font.BOLD, esm.getFont().getSize() + 6f));
+            ExportSuccessContentPane.add(esm);
+            esm.setBounds(new Rectangle(new Point(30, 30), esm.getPreferredSize()));
+
+            {
+                // compute preferred size
+                Dimension preferredSize = new Dimension();
+                for(int i = 0; i < ExportSuccessContentPane.getComponentCount(); i++) {
+                    Rectangle bounds = ExportSuccessContentPane.getComponent(i).getBounds();
+                    preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
+                    preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
+                }
+                Insets insets = ExportSuccessContentPane.getInsets();
+                preferredSize.width += insets.right;
+                preferredSize.height += insets.bottom;
+                ExportSuccessContentPane.setMinimumSize(preferredSize);
+                ExportSuccessContentPane.setPreferredSize(preferredSize);
+            }
+            ExportSuccess.setSize(155, 115);
+            ExportSuccess.setLocationRelativeTo(ExportSuccess.getOwner());
+        }
+
+        //======== ExportFail ========
+        {
+            ExportFail.setTitle("\u5bfc\u51fa\u5931\u8d25");
+            ExportFail.setModal(true);
+            ExportFail.setAlwaysOnTop(true);
+            ExportFail.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            var ExportFailContentPane = ExportFail.getContentPane();
+            ExportFailContentPane.setLayout(null);
+
+            //---- efm ----
+            efm.setText("\u5bfc\u51fa\u5931\u8d25\uff01");
+            efm.setFont(efm.getFont().deriveFont(efm.getFont().getStyle() | Font.BOLD, efm.getFont().getSize() + 6f));
+            ExportFailContentPane.add(efm);
+            efm.setBounds(new Rectangle(new Point(30, 30), efm.getPreferredSize()));
+
+            {
+                // compute preferred size
+                Dimension preferredSize = new Dimension();
+                for(int i = 0; i < ExportFailContentPane.getComponentCount(); i++) {
+                    Rectangle bounds = ExportFailContentPane.getComponent(i).getBounds();
+                    preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
+                    preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
+                }
+                Insets insets = ExportFailContentPane.getInsets();
+                preferredSize.width += insets.right;
+                preferredSize.height += insets.bottom;
+                ExportFailContentPane.setMinimumSize(preferredSize);
+                ExportFailContentPane.setPreferredSize(preferredSize);
+            }
+            ExportFail.setSize(155, 115);
+            ExportFail.setLocationRelativeTo(ExportFail.getOwner());
+        }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
 
@@ -706,6 +780,10 @@ public class DriverFunctionUI extends JFrame {
     private JLabel PassMessage;
     private JDialog OldPasswordWrong;
     private JLabel tips4;
+    private JDialog ExportSuccess;
+    private JLabel esm;
+    private JDialog ExportFail;
+    private JLabel efm;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 
     // 当前司机ID BEGIN

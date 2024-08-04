@@ -6,7 +6,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import javax.swing.*;
 import javax.swing.table.TableModel;
 import java.awt.*;
 import java.io.File;
@@ -47,6 +46,5 @@ public class ExportTable {
 
         FileOutputStream excelExport = new FileOutputStream(new File("data/export-excel/" + excelName + ".xlsx"));
         workbook.write(excelExport);
-        JOptionPane.showMessageDialog(frame, "导出成功!");
     }
 }
