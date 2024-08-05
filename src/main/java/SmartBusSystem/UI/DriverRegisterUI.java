@@ -30,33 +30,27 @@ public class DriverRegisterUI extends JFrame {
         String phoneNum = PhoneNumIdInput.getText();
 
         if (!DriverRegister.checkID(ID)) {
-            setCenterOfFrame(IdWrong);
-            IdWrong.setVisible(true);
+            showInCenterOfFrame(IdWrong);
             return;
         }
         if (DriverRegister.containDriver(ID)) {
-            setCenterOfFrame(IdExist);
-            IdExist.setVisible(true);
+            showInCenterOfFrame(IdExist);
             return;
         }
         if (!DriverRegister.checkPassword(password)) {
-            setCenterOfFrame(PasswordWrong);
-            PasswordWrong.setVisible(true);
+            showInCenterOfFrame(PasswordWrong);
             return;
         }
         if (!password.equals(passwordAgain)) {
-            setCenterOfFrame(PasswordDifferent);
-            PasswordDifferent.setVisible(true);
+            showInCenterOfFrame(PasswordDifferent);
             return;
         }
         if (!DriverRegister.checkPhoneNum(phoneNum)) {
-            setCenterOfFrame(PhoneNumWrong);
-            PhoneNumWrong.setVisible(true);
+            showInCenterOfFrame(PhoneNumWrong);
             return;
         }
 
-        setCenterOfFrame(Pass);
-        Pass.setVisible(true);
+        showInCenterOfFrame(Pass);
     }
 
     private void BackwardMouseReleased(MouseEvent e) {
@@ -82,7 +76,6 @@ public class DriverRegisterUI extends JFrame {
 
         DriverRegister.register(driver);
 
-        setCenterOfFrame(Pass);
         Pass.dispose();
     }
 
@@ -452,6 +445,11 @@ public class DriverRegisterUI extends JFrame {
     // 会话窗口始终位于主窗体中心 BEGIN
     private void setCenterOfFrame(JDialog jDialog) {
         jDialog.setLocationRelativeTo(this);
+    }
+
+    private void showInCenterOfFrame(JDialog jDialog) {
+        setCenterOfFrame(jDialog);
+        jDialog.setVisible(true);
     }
     // 会话窗口始终位于主窗体中心 END
 }

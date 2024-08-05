@@ -39,14 +39,12 @@ public class AdminFunctionUI extends JFrame {
 
     private void QueryBusMouseReleased(MouseEvent e) {
         showAllBusLicenseNum();
-        setCenterOfFrame(QueryBusDialog);
-        QueryBusDialog.setVisible(true);
+        showInCenterOfFrame(QueryBusDialog);
     }
 
     private void SearchBusButtonMouseReleased(MouseEvent e) {
         initBusSearchResult();
-        setCenterOfFrame(BusSearchResult);
-        BusSearchResult.setVisible(true);
+        showInCenterOfFrame(BusSearchResult);
     }
 
     private void BusInformationModifyButtonMouseReleased(MouseEvent e) {
@@ -55,8 +53,7 @@ public class AdminFunctionUI extends JFrame {
         bus.setStatus(SelectBusStatus.isSelected() ? 1 : 0);
         AdminEditBus.updateBusStatus(bus);
 
-        setCenterOfFrame(Pass);
-        Pass.setVisible(true);
+        showInCenterOfFrame(Pass);
         BusSearchResult.dispose();
     }
 
@@ -72,8 +69,7 @@ public class AdminFunctionUI extends JFrame {
 
     private void AddBusMouseReleased(MouseEvent e) {
         showAllRouteId();
-        setCenterOfFrame(BusAddDialog);
-        BusAddDialog.setVisible(true);
+        showInCenterOfFrame(BusAddDialog);
     }
 
     private void AddBusButtonMouseReleased(MouseEvent e) {
@@ -82,21 +78,18 @@ public class AdminFunctionUI extends JFrame {
         int status = NewSelectBusStatus.isSelected() ? 1 : 0;
 
         if (!AdminEditBus.checkLicenseNumber(licenseNum)) {
-            setCenterOfFrame(LicenseNumberWrong);
-            LicenseNumberWrong.setVisible(true);
+            showInCenterOfFrame(LicenseNumberWrong);
             return;
         }
         if (AdminEditBus.containBus(licenseNum)) {
-            setCenterOfFrame(BusExistDialog);
-            BusExistDialog.setVisible(true);
+            showInCenterOfFrame(BusExistDialog);
             return;
         }
 
         Bus bus = new Bus(licenseNum, status, routeId);
         AdminEditBus.addNewBus(bus);
 
-        setCenterOfFrame(Pass);
-        Pass.setVisible(true);
+        showInCenterOfFrame(Pass);
         BusAddDialog.dispose();
     }
 
@@ -104,22 +97,19 @@ public class AdminFunctionUI extends JFrame {
         String licenseNum = BusResultLicenseNumText.getText();
         AdminEditBus.deleteBus(licenseNum);
 
-        setCenterOfFrame(Pass);
-        Pass.setVisible(true);
+        showInCenterOfFrame(Pass);
         BusSearchResult.dispose();
         showAllBusLicenseNum();
     }
 
     private void QueryScheduleMouseReleased(MouseEvent e) {
         showAllTime(SelectTime);
-        setCenterOfFrame(QueryBusDialog);
-        QueryScheduleDialog.setVisible(true);
+        showInCenterOfFrame(QueryBusDialog);
     }
 
     private void SearchScheduleButtonMouseReleased(MouseEvent e) {
         initQueryScheduleResult();
-        setCenterOfFrame(ScheduleSearchResult);
-        ScheduleSearchResult.setVisible(true);
+        showInCenterOfFrame(ScheduleSearchResult);
     }
 
     private void ScheduleInformationModifyButtonMouseReleased(MouseEvent e) {
@@ -131,8 +121,7 @@ public class AdminFunctionUI extends JFrame {
 
         AdminEditSchedule.updateSchedule(schedule);
 
-        setCenterOfFrame(Pass);
-        Pass.setVisible(true);
+        showInCenterOfFrame(Pass);
         ScheduleSearchResult.dispose();
     }
 
@@ -144,15 +133,13 @@ public class AdminFunctionUI extends JFrame {
 
         showDriverIsArrangedOnTheDay(time);
 
-        setCenterOfFrame(Pass);
-        Pass.setVisible(true);
+        showInCenterOfFrame(Pass);
         ScheduleSearchResult.dispose();
     }
 
     private void AddScheduleMouseReleased(MouseEvent e) {
         showAllTime(SelectAddScheduleTime);
-        setCenterOfFrame(AddNewScheduleDialog);
-        AddNewScheduleDialog.setVisible(true);
+        showInCenterOfFrame(AddNewScheduleDialog);
     }
 
     private void AddScheduleButtonMouseReleased(MouseEvent e) {
@@ -164,8 +151,7 @@ public class AdminFunctionUI extends JFrame {
 
         AdminEditSchedule.addNewSchedule(schedule);
 
-        setCenterOfFrame(Pass);
-        Pass.setVisible(true);
+        showInCenterOfFrame(Pass);
         AddNewScheduleDialog.dispose();
     }
 
@@ -173,13 +159,11 @@ public class AdminFunctionUI extends JFrame {
         try {
             ExportTable.JTable2Excel(AllWorkArrange.getModel(), "工作排班表", this);
         } catch (IOException ex) {
-            setCenterOfFrame(ExportFail);
-            ExportFail.setVisible(true);
+            showInCenterOfFrame(ExportFail);
             throw new RuntimeException(ex);
         }
 
-        setCenterOfFrame(ExportSuccess);
-        ExportSuccess.setVisible(true);
+        showInCenterOfFrame(ExportSuccess);
     }
 
     private void initComponents() {
@@ -1135,6 +1119,11 @@ public class AdminFunctionUI extends JFrame {
     // 会话窗口始终位于主窗体中心 BEGIN
     private void setCenterOfFrame(JDialog jDialog) {
         jDialog.setLocationRelativeTo(this);
+    }
+
+    private void showInCenterOfFrame(JDialog jDialog) {
+        setCenterOfFrame(jDialog);
+        jDialog.setVisible(true);
     }
     // 会话窗口始终位于主窗体中心 END
 }

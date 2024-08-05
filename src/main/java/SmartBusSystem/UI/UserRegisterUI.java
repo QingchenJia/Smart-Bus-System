@@ -29,33 +29,27 @@ public class UserRegisterUI extends JFrame {
         String phoneNum = PhoneNumIdInput.getText();
 
         if (!UserRegister.checkID(ID)) {
-            setCenterOfFrame(IdWrong);
-            IdWrong.setVisible(true);
+            showInCenterOfFrame(IdWrong);
             return;
         }
         if (UserRegister.containUser(ID)) {
-            setCenterOfFrame(IdExist);
-            IdExist.setVisible(true);
+            showInCenterOfFrame(IdExist);
             return;
         }
         if (!UserRegister.checkPassword(password)) {
-            setCenterOfFrame(PasswordWrong);
-            PasswordWrong.setVisible(true);
+            showInCenterOfFrame(PasswordWrong);
             return;
         }
         if (!password.equals(passwordAgain)) {
-            setCenterOfFrame(PasswordDifferent);
-            PasswordDifferent.setVisible(true);
+            showInCenterOfFrame(PasswordDifferent);
             return;
         }
         if (!UserRegister.checkPhoneNum(phoneNum)) {
-            setCenterOfFrame(PhoneNumWrong);
-            PhoneNumWrong.setVisible(true);
+            showInCenterOfFrame(PhoneNumWrong);
             return;
         }
 
-        setCenterOfFrame(Pass);
-        Pass.setVisible(true);
+        showInCenterOfFrame(Pass);
     }
 
     private void BackwardMouseReleased(MouseEvent e) {
@@ -429,6 +423,11 @@ public class UserRegisterUI extends JFrame {
     // 会话窗口始终位于主窗体中心 BEGIN
     private void setCenterOfFrame(JDialog jDialog) {
         jDialog.setLocationRelativeTo(this);
+    }
+
+    private void showInCenterOfFrame(JDialog jDialog) {
+        setCenterOfFrame(jDialog);
+        jDialog.setVisible(true);
     }
     // 会话窗口始终位于主窗体中心 END
 }

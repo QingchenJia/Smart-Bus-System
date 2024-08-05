@@ -53,8 +53,7 @@ public class UserFunctionUI extends JFrame {
         PhoneNumText.setText(currentUser.getPhoneNum());
         AptitudeText.setText(currentUser.getAptitude() == 1 ? "优惠" : "无");
 
-        setCenterOfFrame(TotalViewDialog);
-        TotalViewDialog.setVisible(true);
+        showInCenterOfFrame(TotalViewDialog);
     }
 
     private void InformationModifyMouseReleased(MouseEvent e) {
@@ -64,8 +63,7 @@ public class UserFunctionUI extends JFrame {
         PhoneNumInput.setText(currentUser.getPhoneNum());
         IsAptitude.setSelected(currentUser.getAptitude() == 1);
 
-        setCenterOfFrame(InformationModifyDialog);
-        InformationModifyDialog.setVisible(true);
+        showInCenterOfFrame(InformationModifyDialog);
     }
 
     private void InformationChangeMouseReleased(MouseEvent e) {
@@ -74,8 +72,7 @@ public class UserFunctionUI extends JFrame {
 
         String phoneNum = PhoneNumInput.getText();
         if (!UserInformationModify.checkPhoneNum(phoneNum)) {
-            setCenterOfFrame(PhoneNumWrong);
-            PhoneNumWrong.setVisible(true);
+            showInCenterOfFrame(PhoneNumWrong);
             return;
         }
 
@@ -89,8 +86,7 @@ public class UserFunctionUI extends JFrame {
 
         UserInformationModify.updateUserInformation(user);
 
-        setCenterOfFrame(Pass);
-        Pass.setVisible(true);
+        showInCenterOfFrame(Pass);
     }
 
     private void PasswordChangeMouseReleased(MouseEvent e) {
@@ -101,21 +97,18 @@ public class UserFunctionUI extends JFrame {
 
         try {
             if (!UserInformationModify.oldPasswordIsRight(ID, oldPassword)) {
-                setCenterOfFrame(OldPasswordWrong);
-                OldPasswordWrong.setVisible(true);
+                showInCenterOfFrame(OldPasswordWrong);
                 return;
             }
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
         if (!UserInformationModify.checkPassword(newPassword)) {
-            setCenterOfFrame(PasswordWrong);
-            PasswordWrong.setVisible(true);
+            showInCenterOfFrame(PasswordWrong);
             return;
         }
         if (!newPassword.equals(newPasswordAgain)) {
-            setCenterOfFrame(PasswordDifferent);
-            PasswordDifferent.setVisible(true);
+            showInCenterOfFrame(PasswordDifferent);
             return;
         }
 
@@ -128,8 +121,7 @@ public class UserFunctionUI extends JFrame {
 
         UserInformationModify.updateUserNewPassword(ID, newPasswordResult);
 
-        setCenterOfFrame(Pass);
-        Pass.setVisible(true);  // 修改密码成功后 跳出成功提示
+        showInCenterOfFrame(Pass);  // 修改密码成功后 跳出成功提示
         InformationModifyDialog.dispose();
         this.dispose(); // 关闭当前页面
         new LoginUI();  // 回到登录页面
@@ -137,40 +129,34 @@ public class UserFunctionUI extends JFrame {
 
     private void StopQueryMouseReleased(MouseEvent e) {
         showAllStopNameInList(stopQueryListModel);
-        setCenterOfFrame(StopQueryDialog);
-        StopQueryDialog.setVisible(true);
+        showInCenterOfFrame(StopQueryDialog);
     }
 
     private void SearchStopMouseReleased(MouseEvent e) {
         if (initStopSearchResult()) {
-            setCenterOfFrame(StopSearchResult);
-            StopSearchResult.setVisible(true);
+            showInCenterOfFrame(StopSearchResult);
         }
     }
 
     private void RouteQueryMouseReleased(MouseEvent e) {
         showAllRouteIdInBox();
-        setCenterOfFrame(RouteQueryDialog);
-        RouteQueryDialog.setVisible(true);
+        showInCenterOfFrame(RouteQueryDialog);
     }
 
     private void SearchRouteMouseReleased(MouseEvent e) {
         initRouteSearchResult();
-        setCenterOfFrame(RouteSearchResult);
-        RouteSearchResult.setVisible(true);
+        showInCenterOfFrame(RouteSearchResult);
     }
 
     private void DirectionMouseReleased(MouseEvent e) {
         showAllStopNameInList(startStopQueryListModel);
         showAllStopNameInList(endStopQueryListModel);
-        setCenterOfFrame(NavigationGuideDialog);
-        NavigationGuideDialog.setVisible(true);
+        showInCenterOfFrame(NavigationGuideDialog);
     }
 
     private void NavigationButtonMouseReleased(MouseEvent e) {
         if (initNavigationGuideResult()) {
-            setCenterOfFrame(NavigationGuideResult);
-            NavigationGuideResult.setVisible(true);
+            showInCenterOfFrame(NavigationGuideResult);
         }
     }
 
@@ -184,13 +170,11 @@ public class UserFunctionUI extends JFrame {
         try {
             ExportTable.JTable2Excel(RouteGuide.getModel(), "公交线路指南", this);
         } catch (IOException ex) {
-            setCenterOfFrame(ExportFail);
-            ExportFail.setVisible(true);
+            showInCenterOfFrame(ExportFail);
             throw new RuntimeException(ex);
         }
 
-        setCenterOfFrame(ExportSuccess);
-        ExportSuccess.setVisible(true);
+        showInCenterOfFrame(ExportSuccess);
     }
 
     private void initComponents() {
@@ -1510,6 +1494,11 @@ public class UserFunctionUI extends JFrame {
     // 会话窗口始终位于主窗体中心 BEGIN
     private void setCenterOfFrame(JDialog jDialog) {
         jDialog.setLocationRelativeTo(this);
+    }
+
+    private void showInCenterOfFrame(JDialog jDialog) {
+        setCenterOfFrame(jDialog);
+        jDialog.setVisible(true);
     }
     // 会话窗口始终位于主窗体中心 END
 }

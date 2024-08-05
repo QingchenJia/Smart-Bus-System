@@ -54,8 +54,7 @@ public class DriverFunctionUI extends JFrame {
         PhoneNumText.setText(driver.getPhoneNum());
         DrivingYearsText.setText(String.valueOf(driver.getDrivingYears()));
 
-        setCenterOfFrame(TotalViewDialog);
-        TotalViewDialog.setVisible(true);
+        showInCenterOfFrame(TotalViewDialog);
     }
 
     private void InformationModifyMouseReleased(MouseEvent e) {
@@ -65,8 +64,7 @@ public class DriverFunctionUI extends JFrame {
         PhoneNumInput.setText(driver.getPhoneNum());
         SelectDrivingYears.setSelectedItem(String.valueOf(driver.getDrivingYears()));
 
-        setCenterOfFrame(InformationModifyDialog);
-        InformationModifyDialog.setVisible(true);
+        showInCenterOfFrame(InformationModifyDialog);
     }
 
     private void InformationChangeMouseReleased(MouseEvent e) {
@@ -75,8 +73,7 @@ public class DriverFunctionUI extends JFrame {
 
         String phoneNum = PhoneNumInput.getText();
         if (!DriverInformationModify.checkPhoneNum(phoneNum)) {
-            setCenterOfFrame(PhoneNumWrong);
-            PhoneNumWrong.setVisible(true);
+            showInCenterOfFrame(PhoneNumWrong);
             return;
         }
 
@@ -90,8 +87,7 @@ public class DriverFunctionUI extends JFrame {
 
         DriverInformationModify.updateDriverInformation(driver);
 
-        setCenterOfFrame(Pass);
-        Pass.setVisible(true);
+        showInCenterOfFrame(Pass);
     }
 
     private void PasswordChangeMouseReleased(MouseEvent e) {
@@ -102,21 +98,18 @@ public class DriverFunctionUI extends JFrame {
 
         try {
             if (!DriverInformationModify.oldPasswordIsRight(ID, oldPassword)) {
-                setCenterOfFrame(OldPasswordWrong);
-                OldPasswordWrong.setVisible(true);
+                showInCenterOfFrame(OldPasswordWrong);
                 return;
             }
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
         if (!DriverInformationModify.checkPassword(newPassword)) {
-            setCenterOfFrame(PasswordWrong);
-            PasswordWrong.setVisible(true);
+            showInCenterOfFrame(PasswordWrong);
             return;
         }
         if (!newPassword.equals(newPasswordAgain)) {
-            setCenterOfFrame(PasswordDifferent);
-            PasswordDifferent.setVisible(true);
+            showInCenterOfFrame(PasswordDifferent);
             return;
         }
 
@@ -129,8 +122,7 @@ public class DriverFunctionUI extends JFrame {
 
         DriverInformationModify.updateDriverNewPassword(ID, newPasswordResult);
 
-        setCenterOfFrame(Pass);
-        Pass.setVisible(true);  // 修改密码成功后 跳出成功提示
+        showInCenterOfFrame(Pass);  // 修改密码成功后 跳出成功提示
         InformationModifyDialog.dispose();
         this.dispose(); // 关闭当前页面
         new LoginUI();  // 回到登录页面
@@ -145,13 +137,11 @@ public class DriverFunctionUI extends JFrame {
         try {
             ExportTable.JTable2Excel(WorkArrange.getModel(), currentDriverId + "个人工作排班表", this);
         } catch (IOException ex) {
-            setCenterOfFrame(ExportFail);
-            ExportFail.setVisible(true);
+            showInCenterOfFrame(ExportFail);
             throw new RuntimeException(ex);
         }
 
-        setCenterOfFrame(ExportSuccess);
-        ExportSuccess.setVisible(true);
+        showInCenterOfFrame(ExportSuccess);
     }
 
     private void initComponents() {
@@ -829,6 +819,11 @@ public class DriverFunctionUI extends JFrame {
     // 会话窗口始终位于主窗体中心 BEGIN
     private void setCenterOfFrame(JDialog jDialog) {
         jDialog.setLocationRelativeTo(this);
+    }
+
+    private void showInCenterOfFrame(JDialog jDialog) {
+        setCenterOfFrame(jDialog);
+        jDialog.setVisible(true);
     }
     // 会话窗口始终位于主窗体中心 END
 }

@@ -28,8 +28,7 @@ public class LoginUI extends JFrame {
     }
 
     private void RegisterMouseReleased(MouseEvent e) {
-        setCenterOfFrame(RegisterSelect);
-        RegisterSelect.setVisible(true);
+        showInCenterOfFrame(RegisterSelect);
     }
 
     private void UserRegisterMouseReleased(MouseEvent e) {
@@ -67,8 +66,7 @@ public class LoginUI extends JFrame {
     }
 
     private void AdminEnterMouseReleased(MouseEvent e) {
-        setCenterOfFrame(AdminLoginDialog);
-        AdminLoginDialog.setVisible(true);
+        showInCenterOfFrame(AdminLoginDialog);
     }
 
     private void AdminLoginButtonMouseReleased(MouseEvent e) {
@@ -96,8 +94,7 @@ public class LoginUI extends JFrame {
     }
 
     private void RecoverMouseReleased(MouseEvent e) {
-        setCenterOfFrame(RecoverDialog);
-        RecoverDialog.setVisible(true);
+        showInCenterOfFrame(RecoverDialog);
     }
 
     private void DriverEnterSystemMouseReleased(MouseEvent e) {
@@ -769,6 +766,11 @@ public class LoginUI extends JFrame {
     private void setCenterOfFrame(JDialog jDialog) {
         jDialog.setLocationRelativeTo(this);
     }
+
+    private void showInCenterOfFrame(JDialog jDialog) {
+        setCenterOfFrame(jDialog);
+        jDialog.setVisible(true);
+    }
     // 会话窗口始终位于主窗体中心 END
 
     // 登录 BEGIN
@@ -777,50 +779,42 @@ public class LoginUI extends JFrame {
 
         if ("乘客".equals(role)) {
             if (!UserLogin.verifyID(ID)) {
-                setCenterOfFrame(IdNoExist);
-                IdNoExist.setVisible(true);
+                showInCenterOfFrame(IdNoExist);
                 return;
             }
             try {
                 if (!UserLogin.verifyPassword(ID, password)) {
-                    setCenterOfFrame(PasswordWrong);
-                    PasswordWrong.setVisible(true);
+                    showInCenterOfFrame(PasswordWrong);
                     return;
                 }
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
             if (!UserLogin.verifyVerifyCode(code, rightCode)) {
-                setCenterOfFrame(CodeWrong);
-                CodeWrong.setVisible(true);
+                showInCenterOfFrame(CodeWrong);
                 return;
             }
 
-            setCenterOfFrame(UserPass);
-            UserPass.setVisible(true);
+            showInCenterOfFrame(UserPass);
         } else if ("司机".equals(role)) {
             if (!DriverLogin.verifyID(ID)) {
-                setCenterOfFrame(IdNoExist);
-                IdNoExist.setVisible(true);
+                showInCenterOfFrame(IdNoExist);
                 return;
             }
             try {
                 if (!DriverLogin.verifyPassword(ID, password)) {
-                    setCenterOfFrame(PasswordWrong);
-                    PasswordWrong.setVisible(true);
+                    showInCenterOfFrame(PasswordWrong);
                     return;
                 }
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
             if (!DriverLogin.verifyVerifyCode(code, rightCode)) {
-                setCenterOfFrame(CodeWrong);
-                CodeWrong.setVisible(true);
+                showInCenterOfFrame(CodeWrong);
                 return;
             }
 
-            setCenterOfFrame(DriverPass);
-            DriverPass.setVisible(true);
+            showInCenterOfFrame(DriverPass);
         }
     }
 
@@ -855,46 +849,38 @@ public class LoginUI extends JFrame {
 
         if ("乘客".equals(role)) {
             if (!UserRecover.verifyID(ID)) {
-                setCenterOfFrame(IdNoExist);
-                IdNoExist.setVisible(true);
+                showInCenterOfFrame(IdNoExist);
                 return;
             }
             if (!UserRecover.verifyPhoneNum(ID, phoneNum)) {
-                setCenterOfFrame(PasswordWrong);
-                PhoneNumWrong.setVisible(true);
+                showInCenterOfFrame(PasswordWrong);
                 return;
             }
             if (!UserRecover.checkPassword(newPassword)) {
-                setCenterOfFrame(PasswordFormatError);
-                PasswordFormatError.setVisible(true);
+                showInCenterOfFrame(PasswordFormatError);
                 return;
             }
             if (!newPassword.equals(newPasswordAgain)) {
-                setCenterOfFrame(PasswordNotSame);
-                PasswordNotSame.setVisible(true);
+                showInCenterOfFrame(PasswordNotSame);
                 return;
             }
 
             UserRecover.resetPassword(ID, newPasswordResult);
         } else if ("司机".equals(role)) {
             if (!DriverRecover.verifyID(ID)) {
-                setCenterOfFrame(IdNoExist);
-                IdNoExist.setVisible(true);
+                showInCenterOfFrame(IdNoExist);
                 return;
             }
             if (!DriverRecover.verifyPhoneNum(ID, phoneNum)) {
-                setCenterOfFrame(PhoneNumWrong);
-                PhoneNumWrong.setVisible(true);
+                showInCenterOfFrame(PhoneNumWrong);
                 return;
             }
             if (!DriverRecover.checkPassword(newPassword)) {
-                setCenterOfFrame(PasswordFormatError);
-                PasswordFormatError.setVisible(true);
+                showInCenterOfFrame(PasswordFormatError);
                 return;
             }
             if (!newPassword.equals(newPasswordAgain)) {
-                setCenterOfFrame(PasswordNotSame);
-                PasswordNotSame.setVisible(true);
+                showInCenterOfFrame(PasswordNotSame);
                 return;
             }
 
