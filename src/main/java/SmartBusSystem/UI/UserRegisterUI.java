@@ -29,25 +29,32 @@ public class UserRegisterUI extends JFrame {
         String phoneNum = PhoneNumIdInput.getText();
 
         if (!UserRegister.checkID(ID)) {
+            setCenterOfFrame(IdWrong);
             IdWrong.setVisible(true);
             return;
         }
         if (UserRegister.containUser(ID)) {
+            setCenterOfFrame(IdExist);
             IdExist.setVisible(true);
             return;
         }
         if (!UserRegister.checkPassword(password)) {
+            setCenterOfFrame(PasswordWrong);
             PasswordWrong.setVisible(true);
             return;
         }
         if (!password.equals(passwordAgain)) {
+            setCenterOfFrame(PasswordDifferent);
             PasswordDifferent.setVisible(true);
             return;
         }
         if (!UserRegister.checkPhoneNum(phoneNum)) {
-            PasswordDifferent.setVisible(true);
+            setCenterOfFrame(PhoneNumWrong);
+            PhoneNumWrong.setVisible(true);
             return;
         }
+
+        setCenterOfFrame(Pass);
         Pass.setVisible(true);
     }
 
@@ -418,4 +425,10 @@ public class UserRegisterUI extends JFrame {
     private JDialog Pass;
     private JButton Register;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
+
+    // 会话窗口始终位于主窗体中心 BEGIN
+    private void setCenterOfFrame(JDialog jDialog) {
+        jDialog.setLocationRelativeTo(this);
+    }
+    // 会话窗口始终位于主窗体中心 END
 }

@@ -39,11 +39,13 @@ public class AdminFunctionUI extends JFrame {
 
     private void QueryBusMouseReleased(MouseEvent e) {
         showAllBusLicenseNum();
+        setCenterOfFrame(QueryBusDialog);
         QueryBusDialog.setVisible(true);
     }
 
     private void SearchBusButtonMouseReleased(MouseEvent e) {
         initBusSearchResult();
+        setCenterOfFrame(BusSearchResult);
         BusSearchResult.setVisible(true);
     }
 
@@ -53,6 +55,7 @@ public class AdminFunctionUI extends JFrame {
         bus.setStatus(SelectBusStatus.isSelected() ? 1 : 0);
         AdminEditBus.updateBusStatus(bus);
 
+        setCenterOfFrame(Pass);
         Pass.setVisible(true);
         BusSearchResult.dispose();
     }
@@ -69,6 +72,7 @@ public class AdminFunctionUI extends JFrame {
 
     private void AddBusMouseReleased(MouseEvent e) {
         showAllRouteId();
+        setCenterOfFrame(BusAddDialog);
         BusAddDialog.setVisible(true);
     }
 
@@ -78,10 +82,12 @@ public class AdminFunctionUI extends JFrame {
         int status = NewSelectBusStatus.isSelected() ? 1 : 0;
 
         if (!AdminEditBus.checkLicenseNumber(licenseNum)) {
+            setCenterOfFrame(LicenseNumberWrong);
             LicenseNumberWrong.setVisible(true);
             return;
         }
         if (AdminEditBus.containBus(licenseNum)) {
+            setCenterOfFrame(BusExistDialog);
             BusExistDialog.setVisible(true);
             return;
         }
@@ -89,6 +95,7 @@ public class AdminFunctionUI extends JFrame {
         Bus bus = new Bus(licenseNum, status, routeId);
         AdminEditBus.addNewBus(bus);
 
+        setCenterOfFrame(Pass);
         Pass.setVisible(true);
         BusAddDialog.dispose();
     }
@@ -97,6 +104,7 @@ public class AdminFunctionUI extends JFrame {
         String licenseNum = BusResultLicenseNumText.getText();
         AdminEditBus.deleteBus(licenseNum);
 
+        setCenterOfFrame(Pass);
         Pass.setVisible(true);
         BusSearchResult.dispose();
         showAllBusLicenseNum();
@@ -104,12 +112,13 @@ public class AdminFunctionUI extends JFrame {
 
     private void QueryScheduleMouseReleased(MouseEvent e) {
         showAllTime(SelectTime);
-
+        setCenterOfFrame(QueryBusDialog);
         QueryScheduleDialog.setVisible(true);
     }
 
     private void SearchScheduleButtonMouseReleased(MouseEvent e) {
         initQueryScheduleResult();
+        setCenterOfFrame(ScheduleSearchResult);
         ScheduleSearchResult.setVisible(true);
     }
 
@@ -122,6 +131,7 @@ public class AdminFunctionUI extends JFrame {
 
         AdminEditSchedule.updateSchedule(schedule);
 
+        setCenterOfFrame(Pass);
         Pass.setVisible(true);
         ScheduleSearchResult.dispose();
     }
@@ -134,13 +144,14 @@ public class AdminFunctionUI extends JFrame {
 
         showDriverIsArrangedOnTheDay(time);
 
+        setCenterOfFrame(Pass);
         Pass.setVisible(true);
         ScheduleSearchResult.dispose();
     }
 
     private void AddScheduleMouseReleased(MouseEvent e) {
         showAllTime(SelectAddScheduleTime);
-
+        setCenterOfFrame(AddNewScheduleDialog);
         AddNewScheduleDialog.setVisible(true);
     }
 
@@ -153,6 +164,7 @@ public class AdminFunctionUI extends JFrame {
 
         AdminEditSchedule.addNewSchedule(schedule);
 
+        setCenterOfFrame(Pass);
         Pass.setVisible(true);
         AddNewScheduleDialog.dispose();
     }
@@ -161,10 +173,12 @@ public class AdminFunctionUI extends JFrame {
         try {
             ExportTable.JTable2Excel(AllWorkArrange.getModel(), "工作排班表", this);
         } catch (IOException ex) {
+            setCenterOfFrame(ExportFail);
             ExportFail.setVisible(true);
             throw new RuntimeException(ex);
         }
 
+        setCenterOfFrame(ExportSuccess);
         ExportSuccess.setVisible(true);
     }
 
@@ -1117,4 +1131,10 @@ public class AdminFunctionUI extends JFrame {
         }
     }
     // 排班新增 END
+
+    // 会话窗口始终位于主窗体中心 BEGIN
+    private void setCenterOfFrame(JDialog jDialog) {
+        jDialog.setLocationRelativeTo(this);
+    }
+    // 会话窗口始终位于主窗体中心 END
 }

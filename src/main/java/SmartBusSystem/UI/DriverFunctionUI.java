@@ -54,6 +54,7 @@ public class DriverFunctionUI extends JFrame {
         PhoneNumText.setText(driver.getPhoneNum());
         DrivingYearsText.setText(String.valueOf(driver.getDrivingYears()));
 
+        setCenterOfFrame(TotalViewDialog);
         TotalViewDialog.setVisible(true);
     }
 
@@ -64,6 +65,7 @@ public class DriverFunctionUI extends JFrame {
         PhoneNumInput.setText(driver.getPhoneNum());
         SelectDrivingYears.setSelectedItem(String.valueOf(driver.getDrivingYears()));
 
+        setCenterOfFrame(InformationModifyDialog);
         InformationModifyDialog.setVisible(true);
     }
 
@@ -73,6 +75,7 @@ public class DriverFunctionUI extends JFrame {
 
         String phoneNum = PhoneNumInput.getText();
         if (!DriverInformationModify.checkPhoneNum(phoneNum)) {
+            setCenterOfFrame(PhoneNumWrong);
             PhoneNumWrong.setVisible(true);
             return;
         }
@@ -87,6 +90,7 @@ public class DriverFunctionUI extends JFrame {
 
         DriverInformationModify.updateDriverInformation(driver);
 
+        setCenterOfFrame(Pass);
         Pass.setVisible(true);
     }
 
@@ -98,6 +102,7 @@ public class DriverFunctionUI extends JFrame {
 
         try {
             if (!DriverInformationModify.oldPasswordIsRight(ID, oldPassword)) {
+                setCenterOfFrame(OldPasswordWrong);
                 OldPasswordWrong.setVisible(true);
                 return;
             }
@@ -105,10 +110,12 @@ public class DriverFunctionUI extends JFrame {
             throw new RuntimeException(ex);
         }
         if (!DriverInformationModify.checkPassword(newPassword)) {
+            setCenterOfFrame(PasswordWrong);
             PasswordWrong.setVisible(true);
             return;
         }
         if (!newPassword.equals(newPasswordAgain)) {
+            setCenterOfFrame(PasswordDifferent);
             PasswordDifferent.setVisible(true);
             return;
         }
@@ -122,6 +129,7 @@ public class DriverFunctionUI extends JFrame {
 
         DriverInformationModify.updateDriverNewPassword(ID, newPasswordResult);
 
+        setCenterOfFrame(Pass);
         Pass.setVisible(true);  // 修改密码成功后 跳出成功提示
         InformationModifyDialog.dispose();
         this.dispose(); // 关闭当前页面
@@ -137,10 +145,12 @@ public class DriverFunctionUI extends JFrame {
         try {
             ExportTable.JTable2Excel(WorkArrange.getModel(), currentDriverId + "个人工作排班表", this);
         } catch (IOException ex) {
+            setCenterOfFrame(ExportFail);
             ExportFail.setVisible(true);
             throw new RuntimeException(ex);
         }
 
+        setCenterOfFrame(ExportSuccess);
         ExportSuccess.setVisible(true);
     }
 
@@ -815,4 +825,10 @@ public class DriverFunctionUI extends JFrame {
         }
     }
     // 加载工作排班情况 END
+
+    // 会话窗口始终位于主窗体中心 BEGIN
+    private void setCenterOfFrame(JDialog jDialog) {
+        jDialog.setLocationRelativeTo(this);
+    }
+    // 会话窗口始终位于主窗体中心 END
 }

@@ -28,6 +28,7 @@ public class LoginUI extends JFrame {
     }
 
     private void RegisterMouseReleased(MouseEvent e) {
+        setCenterOfFrame(RegisterSelect);
         RegisterSelect.setVisible(true);
     }
 
@@ -48,11 +49,13 @@ public class LoginUI extends JFrame {
         String rightCode = RightCode.getText();
 
         if (!UserLogin.verifyID(ID)) {
+            setCenterOfFrame(IdNoExist);
             IdNoExist.setVisible(true);
             return;
         }
         try {
             if (!UserLogin.verifyPassword(ID, password)) {
+                setCenterOfFrame(PasswordWrong);
                 PasswordWrong.setVisible(true);
                 return;
             }
@@ -60,10 +63,12 @@ public class LoginUI extends JFrame {
             throw new RuntimeException(ex);
         }
         if (!UserLogin.verifyVerifyCode(code, rightCode)) {
+            setCenterOfFrame(CodeWrong);
             CodeWrong.setVisible(true);
             return;
         }
 
+        setCenterOfFrame(UserPass);
         UserPass.setVisible(true);
     }
 
@@ -74,11 +79,13 @@ public class LoginUI extends JFrame {
         String rightCode = RightCode.getText();
 
         if (!DriverLogin.verifyID(ID)) {
+            setCenterOfFrame(IdNoExist);
             IdNoExist.setVisible(true);
             return;
         }
         try {
             if (!DriverLogin.verifyPassword(ID, password)) {
+                setCenterOfFrame(PasswordWrong);
                 PasswordWrong.setVisible(true);
                 return;
             }
@@ -86,10 +93,12 @@ public class LoginUI extends JFrame {
             throw new RuntimeException(ex);
         }
         if (!DriverLogin.verifyVerifyCode(code, rightCode)) {
+            setCenterOfFrame(CodeWrong);
             CodeWrong.setVisible(true);
             return;
         }
 
+        setCenterOfFrame(DriverPass);
         DriverPass.setVisible(true);
     }
 
@@ -100,6 +109,7 @@ public class LoginUI extends JFrame {
     }
 
     private void AdminEnterMouseReleased(MouseEvent e) {
+        setCenterOfFrame(AdminLoginDialog);
         AdminLoginDialog.setVisible(true);
     }
 
@@ -146,38 +156,46 @@ public class LoginUI extends JFrame {
 
         if (role.equals("乘客")) {
             if (!UserRecover.verifyID(ID)) {
+                setCenterOfFrame(IdNoExist);
                 IdNoExist.setVisible(true);
                 return;
             }
             if (!UserRecover.verifyPhoneNum(ID, phoneNum)) {
+                setCenterOfFrame(PasswordWrong);
                 PhoneNumWrong.setVisible(true);
                 return;
             }
             if (!UserRecover.checkPassword(newPassword)) {
+                setCenterOfFrame(PasswordFormatError);
                 PasswordFormatError.setVisible(true);
                 return;
             }
             if (!newPassword.equals(newPasswordAgain)) {
-                PasswordDifferent.setVisible(true);
+                setCenterOfFrame(PasswordNotSame);
+                PasswordNotSame.setVisible(true);
                 return;
             }
 
             UserRecover.resetPassword(ID, newPasswordResult);
         } else if (role.equals("司机")) {
             if (!DriverRecover.verifyID(ID)) {
+                setCenterOfFrame(IdNoExist);
                 IdNoExist.setVisible(true);
                 return;
             }
             if (!DriverRecover.verifyPhoneNum(ID, phoneNum)) {
+                setCenterOfFrame(PhoneNumWrong);
                 PhoneNumWrong.setVisible(true);
                 return;
             }
             if (!DriverRecover.checkPassword(newPassword)) {
+                setCenterOfFrame(PasswordFormatError);
                 PasswordFormatError.setVisible(true);
                 return;
             }
             if (!newPassword.equals(newPasswordAgain)) {
-                PasswordDifferent.setVisible(true);
+                setCenterOfFrame(PasswordNotSame);
+                PasswordNotSame.setVisible(true);
                 return;
             }
 
@@ -186,6 +204,7 @@ public class LoginUI extends JFrame {
     }
 
     private void RecoverMouseReleased(MouseEvent e) {
+        setCenterOfFrame(RecoverDialog);
         RecoverDialog.setVisible(true);
     }
 
@@ -246,7 +265,7 @@ public class LoginUI extends JFrame {
         tips4 = new JLabel();
         PasswordFormatError = new JDialog();
         tips5 = new JLabel();
-        PasswordFormatError2 = new JDialog();
+        PasswordNotSame = new JDialog();
         PasswordDifferent = new JLabel();
 
         //======== this ========
@@ -766,37 +785,37 @@ public class LoginUI extends JFrame {
             PasswordFormatError.setLocationRelativeTo(PasswordFormatError.getOwner());
         }
 
-        //======== PasswordFormatError2 ========
+        //======== PasswordNotSame ========
         {
-            PasswordFormatError2.setTitle("\u9519\u8bef\u63d0\u9192");
-            PasswordFormatError2.setModal(true);
-            PasswordFormatError2.setAlwaysOnTop(true);
-            PasswordFormatError2.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-            var PasswordFormatError2ContentPane = PasswordFormatError2.getContentPane();
-            PasswordFormatError2ContentPane.setLayout(null);
+            PasswordNotSame.setTitle("\u9519\u8bef\u63d0\u9192");
+            PasswordNotSame.setModal(true);
+            PasswordNotSame.setAlwaysOnTop(true);
+            PasswordNotSame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            var PasswordNotSameContentPane = PasswordNotSame.getContentPane();
+            PasswordNotSameContentPane.setLayout(null);
 
             //---- PasswordDifferent ----
             PasswordDifferent.setText("\u524d\u540e\u5bc6\u7801\u4e0d\u4e00\u81f4\uff0c\u8bf7\u91cd\u65b0\u8f93\u5165");
             PasswordDifferent.setFont(PasswordDifferent.getFont().deriveFont(PasswordDifferent.getFont().getStyle() | Font.BOLD, PasswordDifferent.getFont().getSize() + 7f));
-            PasswordFormatError2ContentPane.add(PasswordDifferent);
+            PasswordNotSameContentPane.add(PasswordDifferent);
             PasswordDifferent.setBounds(new Rectangle(new Point(40, 30), PasswordDifferent.getPreferredSize()));
 
             {
                 // compute preferred size
                 Dimension preferredSize = new Dimension();
-                for(int i = 0; i < PasswordFormatError2ContentPane.getComponentCount(); i++) {
-                    Rectangle bounds = PasswordFormatError2ContentPane.getComponent(i).getBounds();
+                for(int i = 0; i < PasswordNotSameContentPane.getComponentCount(); i++) {
+                    Rectangle bounds = PasswordNotSameContentPane.getComponent(i).getBounds();
                     preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
                     preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
                 }
-                Insets insets = PasswordFormatError2ContentPane.getInsets();
+                Insets insets = PasswordNotSameContentPane.getInsets();
                 preferredSize.width += insets.right;
                 preferredSize.height += insets.bottom;
-                PasswordFormatError2ContentPane.setMinimumSize(preferredSize);
-                PasswordFormatError2ContentPane.setPreferredSize(preferredSize);
+                PasswordNotSameContentPane.setMinimumSize(preferredSize);
+                PasswordNotSameContentPane.setPreferredSize(preferredSize);
             }
-            PasswordFormatError2.setSize(315, 125);
-            PasswordFormatError2.setLocationRelativeTo(PasswordFormatError2.getOwner());
+            PasswordNotSame.setSize(315, 125);
+            PasswordNotSame.setLocationRelativeTo(PasswordNotSame.getOwner());
         }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
@@ -850,7 +869,13 @@ public class LoginUI extends JFrame {
     private JLabel tips4;
     private JDialog PasswordFormatError;
     private JLabel tips5;
-    private JDialog PasswordFormatError2;
+    private JDialog PasswordNotSame;
     private JLabel PasswordDifferent;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
+
+    // 会话窗口始终位于主窗体中心 BEGIN
+    private void setCenterOfFrame(JDialog jDialog) {
+        jDialog.setLocationRelativeTo(this);
+    }
+    // 会话窗口始终位于主窗体中心 END
 }

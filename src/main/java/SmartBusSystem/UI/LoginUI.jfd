@@ -473,7 +473,7 @@ new FormModel {
 			"location": new java.awt.Point( 0, 1542 )
 		} )
 		add( new FormWindow( "javax.swing.JDialog", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
-			name: "PasswordFormatError2"
+			name: "PasswordNotSame"
 			"title": "错误提醒"
 			"modal": true
 			"alwaysOnTop": true
