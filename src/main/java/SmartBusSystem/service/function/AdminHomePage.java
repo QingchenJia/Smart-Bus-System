@@ -5,8 +5,9 @@ import SmartBusSystem.pojo.Bus;
 import SmartBusSystem.pojo.Driver;
 import SmartBusSystem.pojo.Route;
 import SmartBusSystem.pojo.Schedule;
-import SmartBusSystem.service.tool.DatabaseOperation;
 import SmartBusSystem.service.TableRow.WorkArrangeRow;
+import SmartBusSystem.service.tool.DatabaseOperation;
+import org.apache.ibatis.session.SqlSession;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,11 +15,13 @@ import java.util.List;
 
 public class AdminHomePage {
     public static List<String> dayOfWeek = new ArrayList<>();
+    private static final SqlSession sqlSession;
     private static final ScheduleMapper scheduleMapper;
 
     static {
         Collections.addAll(dayOfWeek, "星期1", "星期2", "星期3", "星期4", "星期5", "星期6", "星期7");
-        scheduleMapper = DatabaseOperation.session.getMapper(ScheduleMapper.class);
+        sqlSession = DatabaseOperation.getSqlSession();
+        scheduleMapper = sqlSession.getMapper(ScheduleMapper.class);
     }
 
     public static List<WorkArrangeRow> getAllWorkArrange() {

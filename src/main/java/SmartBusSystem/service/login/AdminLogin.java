@@ -4,12 +4,15 @@ import SmartBusSystem.mapper.AdminMapper;
 import SmartBusSystem.pojo.Admin;
 import SmartBusSystem.service.tool.DatabaseOperation;
 import SmartBusSystem.service.tool.SecurityProtect;
+import org.apache.ibatis.session.SqlSession;
 
 public class AdminLogin {
+    private static final SqlSession sqlSession;
     private static final AdminMapper adminMapper;
 
     static {
-        adminMapper = DatabaseOperation.session.getMapper(AdminMapper.class);
+        sqlSession = DatabaseOperation.getSqlSession();
+        adminMapper = sqlSession.getMapper(AdminMapper.class);
     }
 
     public static boolean verifyID(String ID) {

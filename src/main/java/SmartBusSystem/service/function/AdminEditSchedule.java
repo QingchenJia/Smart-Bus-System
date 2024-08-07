@@ -7,18 +7,21 @@ import SmartBusSystem.pojo.Bus;
 import SmartBusSystem.pojo.Driver;
 import SmartBusSystem.pojo.Schedule;
 import SmartBusSystem.service.tool.DatabaseOperation;
+import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
 public class AdminEditSchedule {
+    private static final SqlSession sqlSession;
     private static final BusMapper busMapper;
     private static final DriverMapper driverMapper;
     private static final ScheduleMapper scheduleMapper;
 
     static {
-        busMapper = DatabaseOperation.session.getMapper(BusMapper.class);
-        driverMapper = DatabaseOperation.session.getMapper(DriverMapper.class);
-        scheduleMapper = DatabaseOperation.session.getMapper(ScheduleMapper.class);
+        sqlSession = DatabaseOperation.getSqlSession();
+        busMapper = sqlSession.getMapper(BusMapper.class);
+        driverMapper = sqlSession.getMapper(DriverMapper.class);
+        scheduleMapper = sqlSession.getMapper(ScheduleMapper.class);
     }
 
     public static List<Bus> queryBusAvailable(String dayOfWeek) {   // 可安排的车辆 状态正常且当天无人使用
@@ -55,17 +58,17 @@ public class AdminEditSchedule {
 
     public static void deleteScheduleById(String DID, String dayOfWeek) {
         scheduleMapper.DeleteSchedule(DID, dayOfWeek);
-        DatabaseOperation.session.commit();
+        sqlSession.commit();
     }
 
     public static void addNewSchedule(Schedule schedule) {
         scheduleMapper.InsertSchedule(schedule);
-        DatabaseOperation.session.commit();
+        sqlSession.commit();
     }
 
     public static void updateSchedule(Schedule schedule) {
         scheduleMapper.UpdateSchedule(schedule);
-        DatabaseOperation.session.commit();
+        sqlSession.commit();
     }
 
     public static List<Driver> queryDriverAvailable(String time) {

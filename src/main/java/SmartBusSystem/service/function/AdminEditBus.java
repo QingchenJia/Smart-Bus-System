@@ -5,16 +5,19 @@ import SmartBusSystem.mapper.RouteMapper;
 import SmartBusSystem.pojo.Bus;
 import SmartBusSystem.pojo.Route;
 import SmartBusSystem.service.tool.DatabaseOperation;
+import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
 public class AdminEditBus {
+    private static final SqlSession sqlSession;
     private static final BusMapper busMapper;
     private static final RouteMapper routeMapper;
 
     static {
-        busMapper = DatabaseOperation.session.getMapper(BusMapper.class);
-        routeMapper = DatabaseOperation.session.getMapper(RouteMapper.class);
+        sqlSession = DatabaseOperation.getSqlSession();
+        busMapper = sqlSession.getMapper(BusMapper.class);
+        routeMapper = sqlSession.getMapper(RouteMapper.class);
     }
 
     public static List<Bus> queryAllBus() {
@@ -33,7 +36,7 @@ public class AdminEditBus {
 
     public static void updateBusStatus(Bus bus) {
         busMapper.UpdateBusStatus(bus);
-        DatabaseOperation.session.commit();
+        sqlSession.commit();
     }
 
     public static boolean checkLicenseNumber(String licenseNum) {
@@ -53,7 +56,7 @@ public class AdminEditBus {
 
     public static void addNewBus(Bus bus) {
         busMapper.InsertBus(bus);
-        DatabaseOperation.session.commit();
+        sqlSession.commit();
     }
 
     public static boolean containBus(String licenseNum) {
@@ -62,6 +65,6 @@ public class AdminEditBus {
 
     public static void deleteBus(String licenseNum) {
         busMapper.DeleteBus(licenseNum);
-        DatabaseOperation.session.commit();
+        sqlSession.commit();
     }
 }

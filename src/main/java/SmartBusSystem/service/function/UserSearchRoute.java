@@ -5,17 +5,21 @@ import SmartBusSystem.mapper.StopMapper;
 import SmartBusSystem.pojo.Route;
 import SmartBusSystem.pojo.Stop;
 import SmartBusSystem.service.tool.DatabaseOperation;
+import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
 public class UserSearchRoute {
+    private static final SqlSession sqlSession;
     private static final StopMapper stopMapper;
     private static final RouteMapper routeMapper;
 
     static {
-        stopMapper = DatabaseOperation.session.getMapper(StopMapper.class);
-        routeMapper = DatabaseOperation.session.getMapper(RouteMapper.class);
+        sqlSession = DatabaseOperation.getSqlSession();
+        stopMapper = sqlSession.getMapper(StopMapper.class);
+        routeMapper = sqlSession.getMapper(RouteMapper.class);
     }
+
     public static List<Route> showAllRoute() {
         List<Route> routes = routeMapper.SelectAll();
         System.out.println("全部线路->" + routes);

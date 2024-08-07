@@ -2,15 +2,18 @@ package SmartBusSystem.service.login;
 
 import SmartBusSystem.mapper.DriverMapper;
 import SmartBusSystem.pojo.Driver;
+import SmartBusSystem.service.register.DriverRegister;
 import SmartBusSystem.service.tool.DatabaseOperation;
 import SmartBusSystem.service.tool.SecurityProtect;
-import SmartBusSystem.service.register.DriverRegister;
+import org.apache.ibatis.session.SqlSession;
 
 public class DriverLogin {
+    private static final SqlSession sqlSession;
     private static final DriverMapper driverMapper;
 
     static {
-        driverMapper = DatabaseOperation.session.getMapper(DriverMapper.class);
+        sqlSession = DatabaseOperation.getSqlSession();
+        driverMapper = sqlSession.getMapper(DriverMapper.class);
     }
 
     public static boolean verifyID(String ID) {

@@ -2,15 +2,18 @@ package SmartBusSystem.service.recover;
 
 import SmartBusSystem.mapper.DriverMapper;
 import SmartBusSystem.pojo.Driver;
-import SmartBusSystem.service.tool.DatabaseOperation;
 import SmartBusSystem.service.login.DriverLogin;
 import SmartBusSystem.service.register.DriverRegister;
+import SmartBusSystem.service.tool.DatabaseOperation;
+import org.apache.ibatis.session.SqlSession;
 
 public class DriverRecover {
+    private static final SqlSession sqlSession;
     private static final DriverMapper driverMapper;
 
     static {
-        driverMapper = DatabaseOperation.session.getMapper(DriverMapper.class);
+        sqlSession = DatabaseOperation.getSqlSession();
+        driverMapper = sqlSession.getMapper(DriverMapper.class);
     }
 
     public static boolean verifyID(String ID) {
@@ -29,6 +32,6 @@ public class DriverRecover {
 
     public static void resetPassword(String ID, String newPassword) {
         driverMapper.UpdatePassword(ID, newPassword);
-        DatabaseOperation.session.commit();
+        sqlSession.commit();
     }
 }

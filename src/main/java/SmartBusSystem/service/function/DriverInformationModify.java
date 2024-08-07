@@ -2,15 +2,18 @@ package SmartBusSystem.service.function;
 
 import SmartBusSystem.mapper.DriverMapper;
 import SmartBusSystem.pojo.Driver;
-import SmartBusSystem.service.tool.DatabaseOperation;
 import SmartBusSystem.service.login.DriverLogin;
 import SmartBusSystem.service.register.DriverRegister;
+import SmartBusSystem.service.tool.DatabaseOperation;
+import org.apache.ibatis.session.SqlSession;
 
 public class DriverInformationModify {
+    private static final SqlSession sqlSession;
     private static final DriverMapper driverMapper;
 
     static {
-        driverMapper = DatabaseOperation.session.getMapper(DriverMapper.class);
+        sqlSession = DatabaseOperation.getSqlSession();
+        driverMapper = sqlSession.getMapper(DriverMapper.class);
     }
 
     public static boolean checkPhoneNum(String phoneNum) {
@@ -19,7 +22,7 @@ public class DriverInformationModify {
 
     public static void updateDriverInformation(Driver driver) {
         driverMapper.UpdateDriver(driver);
-        DatabaseOperation.session.commit();
+        sqlSession.commit();
     }
 
     public static boolean oldPasswordIsRight(String ID, String oldPassword) throws Exception {
@@ -32,6 +35,6 @@ public class DriverInformationModify {
 
     public static void updateDriverNewPassword(String ID, String newPassword) {
         driverMapper.UpdatePassword(ID, newPassword);
-        DatabaseOperation.session.commit();
+        sqlSession.commit();
     }
 }

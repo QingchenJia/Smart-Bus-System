@@ -3,12 +3,15 @@ package SmartBusSystem.service.register;
 import SmartBusSystem.mapper.UserMapper;
 import SmartBusSystem.pojo.User;
 import SmartBusSystem.service.tool.DatabaseOperation;
+import org.apache.ibatis.session.SqlSession;
 
 public class UserRegister {
+    private static final SqlSession sqlSession;
     public static final UserMapper userMapper;
 
     static {
-        userMapper = DatabaseOperation.session.getMapper(UserMapper.class);
+        sqlSession = DatabaseOperation.getSqlSession();
+        userMapper = sqlSession.getMapper(UserMapper.class);
     }
 
     public static boolean containUser(String ID) {
@@ -31,6 +34,6 @@ public class UserRegister {
 
     public static void register(User user) {
         userMapper.InsertUser(user);
-        DatabaseOperation.session.commit();
+        sqlSession.commit();
     }
 }

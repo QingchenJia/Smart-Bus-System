@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class DatabaseOperation {
-    public static SqlSession session;
+    private final static SqlSessionFactory sqlSessionFactory;
 
     static {
         String resource = "MybatisConfig.xml";
@@ -19,7 +19,10 @@ public class DatabaseOperation {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-        session = sqlSessionFactory.openSession();
+        sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+    }
+
+    public static SqlSession getSqlSession() {
+        return sqlSessionFactory.openSession();
     }
 }

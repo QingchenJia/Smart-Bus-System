@@ -5,22 +5,25 @@ import SmartBusSystem.mapper.StopMapper;
 import SmartBusSystem.mapper.UserMapper;
 import SmartBusSystem.pojo.Route;
 import SmartBusSystem.pojo.Stop;
-import SmartBusSystem.service.TableRow.RouteGuideRow;
 import SmartBusSystem.pojo.User;
+import SmartBusSystem.service.TableRow.RouteGuideRow;
 import SmartBusSystem.service.tool.DatabaseOperation;
+import org.apache.ibatis.session.SqlSession;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserHomePage {
+    private static final SqlSession sqlSession;
     private static final UserMapper userMapper;
     private static final StopMapper stopMapper;
     private static final RouteMapper routeMapper;
 
     static {
-        userMapper = DatabaseOperation.session.getMapper(UserMapper.class);
-        stopMapper = DatabaseOperation.session.getMapper(StopMapper.class);
-        routeMapper = DatabaseOperation.session.getMapper(RouteMapper.class);
+        sqlSession = DatabaseOperation.getSqlSession();
+        userMapper = sqlSession.getMapper(UserMapper.class);
+        stopMapper = sqlSession.getMapper(StopMapper.class);
+        routeMapper = sqlSession.getMapper(RouteMapper.class);
     }
 
     public static User queryCurrentUserInformation(String UID) {    // 查询当前用户信息

@@ -7,21 +7,24 @@ import SmartBusSystem.pojo.Bus;
 import SmartBusSystem.pojo.Driver;
 import SmartBusSystem.pojo.Route;
 import SmartBusSystem.pojo.Schedule;
-import SmartBusSystem.service.tool.DatabaseOperation;
 import SmartBusSystem.service.TableRow.WorkArrangeRow;
+import SmartBusSystem.service.tool.DatabaseOperation;
+import org.apache.ibatis.session.SqlSession;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DriverHomePage {
+    private static final SqlSession sqlSession;
     private static final BusMapper busMapper;
     private static final DriverMapper driverMapper;
     private static final ScheduleMapper scheduleMapper;
 
     static {
-        busMapper = DatabaseOperation.session.getMapper(BusMapper.class);
-        driverMapper = DatabaseOperation.session.getMapper(DriverMapper.class);
-        scheduleMapper = DatabaseOperation.session.getMapper(ScheduleMapper.class);
+        sqlSession = DatabaseOperation.getSqlSession();
+        busMapper = sqlSession.getMapper(BusMapper.class);
+        driverMapper = sqlSession.getMapper(DriverMapper.class);
+        scheduleMapper = sqlSession.getMapper(ScheduleMapper.class);
     }
 
     public static Driver queryCurrentDriverInformation(String DID) {
