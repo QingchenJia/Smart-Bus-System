@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>edu.qingchenjia</groupId>
-    <artifactId>demo</artifactId>
+    <artifactId>SmartBusSystem</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -60,6 +60,12 @@
             <artifactId>bcprov-jdk18on</artifactId>
             <version>1.78.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <version>3.1.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -76,7 +82,6 @@
                         <configuration>
                             <archive>
                                 <manifest>
-                                    <!--填写你的main方法所在的主类-->
                                     <mainClass>
                                         SmartBusSystem.App
                                     </mainClass>
