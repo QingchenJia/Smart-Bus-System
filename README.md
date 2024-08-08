@@ -35,8 +35,19 @@ In order to present the operation effect of the project, the schema creation `re
 ```shell
 cd ./data
 mysql -u root -p
-source ./relationship-patterns.sql	#! 模式创建
-source ./demo-data.sql	#! 数据录入
+source ./relationship-patterns.sql
+source ./demo-data.sql
+```
+
+#### 打包运行
+
+In addition to running the project through the IDE, you can also use `Maven` to package it into a jar package and run it through a command-line tool such as `CMD` and `PowerShell`.
+
+```shell
+cd .
+mvn clean package
+cd ./target
+java -jar SmartBusSystem-1.0-SNAPSHOT-jar-with-dependencies.jar
 ```
 
 #### 更多背景
