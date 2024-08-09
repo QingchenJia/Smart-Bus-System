@@ -2,6 +2,15 @@ CREATE SCHEMA if not exists smartbussystem;
 
 USE smartbussystem;
 
+drop table if exists `schedule`;
+drop table if exists `bus`;
+drop table if exists `route-stop`;
+drop table if exists `route`;
+drop table if exists `stop`;
+drop table if exists `admin`;
+drop table if exists `driver`;
+drop table if exists `user`;
+
 create table `user`
 (
     UID      varchar(10)   not null
@@ -75,6 +84,8 @@ create table `schedule`
     Time          varchar(5)  not null,
     LicenseNumber varchar(10) null,
     primary key (DID, Time),
+    constraint schedule_driver_DID_fk
+        foreign key (DID) references smartbussystem.driver (DID),
     constraint schedule_bus_LicenseNumber_fk
         foreign key (LicenseNumber) references smartbussystem.bus (LicenseNumber)
 );
