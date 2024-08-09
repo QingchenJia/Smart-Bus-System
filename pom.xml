@@ -33,6 +33,13 @@
             <version>4.1.2</version>
         </dependency>
 
+        <!-- 添加slf4j注解开发 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
+            <scope>provided</scope>
+        </dependency>
 
         <!-- 添加slf4j日志api -->
         <dependency>
