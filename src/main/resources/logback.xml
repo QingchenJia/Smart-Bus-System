@@ -3,7 +3,7 @@
     <!--CONSOLE ：表示当前的日志信息是可以输出到控制台的。-->
     <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>[%level] %cyan([%thread]) %boldGreen(%logger{15}) - %msg %n</pattern>
+            <pattern>%blue(%d{HH:mm:ss}) [%level] %cyan([%thread]) %boldGreen(%logger) - %msg %n</pattern>
         </encoder>
     </appender>
 
