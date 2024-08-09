@@ -7,10 +7,12 @@ import SmartBusSystem.pojo.Bus;
 import SmartBusSystem.pojo.Driver;
 import SmartBusSystem.pojo.Schedule;
 import SmartBusSystem.service.tool.DatabaseOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
+@Slf4j
 public class AdminEditSchedule {
     private static final SqlSession sqlSession;
     private static final BusMapper busMapper;
@@ -26,7 +28,7 @@ public class AdminEditSchedule {
 
     public static List<Bus> queryBusAvailable(String dayOfWeek) {   // 可安排的车辆 状态正常且当天无人使用
         List<Bus> buses = busMapper.SelectBusAvailable(dayOfWeek);
-        System.out.println("可用车辆->" + buses);
+        log.info("可用车辆->" + buses);
         return buses;
     }
 
@@ -36,13 +38,13 @@ public class AdminEditSchedule {
 
     public static List<Driver> queryAllDriver() {
         List<Driver> drivers = driverMapper.SelectAll();
-        System.out.println("全部司机->" + drivers);
+        log.info("全部司机->" + drivers);
         return drivers;
     }
 
     public static List<Driver> queryDriverIsArrangedOnTheDay(String time) {
         List<Driver> drivers = driverMapper.SelectDriverIsArranged(time);
-        System.out.println("在班司机->" + drivers);
+        log.info("在班司机->" + drivers);
         return drivers;
     }
 
@@ -52,7 +54,7 @@ public class AdminEditSchedule {
 
     public static Schedule queryScheduleById(Schedule schedule) {
         Schedule scheduleResult = scheduleMapper.SelectById(schedule);
-        System.out.println("查询排班->" + scheduleResult);
+        log.info("查询排班->" + scheduleResult);
         return scheduleResult;
     }
 
@@ -73,7 +75,7 @@ public class AdminEditSchedule {
 
     public static List<Driver> queryDriverAvailable(String time) {
         List<Driver> drivers = driverMapper.SelectDriverAvailable(time);
-        System.out.println("可用司机->" + drivers);
+        log.info("可用司机->" + drivers);
         return drivers;
     }
 }

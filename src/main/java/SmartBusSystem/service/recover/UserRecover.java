@@ -5,8 +5,10 @@ import SmartBusSystem.pojo.User;
 import SmartBusSystem.service.login.UserLogin;
 import SmartBusSystem.service.register.UserRegister;
 import SmartBusSystem.service.tool.DatabaseOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 
+@Slf4j
 public class UserRecover {
     private static final SqlSession sqlSession;
     public static final UserMapper userMapper;
@@ -22,7 +24,7 @@ public class UserRecover {
 
     public static boolean verifyPhoneNum(String ID, String phoneNum) {
         User user = userMapper.SelectById(ID);
-        System.out.println("验证手机号->" + user);   // 控制台展示查询结果
+        log.info("验证手机号->" + user);   // 控制台展示查询结果
         return phoneNum.equals(user.getPhoneNum());
     }
 

@@ -9,11 +9,13 @@ import SmartBusSystem.pojo.Route;
 import SmartBusSystem.pojo.Schedule;
 import SmartBusSystem.service.TableRow.WorkArrangeRow;
 import SmartBusSystem.service.tool.DatabaseOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class DriverHomePage {
     private static final SqlSession sqlSession;
     private static final BusMapper busMapper;
@@ -29,13 +31,13 @@ public class DriverHomePage {
 
     public static Driver queryCurrentDriverInformation(String DID) {
         Driver driver = driverMapper.SelectById(DID);
-        System.out.println("当前司机->" + driver);
+        log.info("当前司机->" + driver);
         return driver;
     }
 
     public static Bus queryBusById(String licenseNum) {
         Bus bus = busMapper.SelectByLicenseNumber(licenseNum);
-        System.out.println("检索车辆->" + bus);
+        log.info("检索车辆->" + bus);
         return bus;
     }
 
@@ -45,7 +47,7 @@ public class DriverHomePage {
 
     public static List<WorkArrangeRow> getOwnWorkArrangeRow(String currentId) {
         List<Schedule> schedules = scheduleMapper.SelectByDriverID(currentId);
-        System.out.println("工作安排->" + schedules);
+        log.info("工作安排->" + schedules);
 
         List<WorkArrangeRow> workArrangeRows = new ArrayList<>();
 

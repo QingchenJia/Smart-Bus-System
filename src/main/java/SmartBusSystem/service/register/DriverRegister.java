@@ -3,8 +3,10 @@ package SmartBusSystem.service.register;
 import SmartBusSystem.mapper.DriverMapper;
 import SmartBusSystem.pojo.Driver;
 import SmartBusSystem.service.tool.DatabaseOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 
+@Slf4j
 public class DriverRegister {
     private static final SqlSession sqlSession;
     private static final DriverMapper driverMapper;
@@ -17,7 +19,7 @@ public class DriverRegister {
     public static boolean containDriver(String ID) {
         DriverMapper driverMapper = sqlSession.getMapper(DriverMapper.class);
         Driver driver = driverMapper.SelectById(ID);
-        System.out.println("检索司机->" + driver);  // 控制台展示查询结果
+        log.info("检索司机->" + driver);  // 控制台展示查询结果
         return driver != null;
     }
 

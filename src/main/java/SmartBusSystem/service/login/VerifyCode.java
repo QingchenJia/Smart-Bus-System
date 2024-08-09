@@ -1,9 +1,12 @@
 package SmartBusSystem.service.login;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+@Slf4j
 public class VerifyCode {
     public static ArrayList<Character> alphabet = new ArrayList<>();    // 字母表
     public static ArrayList<Integer> number = new ArrayList<>();    // 数字表
@@ -32,7 +35,7 @@ public class VerifyCode {
         codeArray[codeArray.length - 1] = temp;
 
         String verifyCode = new String(codeArray);
-        System.out.println("验证码->" + verifyCode);
+        log.info("验证码->" + verifyCode);
         return verifyCode;
     }
 }

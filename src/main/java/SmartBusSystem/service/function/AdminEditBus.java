@@ -5,10 +5,12 @@ import SmartBusSystem.mapper.RouteMapper;
 import SmartBusSystem.pojo.Bus;
 import SmartBusSystem.pojo.Route;
 import SmartBusSystem.service.tool.DatabaseOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
+@Slf4j
 public class AdminEditBus {
     private static final SqlSession sqlSession;
     private static final BusMapper busMapper;
@@ -22,7 +24,7 @@ public class AdminEditBus {
 
     public static List<Bus> queryAllBus() {
         List<Bus> buses = busMapper.SelectAll();
-        System.out.println("全部车辆->" + buses);
+        log.info("全部车辆->" + buses);
         return buses;
     }
 
@@ -46,7 +48,7 @@ public class AdminEditBus {
 
     public static List<Route> queryRouteStatusIsOne() {
         List<Route> routes = routeMapper.SelectStatusIsOne();
-        System.out.println("正常路线->" + routes);
+        log.info("正常路线->" + routes);
         return routes;
     }
 

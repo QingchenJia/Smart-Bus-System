@@ -5,8 +5,10 @@ import SmartBusSystem.pojo.User;
 import SmartBusSystem.service.register.UserRegister;
 import SmartBusSystem.service.tool.DatabaseOperation;
 import SmartBusSystem.service.tool.SecurityProtect;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 
+@Slf4j
 public class UserLogin {
     private static final SqlSession sqlSession;
     public static final UserMapper userMapper;
@@ -22,7 +24,7 @@ public class UserLogin {
 
     public static boolean verifyPassword(String ID, String password) throws Exception {
         User user = userMapper.SelectById(ID);
-        System.out.println("验证密码->" + user);   // 控制台展示查询结果
+        log.info("验证密码->" + user);   // 控制台展示查询结果
         return password.equals(SecurityProtect.decrypt(user.getPassword()));
     }
 

@@ -3,8 +3,10 @@ package SmartBusSystem.service.register;
 import SmartBusSystem.mapper.UserMapper;
 import SmartBusSystem.pojo.User;
 import SmartBusSystem.service.tool.DatabaseOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 
+@Slf4j
 public class UserRegister {
     private static final SqlSession sqlSession;
     public static final UserMapper userMapper;
@@ -16,7 +18,7 @@ public class UserRegister {
 
     public static boolean containUser(String ID) {
         User user = userMapper.SelectById(ID);
-        System.out.println("检索用户->" + user);   // 控制台展示查询结果
+        log.info("检索用户->" + user);   // 控制台展示查询结果
         return user != null;
     }
 

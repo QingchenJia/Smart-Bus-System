@@ -5,10 +5,12 @@ import SmartBusSystem.mapper.StopMapper;
 import SmartBusSystem.pojo.Route;
 import SmartBusSystem.pojo.Stop;
 import SmartBusSystem.service.tool.DatabaseOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
+@Slf4j
 public class UserSearchStop {
     private static final SqlSession sqlSession;
     private static final StopMapper stopMapper;
@@ -22,7 +24,7 @@ public class UserSearchStop {
 
     public static List<Stop> searchBySimilarName(String similarName) {
         List<Stop> stops = stopMapper.SelectStopBySimilarName(similarName);
-        System.out.println("模糊匹配->" + stops);
+        log.info("模糊匹配->" + stops);
         return stops;
     }
 
@@ -32,13 +34,13 @@ public class UserSearchStop {
 
     public static List<Stop> showAllStop() {
         List<Stop> stops = stopMapper.SelectAll();
-        System.out.println("全部站点->" + stops);
+        log.info("全部站点->" + stops);
         return stops;
     }
 
     public static List<Route> searchPassByRoute(String stopName) {
         List<Route> routes = routeMapper.SelectRoutePassByStop(stopName);
-        System.out.println("经行路线->" + routes);
+        log.info("经行路线->" + routes);
         return routes;
     }
 
@@ -52,7 +54,7 @@ public class UserSearchStop {
 
     public static Stop getStopByName(String name) {
         Stop stop = stopMapper.SelectByName(name);
-        System.out.println("查询站点->" + stop);
+        log.info("查询站点->" + stop);
         return stop;
     }
 }

@@ -8,11 +8,13 @@ import SmartBusSystem.pojo.Stop;
 import SmartBusSystem.pojo.User;
 import SmartBusSystem.service.TableRow.RouteGuideRow;
 import SmartBusSystem.service.tool.DatabaseOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class UserHomePage {
     private static final SqlSession sqlSession;
     private static final UserMapper userMapper;
@@ -28,19 +30,19 @@ public class UserHomePage {
 
     public static User queryCurrentUserInformation(String UID) {    // 查询当前用户信息
         User user = userMapper.SelectById(UID);
-        System.out.println("当前用户->" + user);   // 控制台展示查询结果
+        log.info("当前用户->" + user);   // 控制台展示查询结果
         return user;
     }
 
     public static List<Route> queryAllRoute() { // 查询所有线路
         List<Route> routes = routeMapper.SelectAll();
-        System.out.println("所有线路->" + routes); // 控制台展示查询结果
+        log.info("所有线路->" + routes); // 控制台展示查询结果
         return routes;
     }
 
     public static List<Stop> queryStopOrderInRoute(String RID) {    // 查询线路中经行站点顺序
         List<Stop> stops = stopMapper.SelectStopOrderInRoute(RID);
-        System.out.println("经行站点->" + stops);  // 控制台展示查询结果
+        log.info("经行站点->" + stops);  // 控制台展示查询结果
         return stops;
     }
 
