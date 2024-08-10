@@ -104,7 +104,7 @@ public class AdminFunctionUI extends JFrame {
 
     private void QueryScheduleMouseReleased(MouseEvent e) {
         showAllTime(SelectTime);
-        showInCenterOfFrame(QueryBusDialog);
+        showInCenterOfFrame(QueryScheduleDialog);
     }
 
     private void SearchScheduleButtonMouseReleased(MouseEvent e) {
