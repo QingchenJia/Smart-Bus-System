@@ -5,7 +5,8 @@
 package SmartBusSystem.UI;
 
 import SmartBusSystem.pojo.Driver;
-import SmartBusSystem.service.register.DriverRegister;
+import SmartBusSystem.service.register.Register;
+import SmartBusSystem.service.register.impl.DriverRegister;
 import SmartBusSystem.service.tool.SecurityProtect;
 
 import javax.swing.*;
@@ -29,28 +30,7 @@ public class DriverRegisterUI extends JFrame {
         String passwordAgain = new String(PasswordAgainInput.getPassword());
         String phoneNum = PhoneNumIdInput.getText();
 
-        if (!DriverRegister.checkID(ID)) {
-            showInCenterOfFrame(IdWrong);
-            return;
-        }
-        if (DriverRegister.containDriver(ID)) {
-            showInCenterOfFrame(IdExist);
-            return;
-        }
-        if (!DriverRegister.checkPassword(password)) {
-            showInCenterOfFrame(PasswordWrong);
-            return;
-        }
-        if (!password.equals(passwordAgain)) {
-            showInCenterOfFrame(PasswordDifferent);
-            return;
-        }
-        if (!DriverRegister.checkPhoneNum(phoneNum)) {
-            showInCenterOfFrame(PhoneNumWrong);
-            return;
-        }
-
-        showInCenterOfFrame(Pass);
+        registerDriver(ID, password, passwordAgain, phoneNum);
     }
 
     private void BackwardMouseReleased(MouseEvent e) {
@@ -74,7 +54,7 @@ public class DriverRegisterUI extends JFrame {
         driver.setDrivingYears(drivingYears);
         driver.setPhoneNum(phoneNum);
 
-        DriverRegister.register(driver);
+        register.register(driver);
 
         Pass.dispose();
     }
@@ -452,4 +432,35 @@ public class DriverRegisterUI extends JFrame {
         jDialog.setVisible(true);
     }
     // 会话窗口始终位于主窗体中心 END
+
+    // 司机注册 BEGIN
+    private Register register;
+
+    private void registerDriver(String ID, String password, String passwordAgain, String phoneNum) {
+        register = new DriverRegister();
+
+        if (!register.checkID(ID)) {
+            showInCenterOfFrame(IdWrong);
+            return;
+        }
+        if (register.containObject(ID)) {
+            showInCenterOfFrame(IdExist);
+            return;
+        }
+        if (!register.checkPassword(password)) {
+            showInCenterOfFrame(PasswordWrong);
+            return;
+        }
+        if (!password.equals(passwordAgain)) {
+            showInCenterOfFrame(PasswordDifferent);
+            return;
+        }
+        if (!register.checkPhoneNum(phoneNum)) {
+            showInCenterOfFrame(PhoneNumWrong);
+            return;
+        }
+
+        showInCenterOfFrame(Pass);
+    }
+    // 司机注册 END
 }

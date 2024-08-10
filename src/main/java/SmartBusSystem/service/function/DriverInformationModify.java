@@ -2,8 +2,8 @@ package SmartBusSystem.service.function;
 
 import SmartBusSystem.mapper.DriverMapper;
 import SmartBusSystem.pojo.Driver;
-import SmartBusSystem.service.login.DriverLogin;
-import SmartBusSystem.service.register.DriverRegister;
+import SmartBusSystem.service.login.impl.DriverLogin;
+import SmartBusSystem.service.register.impl.DriverRegister;
 import SmartBusSystem.service.tool.DatabaseOperation;
 import org.apache.ibatis.session.SqlSession;
 
@@ -17,7 +17,7 @@ public class DriverInformationModify {
     }
 
     public static boolean checkPhoneNum(String phoneNum) {
-        return DriverRegister.checkPhoneNum(phoneNum);
+        return phoneNum.matches("[1]\\d{10}");
     }
 
     public static void updateDriverInformation(Driver driver) {
@@ -26,11 +26,11 @@ public class DriverInformationModify {
     }
 
     public static boolean oldPasswordIsRight(String ID, String oldPassword) throws Exception {
-        return DriverLogin.verifyPassword(ID, oldPassword);
+        return new DriverLogin().verifyPassword(ID, oldPassword);
     }
 
     public static boolean checkPassword(String password) {
-        return DriverRegister.checkPassword(password);
+        return new DriverRegister().checkPassword(password);
     }
 
     public static void updateDriverNewPassword(String ID, String newPassword) {

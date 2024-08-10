@@ -36,12 +36,6 @@ public class AdminEditSchedule {
         return AdminEditBus.listBus2listBusLicenseNumber(buses);
     }
 
-    public static List<Driver> queryAllDriver() {
-        List<Driver> drivers = driverMapper.SelectAll();
-        log.info("全部司机->" + drivers);
-        return drivers;
-    }
-
     public static List<Driver> queryDriverIsArrangedOnTheDay(String time) {
         List<Driver> drivers = driverMapper.SelectDriverIsArranged(time);
         log.info("在班司机->" + drivers);

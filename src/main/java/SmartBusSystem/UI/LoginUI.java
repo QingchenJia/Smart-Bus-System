@@ -4,12 +4,14 @@
 
 package SmartBusSystem.UI;
 
-import SmartBusSystem.service.login.AdminLogin;
-import SmartBusSystem.service.login.DriverLogin;
-import SmartBusSystem.service.login.UserLogin;
+import SmartBusSystem.service.login.Login;
 import SmartBusSystem.service.login.VerifyCode;
-import SmartBusSystem.service.recover.DriverRecover;
-import SmartBusSystem.service.recover.UserRecover;
+import SmartBusSystem.service.login.impl.AdminLogin;
+import SmartBusSystem.service.login.impl.DriverLogin;
+import SmartBusSystem.service.login.impl.UserLogin;
+import SmartBusSystem.service.recover.impl.DriverRecover;
+import SmartBusSystem.service.recover.Recover;
+import SmartBusSystem.service.recover.impl.UserRecover;
 import SmartBusSystem.service.tool.SecurityProtect;
 
 import javax.swing.*;
@@ -774,58 +776,47 @@ public class LoginUI extends JFrame {
     // 会话窗口始终位于主窗体中心 END
 
     // 登录 BEGIN
+    private Login login;
+
     private void roleLogin(String role, String ID, String password, String code, String rightCode) {
         if (ID.isEmpty() || password.isEmpty() || code.isEmpty()) return;
 
         if ("乘客".equals(role)) {
-            if (!UserLogin.verifyID(ID)) {
-                showInCenterOfFrame(IdNoExist);
-                return;
-            }
-            try {
-                if (!UserLogin.verifyPassword(ID, password)) {
-                    showInCenterOfFrame(PasswordWrong);
-                    return;
-                }
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
-            if (!UserLogin.verifyVerifyCode(code, rightCode)) {
-                showInCenterOfFrame(CodeWrong);
-                return;
-            }
-
-            showInCenterOfFrame(UserPass);
+            login = new UserLogin();
         } else if ("司机".equals(role)) {
-            if (!DriverLogin.verifyID(ID)) {
-                showInCenterOfFrame(IdNoExist);
-                return;
-            }
-            try {
-                if (!DriverLogin.verifyPassword(ID, password)) {
-                    showInCenterOfFrame(PasswordWrong);
-                    return;
-                }
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
-            if (!DriverLogin.verifyVerifyCode(code, rightCode)) {
-                showInCenterOfFrame(CodeWrong);
-                return;
-            }
-
-            showInCenterOfFrame(DriverPass);
+            login = new DriverLogin();
         }
+
+        if (!login.verifyID(ID)) {
+            showInCenterOfFrame(IdNoExist);
+            return;
+        }
+        try {
+            if (!login.verifyPassword(ID, password)) {
+                showInCenterOfFrame(PasswordWrong);
+                return;
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+        if (!login.verifyVerifyCode(code, rightCode)) {
+            showInCenterOfFrame(CodeWrong);
+            return;
+        }
+
+        showInCenterOfFrame(DriverPass);
     }
 
     private void roleLogin(String ID, String password) {
         if (ID.isEmpty() || password.isEmpty()) return;
 
-        if (!AdminLogin.verifyID(ID)) {
+        login = new AdminLogin();
+
+        if (!login.verifyID(ID)) {
             return;
         }
         try {
-            if (!AdminLogin.verifyPassword(ID, password)) {
+            if (!login.verifyPassword(ID, password)) {
                 return;
             }
         } catch (Exception ex) {
@@ -839,6 +830,8 @@ public class LoginUI extends JFrame {
     // 登录 END
 
     // 恢复(重设密码) BEGIN
+    private Recover recover;
+
     private void resetPassword(String role, String ID, String phoneNum, String newPassword, String newPasswordAgain) {
         String newPasswordResult = null;
         try {
@@ -848,44 +841,29 @@ public class LoginUI extends JFrame {
         }
 
         if ("乘客".equals(role)) {
-            if (!UserRecover.verifyID(ID)) {
-                showInCenterOfFrame(IdNoExist);
-                return;
-            }
-            if (!UserRecover.verifyPhoneNum(ID, phoneNum)) {
-                showInCenterOfFrame(PasswordWrong);
-                return;
-            }
-            if (!UserRecover.checkPassword(newPassword)) {
-                showInCenterOfFrame(PasswordFormatError);
-                return;
-            }
-            if (!newPassword.equals(newPasswordAgain)) {
-                showInCenterOfFrame(PasswordNotSame);
-                return;
-            }
-
-            UserRecover.resetPassword(ID, newPasswordResult);
+            recover = new UserRecover();
         } else if ("司机".equals(role)) {
-            if (!DriverRecover.verifyID(ID)) {
-                showInCenterOfFrame(IdNoExist);
-                return;
-            }
-            if (!DriverRecover.verifyPhoneNum(ID, phoneNum)) {
-                showInCenterOfFrame(PhoneNumWrong);
-                return;
-            }
-            if (!DriverRecover.checkPassword(newPassword)) {
-                showInCenterOfFrame(PasswordFormatError);
-                return;
-            }
-            if (!newPassword.equals(newPasswordAgain)) {
-                showInCenterOfFrame(PasswordNotSame);
-                return;
-            }
-
-            DriverRecover.resetPassword(ID, newPasswordResult);
+            recover = new DriverRecover();
         }
-        // 恢复(重设密码) END
+
+        if (!recover.verifyID(ID)) {
+            showInCenterOfFrame(IdNoExist);
+            return;
+        }
+        if (!recover.verifyPhoneNum(ID, phoneNum)) {
+            showInCenterOfFrame(PhoneNumWrong);
+            return;
+        }
+        if (!recover.checkPassword(newPassword)) {
+            showInCenterOfFrame(PasswordFormatError);
+            return;
+        }
+        if (!newPassword.equals(newPasswordAgain)) {
+            showInCenterOfFrame(PasswordNotSame);
+            return;
+        }
+
+        recover.resetPassword(ID, newPasswordResult);
     }
+    // 恢复(重设密码) END
 }

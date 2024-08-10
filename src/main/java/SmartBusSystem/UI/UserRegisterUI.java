@@ -5,7 +5,8 @@
 package SmartBusSystem.UI;
 
 import SmartBusSystem.pojo.User;
-import SmartBusSystem.service.register.UserRegister;
+import SmartBusSystem.service.register.Register;
+import SmartBusSystem.service.register.impl.UserRegister;
 import SmartBusSystem.service.tool.SecurityProtect;
 
 import javax.swing.*;
@@ -28,28 +29,7 @@ public class UserRegisterUI extends JFrame {
         String passwordAgain = new String(PasswordAgainInput.getPassword());
         String phoneNum = PhoneNumIdInput.getText();
 
-        if (!UserRegister.checkID(ID)) {
-            showInCenterOfFrame(IdWrong);
-            return;
-        }
-        if (UserRegister.containUser(ID)) {
-            showInCenterOfFrame(IdExist);
-            return;
-        }
-        if (!UserRegister.checkPassword(password)) {
-            showInCenterOfFrame(PasswordWrong);
-            return;
-        }
-        if (!password.equals(passwordAgain)) {
-            showInCenterOfFrame(PasswordDifferent);
-            return;
-        }
-        if (!UserRegister.checkPhoneNum(phoneNum)) {
-            showInCenterOfFrame(PhoneNumWrong);
-            return;
-        }
-
-        showInCenterOfFrame(Pass);
+        registerUser(ID, password, passwordAgain, phoneNum);
     }
 
     private void BackwardMouseReleased(MouseEvent e) {
@@ -73,7 +53,7 @@ public class UserRegisterUI extends JFrame {
         user.setPhoneNum(phoneNum);
         user.setAptitude(aptitude);
 
-        UserRegister.register(user);
+        register.register(user);
 
         Pass.dispose();
     }
@@ -430,4 +410,35 @@ public class UserRegisterUI extends JFrame {
         jDialog.setVisible(true);
     }
     // 会话窗口始终位于主窗体中心 END
+
+    // 用户注册 BEGIN
+    private Register register;
+
+    private void registerUser(String ID, String password, String passwordAgain, String phoneNum) {
+        register = new UserRegister();
+
+        if (!register.checkID(ID)) {
+            showInCenterOfFrame(IdWrong);
+            return;
+        }
+        if (register.containObject(ID)) {
+            showInCenterOfFrame(IdExist);
+            return;
+        }
+        if (!register.checkPassword(password)) {
+            showInCenterOfFrame(PasswordWrong);
+            return;
+        }
+        if (!password.equals(passwordAgain)) {
+            showInCenterOfFrame(PasswordDifferent);
+            return;
+        }
+        if (!register.checkPhoneNum(phoneNum)) {
+            showInCenterOfFrame(PhoneNumWrong);
+            return;
+        }
+
+        showInCenterOfFrame(Pass);
+    }
+    // 用户注册 END
 }
