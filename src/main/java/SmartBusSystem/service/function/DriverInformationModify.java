@@ -1,40 +1,31 @@
 package SmartBusSystem.service.function;
 
-import SmartBusSystem.mapper.DriverMapper;
+import SmartBusSystem.dao.DriverDao;
+import SmartBusSystem.dao.impl.DriverDaoImpl;
 import SmartBusSystem.pojo.Driver;
-import SmartBusSystem.service.login.impl.DriverLogin;
-import SmartBusSystem.service.register.impl.DriverRegister;
-import SmartBusSystem.service.tool.DatabaseOperation;
-import org.apache.ibatis.session.SqlSession;
+import SmartBusSystem.service.tool.SecurityProtect;
 
 public class DriverInformationModify {
-    private static final SqlSession sqlSession;
-    private static final DriverMapper driverMapper;
-
-    static {
-        sqlSession = DatabaseOperation.getSqlSession();
-        driverMapper = sqlSession.getMapper(DriverMapper.class);
-    }
+    private static final DriverDao driverDao = new DriverDaoImpl();
 
     public static boolean checkPhoneNum(String phoneNum) {
         return phoneNum.matches("[1]\\d{10}");
     }
 
     public static void updateDriverInformation(Driver driver) {
-        driverMapper.UpdateDriver(driver);
-        sqlSession.commit();
+        driverDao.UpdateDriver(driver);
     }
 
     public static boolean oldPasswordIsRight(String ID, String oldPassword) throws Exception {
-        return new DriverLogin().verifyPassword(ID, oldPassword);
+        Driver driver = driverDao.SelectById(ID);
+        return oldPassword.equals(SecurityProtect.decrypt(driver.getPassword()));
     }
 
     public static boolean checkPassword(String password) {
-        return new DriverRegister().checkPassword(password);
+        return password.matches("[A-Za-z0-9@#*]{6,20}");
     }
 
     public static void updateDriverNewPassword(String ID, String newPassword) {
-        driverMapper.UpdatePassword(ID, newPassword);
-        sqlSession.commit();
+        driverDao.UpdatePassword(ID, newPassword);
     }
 }

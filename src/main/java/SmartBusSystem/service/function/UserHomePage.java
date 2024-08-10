@@ -1,49 +1,36 @@
 package SmartBusSystem.service.function;
 
-import SmartBusSystem.mapper.RouteMapper;
-import SmartBusSystem.mapper.StopMapper;
-import SmartBusSystem.mapper.UserMapper;
+import SmartBusSystem.dao.RouteDao;
+import SmartBusSystem.dao.StopDao;
+import SmartBusSystem.dao.UserDao;
+import SmartBusSystem.dao.impl.RouteDaoImpl;
+import SmartBusSystem.dao.impl.StopDaoImpl;
+import SmartBusSystem.dao.impl.UserDaoImpl;
 import SmartBusSystem.pojo.Route;
 import SmartBusSystem.pojo.Stop;
 import SmartBusSystem.pojo.User;
 import SmartBusSystem.service.TableRow.RouteGuideRow;
-import SmartBusSystem.service.tool.DatabaseOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.session.SqlSession;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
 public class UserHomePage {
-    private static final SqlSession sqlSession;
-    private static final UserMapper userMapper;
-    private static final StopMapper stopMapper;
-    private static final RouteMapper routeMapper;
+    private static final UserDao userDao = new UserDaoImpl();
+    private static final StopDao stopDao = new StopDaoImpl();
+    private static final RouteDao routeDao = new RouteDaoImpl();
 
-    static {
-        sqlSession = DatabaseOperation.getSqlSession();
-        userMapper = sqlSession.getMapper(UserMapper.class);
-        stopMapper = sqlSession.getMapper(StopMapper.class);
-        routeMapper = sqlSession.getMapper(RouteMapper.class);
-    }
 
     public static User queryCurrentUserInformation(String UID) {    // 查询当前用户信息
-        User user = userMapper.SelectById(UID);
-        log.info("当前用户->" + user);   // 控制台展示查询结果
-        return user;
+        return userDao.SelectById(UID);
     }
 
     public static List<Route> queryAllRoute() { // 查询所有线路
-        List<Route> routes = routeMapper.SelectAll();
-        log.info("所有线路->" + routes); // 控制台展示查询结果
-        return routes;
+        return routeDao.SelectAll();
     }
 
     public static List<Stop> queryStopOrderInRoute(String RID) {    // 查询线路中经行站点顺序
-        List<Stop> stops = stopMapper.SelectStopOrderInRoute(RID);
-        log.info("经行站点->" + stops);  // 控制台展示查询结果
-        return stops;
+        return stopDao.SelectStopOrderInRoute(RID);
     }
 
     public static List<RouteGuideRow> getAllRouteGuideRow() {   // 获取线路指南表的元组

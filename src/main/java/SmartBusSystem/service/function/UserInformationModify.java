@@ -1,40 +1,32 @@
 package SmartBusSystem.service.function;
 
-import SmartBusSystem.mapper.UserMapper;
+import SmartBusSystem.dao.UserDao;
+import SmartBusSystem.dao.impl.UserDaoImpl;
 import SmartBusSystem.pojo.User;
-import SmartBusSystem.service.login.impl.UserLogin;
 import SmartBusSystem.service.register.impl.UserRegister;
-import SmartBusSystem.service.tool.DatabaseOperation;
-import org.apache.ibatis.session.SqlSession;
+import SmartBusSystem.service.tool.SecurityProtect;
 
 public class UserInformationModify {
-    private static final SqlSession sqlSession;
-    private static final UserMapper userMapper;
-
-    static {
-        sqlSession = DatabaseOperation.getSqlSession();
-        userMapper = sqlSession.getMapper(UserMapper.class);
-    }
+    private static final UserDao userDao = new UserDaoImpl();
 
     public static boolean checkPhoneNum(String phoneNum) {
         return new UserRegister().checkPhoneNum(phoneNum);
     }
 
     public static void updateUserInformation(User user) {   // 更新用户基本信息
-        userMapper.UpdateUser(user);
-        sqlSession.commit();
+        userDao.UpdateUser(user);
     }
 
     public static boolean oldPasswordIsRight(String ID, String oldPassword) throws Exception {
-        return new UserLogin().verifyPassword(ID, oldPassword);
+        User user = userDao.SelectById(ID);
+        return oldPassword.equals(SecurityProtect.decrypt(user.getPassword()));
     }
 
     public static boolean checkPassword(String password) {
-        return new UserRegister().checkPassword(password);
+        return password.matches("[A-Za-z0-9@#.]{6,20}");
     }
 
     public static void updateUserNewPassword(String ID, String newPassword) {   // 修改密码
-        userMapper.UpdatePassword(ID, newPassword);
-        sqlSession.commit();
+        userDao.UpdatePassword(ID, newPassword);
     }
 }

@@ -1,31 +1,20 @@
 package SmartBusSystem.service.function;
 
-import SmartBusSystem.mapper.RouteMapper;
-import SmartBusSystem.mapper.StopMapper;
+import SmartBusSystem.dao.RouteDao;
+import SmartBusSystem.dao.StopDao;
+import SmartBusSystem.dao.impl.RouteDaoImpl;
+import SmartBusSystem.dao.impl.StopDaoImpl;
 import SmartBusSystem.pojo.Route;
 import SmartBusSystem.pojo.Stop;
-import SmartBusSystem.service.tool.DatabaseOperation;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
-@Slf4j
 public class UserSearchRoute {
-    private static final SqlSession sqlSession;
-    private static final StopMapper stopMapper;
-    private static final RouteMapper routeMapper;
-
-    static {
-        sqlSession = DatabaseOperation.getSqlSession();
-        stopMapper = sqlSession.getMapper(StopMapper.class);
-        routeMapper = sqlSession.getMapper(RouteMapper.class);
-    }
+    private static final StopDao stopDao = new StopDaoImpl();
+    private static final RouteDao routeDao = new RouteDaoImpl();
 
     public static List<Route> showAllRoute() {
-        List<Route> routes = routeMapper.SelectAll();
-        log.info("全部线路->" + routes);
-        return routes;
+        return routeDao.SelectAll();
     }
 
     public static List<String> listRoute2listRouteId(List<Route> routes) {
@@ -33,15 +22,11 @@ public class UserSearchRoute {
     }
 
     public static Route getRouteById(String ID) {
-        Route route = routeMapper.SelectById(ID);
-        log.info("查询线路->" + route);
-        return route;
+        return routeDao.SelectById(ID);
     }
 
     public static List<Stop> searchPassByStop(String RID) {
-        List<Stop> stops = stopMapper.SelectStopOrderInRoute(RID);
-        log.info("途径站点->" + stops);
-        return stops;
+        return stopDao.SelectStopOrderInRoute(RID);
     }
 
     public static List<String> listStop2listStopName(List<Stop> stops) {

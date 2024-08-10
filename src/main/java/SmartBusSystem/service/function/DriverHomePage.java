@@ -1,44 +1,32 @@
 package SmartBusSystem.service.function;
 
-import SmartBusSystem.mapper.BusMapper;
-import SmartBusSystem.mapper.DriverMapper;
-import SmartBusSystem.mapper.ScheduleMapper;
+import SmartBusSystem.dao.BusDao;
+import SmartBusSystem.dao.DriverDao;
+import SmartBusSystem.dao.ScheduleDao;
+import SmartBusSystem.dao.impl.BusDaoImpl;
+import SmartBusSystem.dao.impl.DriverDaoImpl;
+import SmartBusSystem.dao.impl.ScheduleDaoImpl;
 import SmartBusSystem.pojo.Bus;
 import SmartBusSystem.pojo.Driver;
 import SmartBusSystem.pojo.Route;
 import SmartBusSystem.pojo.Schedule;
 import SmartBusSystem.service.TableRow.WorkArrangeRow;
-import SmartBusSystem.service.tool.DatabaseOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.session.SqlSession;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
 public class DriverHomePage {
-    private static final SqlSession sqlSession;
-    private static final BusMapper busMapper;
-    private static final DriverMapper driverMapper;
-    private static final ScheduleMapper scheduleMapper;
-
-    static {
-        sqlSession = DatabaseOperation.getSqlSession();
-        busMapper = sqlSession.getMapper(BusMapper.class);
-        driverMapper = sqlSession.getMapper(DriverMapper.class);
-        scheduleMapper = sqlSession.getMapper(ScheduleMapper.class);
-    }
+    private static final BusDao busDao = new BusDaoImpl();
+    private static final DriverDao driverDao = new DriverDaoImpl();
+    private static final ScheduleDao scheduleDao = new ScheduleDaoImpl();
 
     public static Driver queryCurrentDriverInformation(String DID) {
-        Driver driver = driverMapper.SelectById(DID);
-        log.info("当前司机->" + driver);
-        return driver;
+        return driverDao.SelectById(DID);
     }
 
     public static Bus queryBusById(String licenseNum) {
-        Bus bus = busMapper.SelectByLicenseNumber(licenseNum);
-        log.info("检索车辆->" + bus);
-        return bus;
+        return busDao.SelectByLicenseNumber(licenseNum);
     }
 
     public static Route queryRouteById(String routeId) {
@@ -46,8 +34,7 @@ public class DriverHomePage {
     }
 
     public static List<WorkArrangeRow> getOwnWorkArrangeRow(String currentId) {
-        List<Schedule> schedules = scheduleMapper.SelectByDriverID(currentId);
-        log.info("工作安排->" + schedules);
+        List<Schedule> schedules = scheduleDao.SelectByDriverID(currentId);
 
         List<WorkArrangeRow> workArrangeRows = new ArrayList<>();
 

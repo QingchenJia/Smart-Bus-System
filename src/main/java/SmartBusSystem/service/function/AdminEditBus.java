@@ -1,31 +1,21 @@
 package SmartBusSystem.service.function;
 
-import SmartBusSystem.mapper.BusMapper;
-import SmartBusSystem.mapper.RouteMapper;
+import SmartBusSystem.dao.BusDao;
+import SmartBusSystem.dao.RouteDao;
+import SmartBusSystem.dao.impl.BusDaoImpl;
+import SmartBusSystem.dao.impl.RouteDaoImpl;
 import SmartBusSystem.pojo.Bus;
 import SmartBusSystem.pojo.Route;
-import SmartBusSystem.service.tool.DatabaseOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
-@Slf4j
 public class AdminEditBus {
-    private static final SqlSession sqlSession;
-    private static final BusMapper busMapper;
-    private static final RouteMapper routeMapper;
-
-    static {
-        sqlSession = DatabaseOperation.getSqlSession();
-        busMapper = sqlSession.getMapper(BusMapper.class);
-        routeMapper = sqlSession.getMapper(RouteMapper.class);
-    }
+    private static final BusDao busDao = new BusDaoImpl();
+    private static final RouteDao routeDao = new RouteDaoImpl();
 
     public static List<Bus> queryAllBus() {
-        List<Bus> buses = busMapper.SelectAll();
-        log.info("全部车辆->" + buses);
-        return buses;
+        return busDao.SelectAll();
     }
 
     public static List<String> listBus2listBusLicenseNumber(List<Bus> buses) {
@@ -37,8 +27,7 @@ public class AdminEditBus {
     }
 
     public static void updateBusStatus(Bus bus) {
-        busMapper.UpdateBusStatus(bus);
-        sqlSession.commit();
+        busDao.UpdateBusStatus(bus);
     }
 
     public static boolean checkLicenseNumber(String licenseNum) {
@@ -47,9 +36,7 @@ public class AdminEditBus {
     }
 
     public static List<Route> queryRouteStatusIsOne() {
-        List<Route> routes = routeMapper.SelectStatusIsOne();
-        log.info("正常路线->" + routes);
-        return routes;
+        return routeDao.SelectStatusIsOne();
     }
 
     public static List<String> listRoute2listRouteId(List<Route> routes) {
@@ -57,8 +44,7 @@ public class AdminEditBus {
     }
 
     public static void addNewBus(Bus bus) {
-        busMapper.InsertBus(bus);
-        sqlSession.commit();
+        busDao.InsertBus(bus);
     }
 
     public static boolean containBus(String licenseNum) {
@@ -66,7 +52,6 @@ public class AdminEditBus {
     }
 
     public static void deleteBus(String licenseNum) {
-        busMapper.DeleteBus(licenseNum);
-        sqlSession.commit();
+        busDao.DeleteBus(licenseNum);
     }
 }

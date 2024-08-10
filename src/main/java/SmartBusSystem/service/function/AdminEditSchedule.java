@@ -1,35 +1,25 @@
 package SmartBusSystem.service.function;
 
-import SmartBusSystem.mapper.BusMapper;
-import SmartBusSystem.mapper.DriverMapper;
-import SmartBusSystem.mapper.ScheduleMapper;
+import SmartBusSystem.dao.BusDao;
+import SmartBusSystem.dao.DriverDao;
+import SmartBusSystem.dao.ScheduleDao;
+import SmartBusSystem.dao.impl.BusDaoImpl;
+import SmartBusSystem.dao.impl.DriverDaoImpl;
+import SmartBusSystem.dao.impl.ScheduleDaoImpl;
 import SmartBusSystem.pojo.Bus;
 import SmartBusSystem.pojo.Driver;
 import SmartBusSystem.pojo.Schedule;
-import SmartBusSystem.service.tool.DatabaseOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
-@Slf4j
 public class AdminEditSchedule {
-    private static final SqlSession sqlSession;
-    private static final BusMapper busMapper;
-    private static final DriverMapper driverMapper;
-    private static final ScheduleMapper scheduleMapper;
-
-    static {
-        sqlSession = DatabaseOperation.getSqlSession();
-        busMapper = sqlSession.getMapper(BusMapper.class);
-        driverMapper = sqlSession.getMapper(DriverMapper.class);
-        scheduleMapper = sqlSession.getMapper(ScheduleMapper.class);
-    }
+    private static final BusDao busDao = new BusDaoImpl();
+    private static final DriverDao driverDao = new DriverDaoImpl();
+    private static final ScheduleDao scheduleDao = new ScheduleDaoImpl();
 
     public static List<Bus> queryBusAvailable(String dayOfWeek) {   // 可安排的车辆 状态正常且当天无人使用
-        List<Bus> buses = busMapper.SelectBusAvailable(dayOfWeek);
-        log.info("可用车辆->" + buses);
-        return buses;
+        return busDao.SelectBusAvailable(dayOfWeek);
     }
 
     public static List<String> listBus2listBusLicenseNumber(List<Bus> buses) {
@@ -37,9 +27,7 @@ public class AdminEditSchedule {
     }
 
     public static List<Driver> queryDriverIsArrangedOnTheDay(String time) {
-        List<Driver> drivers = driverMapper.SelectDriverIsArranged(time);
-        log.info("在班司机->" + drivers);
-        return drivers;
+        return driverDao.SelectDriverIsArranged(time);
     }
 
     public static List<String> listDriver2listDriverId(List<Driver> drivers) {
@@ -47,29 +35,22 @@ public class AdminEditSchedule {
     }
 
     public static Schedule queryScheduleById(Schedule schedule) {
-        Schedule scheduleResult = scheduleMapper.SelectById(schedule);
-        log.info("查询排班->" + scheduleResult);
-        return scheduleResult;
+        return scheduleDao.SelectById(schedule);
     }
 
     public static void deleteScheduleById(String DID, String dayOfWeek) {
-        scheduleMapper.DeleteSchedule(DID, dayOfWeek);
-        sqlSession.commit();
+        scheduleDao.DeleteSchedule(DID, dayOfWeek);
     }
 
     public static void addNewSchedule(Schedule schedule) {
-        scheduleMapper.InsertSchedule(schedule);
-        sqlSession.commit();
+        scheduleDao.InsertSchedule(schedule);
     }
 
     public static void updateSchedule(Schedule schedule) {
-        scheduleMapper.UpdateSchedule(schedule);
-        sqlSession.commit();
+        scheduleDao.UpdateSchedule(schedule);
     }
 
     public static List<Driver> queryDriverAvailable(String time) {
-        List<Driver> drivers = driverMapper.SelectDriverAvailable(time);
-        log.info("可用司机->" + drivers);
-        return drivers;
+        return driverDao.SelectDriverAvailable(time);
     }
 }
