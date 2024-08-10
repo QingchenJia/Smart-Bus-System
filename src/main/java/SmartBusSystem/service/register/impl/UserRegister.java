@@ -1,26 +1,18 @@
 package SmartBusSystem.service.register.impl;
 
-import SmartBusSystem.mapper.UserMapper;
+import SmartBusSystem.dao.UserDao;
+import SmartBusSystem.dao.impl.UserDaoImpl;
 import SmartBusSystem.pojo.User;
 import SmartBusSystem.service.register.Register;
-import SmartBusSystem.service.tool.DatabaseOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.session.SqlSession;
 
 @Slf4j
 public class UserRegister implements Register {
-    private static final SqlSession sqlSession;
-    public static final UserMapper userMapper;
-
-    static {
-        sqlSession = DatabaseOperation.getSqlSession();
-        userMapper = sqlSession.getMapper(UserMapper.class);
-    }
+    private static final UserDao userDao = new UserDaoImpl();
 
     @Override
     public boolean containObject(String ID) {
-        User user = userMapper.SelectById(ID);
-        log.info("检索用户->" + user);   // 控制台展示查询结果
+        User user = userDao.SelectById(ID);
         return user != null;
     }
 
@@ -41,7 +33,6 @@ public class UserRegister implements Register {
 
     @Override
     public void register(Object object) {
-        userMapper.InsertUser((User) object);
-        sqlSession.commit();
+        userDao.InsertUser((User) object);
     }
 }

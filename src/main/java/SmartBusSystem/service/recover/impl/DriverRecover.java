@@ -1,41 +1,34 @@
 package SmartBusSystem.service.recover.impl;
 
-import SmartBusSystem.mapper.DriverMapper;
+import SmartBusSystem.dao.DriverDao;
+import SmartBusSystem.dao.impl.DriverDaoImpl;
 import SmartBusSystem.pojo.Driver;
 import SmartBusSystem.service.recover.Recover;
-import SmartBusSystem.service.register.impl.DriverRegister;
-import SmartBusSystem.service.tool.DatabaseOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.session.SqlSession;
 
 @Slf4j
 public class DriverRecover implements Recover {
-    private static final SqlSession sqlSession;
-    private static final DriverMapper driverMapper;
+    private static final DriverDao driverDao = new DriverDaoImpl();
 
-    static {
-        sqlSession = DatabaseOperation.getSqlSession();
-        driverMapper = sqlSession.getMapper(DriverMapper.class);
-    }
-
+    @Override
     public boolean verifyID(String ID) {
-        Driver driver = driverMapper.SelectById(ID);
-        log.info("检索司机->" + driver);  // 控制台展示查询结果
+        Driver driver = driverDao.SelectById(ID);
         return driver != null;
     }
 
+    @Override
     public boolean verifyPhoneNum(String ID, String phoneNum) {
-        Driver driver = driverMapper.SelectById(ID);
-        log.info("验证手机号->" + driver);   // 控制台展示查询结果
+        Driver driver = driverDao.SelectById(ID);
         return phoneNum.equals(driver.getPhoneNum());
     }
 
+    @Override
     public boolean checkPassword(String password) {
-        return new DriverRegister().checkPassword(password);
+        return password.matches("[A-Za-z0-9@#*]{6,20}");
     }
 
+    @Override
     public void resetPassword(String ID, String newPassword) {
-        driverMapper.UpdatePassword(ID, newPassword);
-        sqlSession.commit();
+        driverDao.UpdatePassword(ID, newPassword);
     }
 }

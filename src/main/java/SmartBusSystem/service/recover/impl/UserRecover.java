@@ -1,41 +1,34 @@
 package SmartBusSystem.service.recover.impl;
 
-import SmartBusSystem.mapper.UserMapper;
+import SmartBusSystem.dao.UserDao;
+import SmartBusSystem.dao.impl.UserDaoImpl;
 import SmartBusSystem.pojo.User;
 import SmartBusSystem.service.recover.Recover;
-import SmartBusSystem.service.register.impl.UserRegister;
-import SmartBusSystem.service.tool.DatabaseOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.session.SqlSession;
 
 @Slf4j
 public class UserRecover implements Recover {
-    private static final SqlSession sqlSession;
-    public static final UserMapper userMapper;
+    private static final UserDao userDao = new UserDaoImpl();
 
-    static {
-        sqlSession = DatabaseOperation.getSqlSession();
-        userMapper = sqlSession.getMapper(UserMapper.class);
-    }
-
+    @Override
     public boolean verifyID(String ID) {
-        User user = userMapper.SelectById(ID);
-        log.info("检索用户->" + user);   // 控制台展示查询结果
+        User user = userDao.SelectById(ID);
         return user != null;
     }
 
+    @Override
     public boolean verifyPhoneNum(String ID, String phoneNum) {
-        User user = userMapper.SelectById(ID);
-        log.info("验证手机号->" + user);   // 控制台展示查询结果
+        User user = userDao.SelectById(ID);
         return phoneNum.equals(user.getPhoneNum());
     }
 
+    @Override
     public boolean checkPassword(String password) {
-        return new UserRegister().checkPassword(password);
+        return password.matches("[A-Za-z0-9@#*]{6,20}");
     }
 
+    @Override
     public void resetPassword(String ID, String newPassword) {
-        userMapper.UpdatePassword(ID, newPassword);
-        sqlSession.commit();
+        userDao.UpdatePassword(ID, newPassword);
     }
 }
