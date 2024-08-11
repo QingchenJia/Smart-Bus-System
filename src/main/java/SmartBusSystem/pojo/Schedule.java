@@ -1,5 +1,10 @@
 package SmartBusSystem.pojo;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class Schedule {
     private String DID;
     private String Time;
@@ -11,30 +16,6 @@ public class Schedule {
     public Schedule(String DID, String time, String licenseNumber) {
         this.DID = DID;
         Time = time;
-        this.licenseNumber = licenseNumber;
-    }
-
-    public String getDID() {
-        return DID;
-    }
-
-    public void setDID(String DID) {
-        this.DID = DID;
-    }
-
-    public String getTime() {
-        return Time;
-    }
-
-    public void setTime(String time) {
-        Time = time;
-    }
-
-    public String getLicenseNumber() {
-        return licenseNumber;
-    }
-
-    public void setLicenseNumber(String licenseNumber) {
         this.licenseNumber = licenseNumber;
     }
 

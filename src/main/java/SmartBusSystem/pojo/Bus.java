@@ -1,5 +1,10 @@
 package SmartBusSystem.pojo;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class Bus {
     private String licenseNumber;
     private int status;
@@ -11,30 +16,6 @@ public class Bus {
     public Bus(String licenseNumber, int status, String RID) {
         this.licenseNumber = licenseNumber;
         this.status = status;
-        this.RID = RID;
-    }
-
-    public String getLicenseNumber() {
-        return licenseNumber;
-    }
-
-    public void setLicenseNumber(String licenseNumber) {
-        this.licenseNumber = licenseNumber;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public String getRID() {
-        return RID;
-    }
-
-    public void setRID(String RID) {
         this.RID = RID;
     }
 
