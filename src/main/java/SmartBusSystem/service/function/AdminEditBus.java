@@ -6,7 +6,6 @@ import SmartBusSystem.dao.impl.BusDaoImpl;
 import SmartBusSystem.dao.impl.RouteDaoImpl;
 import SmartBusSystem.pojo.Bus;
 import SmartBusSystem.pojo.Route;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 

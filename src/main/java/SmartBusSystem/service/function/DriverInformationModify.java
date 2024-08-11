@@ -9,7 +9,7 @@ public class DriverInformationModify {
     private static final DriverDao driverDao = new DriverDaoImpl();
 
     public static boolean checkPhoneNum(String phoneNum) {
-        return phoneNum.matches("[1]\\d{10}");
+        return phoneNum.matches("1\\d{10}");
     }
 
     public static void updateDriverInformation(Driver driver) {

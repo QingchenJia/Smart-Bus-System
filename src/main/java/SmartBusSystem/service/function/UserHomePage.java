@@ -10,7 +10,6 @@ import SmartBusSystem.pojo.Route;
 import SmartBusSystem.pojo.Stop;
 import SmartBusSystem.pojo.User;
 import SmartBusSystem.service.TableRow.RouteGuideRow;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +18,6 @@ public class UserHomePage {
     private static final UserDao userDao = new UserDaoImpl();
     private static final StopDao stopDao = new StopDaoImpl();
     private static final RouteDao routeDao = new RouteDaoImpl();
-
 
     public static User queryCurrentUserInformation(String UID) {    // 查询当前用户信息
         return userDao.SelectById(UID);

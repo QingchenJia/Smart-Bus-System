@@ -9,7 +9,6 @@ import SmartBusSystem.dao.impl.ScheduleDaoImpl;
 import SmartBusSystem.pojo.Bus;
 import SmartBusSystem.pojo.Driver;
 import SmartBusSystem.pojo.Schedule;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
