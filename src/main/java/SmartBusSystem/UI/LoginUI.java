@@ -9,8 +9,8 @@ import SmartBusSystem.service.login.VerifyCode;
 import SmartBusSystem.service.login.impl.AdminLogin;
 import SmartBusSystem.service.login.impl.DriverLogin;
 import SmartBusSystem.service.login.impl.UserLogin;
-import SmartBusSystem.service.recover.impl.DriverRecover;
 import SmartBusSystem.service.recover.Recover;
+import SmartBusSystem.service.recover.impl.DriverRecover;
 import SmartBusSystem.service.recover.impl.UserRecover;
 import SmartBusSystem.service.tool.SecurityProtect;
 
@@ -804,7 +804,12 @@ public class LoginUI extends JFrame {
             return;
         }
 
-        showInCenterOfFrame(DriverPass);
+        if ("乘客".equals(role)) {
+            showInCenterOfFrame(UserPass);
+        } else if ("司机".equals(role)) {
+            showInCenterOfFrame(DriverPass);
+        }
+
     }
 
     private void roleLogin(String ID, String password) {
