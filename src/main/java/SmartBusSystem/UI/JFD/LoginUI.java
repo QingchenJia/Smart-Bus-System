@@ -2,8 +2,9 @@
  * Created by JFormDesigner on Wed Jun 26 23:27:45 CST 2024
  */
 
-package SmartBusSystem.UI;
+package SmartBusSystem.UI.JFD;
 
+import SmartBusSystem.UI.CenterWindow;
 import SmartBusSystem.service.login.Login;
 import SmartBusSystem.service.login.VerifyCode;
 import SmartBusSystem.service.login.impl.AdminLogin;
@@ -23,7 +24,7 @@ import java.util.Objects;
 /**
  * @author 87948
  */
-public class LoginUI extends JFrame {
+public class LoginUI extends CenterWindow {
     public LoginUI() {
         initComponents();
         this.setVisible(true);
@@ -763,17 +764,6 @@ public class LoginUI extends JFrame {
     private JDialog PasswordNotSame;
     private JLabel PasswordDifferent;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
-
-    // 会话窗口始终位于主窗体中心 BEGIN
-    private void setCenterOfFrame(JDialog jDialog) {
-        jDialog.setLocationRelativeTo(this);
-    }
-
-    private void showInCenterOfFrame(JDialog jDialog) {
-        setCenterOfFrame(jDialog);
-        jDialog.setVisible(true);
-    }
-    // 会话窗口始终位于主窗体中心 END
 
     // 登录 BEGIN
     private Login login;

@@ -2,15 +2,15 @@
  * Created by JFormDesigner on Thu Jul 11 14:44:36 CST 2024
  */
 
-package SmartBusSystem.UI;
+package SmartBusSystem.UI.JFD;
 
+import SmartBusSystem.UI.GenerateExcel;
 import SmartBusSystem.pojo.Bus;
 import SmartBusSystem.pojo.Schedule;
 import SmartBusSystem.service.TableRow.WorkArrangeRow;
 import SmartBusSystem.service.function.AdminEditBus;
 import SmartBusSystem.service.function.AdminEditSchedule;
 import SmartBusSystem.service.function.AdminHomePage;
-import SmartBusSystem.service.tool.ExportTable;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -20,14 +20,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
 /**
  * @author 87948
  */
-public class AdminFunctionUI extends JFrame {
+public class AdminFunctionUI extends GenerateExcel {
     public AdminFunctionUI() {
         initComponents();
         initAllWorkArrange();
@@ -156,14 +155,7 @@ public class AdminFunctionUI extends JFrame {
     }
 
     private void ExportTableMouseReleased(MouseEvent e) {
-        try {
-            ExportTable.JTable2Excel(AllWorkArrange.getModel(), "工作排班表", this);
-        } catch (IOException ex) {
-            showInCenterOfFrame(ExportFail);
-            throw new RuntimeException(ex);
-        }
-
-        showInCenterOfFrame(ExportSuccess);
+        ExportTable(AllWorkArrange, "工作排班表", ExportSuccess, ExportFail);
     }
 
     private void initComponents() {
@@ -1115,15 +1107,4 @@ public class AdminFunctionUI extends JFrame {
         }
     }
     // 排班新增 END
-
-    // 会话窗口始终位于主窗体中心 BEGIN
-    private void setCenterOfFrame(JDialog jDialog) {
-        jDialog.setLocationRelativeTo(this);
-    }
-
-    private void showInCenterOfFrame(JDialog jDialog) {
-        setCenterOfFrame(jDialog);
-        jDialog.setVisible(true);
-    }
-    // 会话窗口始终位于主窗体中心 END
 }

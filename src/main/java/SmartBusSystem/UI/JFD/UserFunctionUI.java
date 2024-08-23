@@ -2,8 +2,9 @@
  * Created by JFormDesigner on Mon Jul 01 20:22:42 CST 2024
  */
 
-package SmartBusSystem.UI;
+package SmartBusSystem.UI.JFD;
 
+import SmartBusSystem.UI.GenerateExcel;
 import SmartBusSystem.pojo.User;
 import SmartBusSystem.service.NavigationSystem.NavigationSystem;
 import SmartBusSystem.service.TableRow.RouteGuideRow;
@@ -11,7 +12,6 @@ import SmartBusSystem.service.function.UserHomePage;
 import SmartBusSystem.service.function.UserInformationModify;
 import SmartBusSystem.service.function.UserSearchRoute;
 import SmartBusSystem.service.function.UserSearchStop;
-import SmartBusSystem.service.tool.ExportTable;
 import SmartBusSystem.service.tool.SecurityProtect;
 
 import javax.swing.*;
@@ -22,7 +22,6 @@ import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 import java.sql.Time;
 import java.util.List;
 import java.util.Objects;
@@ -30,7 +29,7 @@ import java.util.Objects;
 /**
  * @author 87948
  */
-public class UserFunctionUI extends JFrame {
+public class UserFunctionUI extends GenerateExcel {
     public UserFunctionUI() {
         initComponents();
         initRouteGuide();
@@ -167,14 +166,7 @@ public class UserFunctionUI extends JFrame {
     }
 
     private void ExportToExcelMouseReleased(MouseEvent e) {
-        try {
-            ExportTable.JTable2Excel(RouteGuide.getModel(), "公交线路指南", this);
-        } catch (IOException ex) {
-            showInCenterOfFrame(ExportFail);
-            throw new RuntimeException(ex);
-        }
-
-        showInCenterOfFrame(ExportSuccess);
+        ExportTable(RouteGuide, "公交线路指南", ExportSuccess, ExportFail);
     }
 
     private void initComponents() {
@@ -1490,15 +1482,4 @@ public class UserFunctionUI extends JFrame {
         return true;
     }
     // 路线导航指南 END
-
-    // 会话窗口始终位于主窗体中心 BEGIN
-    private void setCenterOfFrame(JDialog jDialog) {
-        jDialog.setLocationRelativeTo(this);
-    }
-
-    private void showInCenterOfFrame(JDialog jDialog) {
-        setCenterOfFrame(jDialog);
-        jDialog.setVisible(true);
-    }
-    // 会话窗口始终位于主窗体中心 END
 }

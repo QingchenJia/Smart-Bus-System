@@ -2,8 +2,9 @@
  * Created by JFormDesigner on Tue Jul 09 13:46:35 CST 2024
  */
 
-package SmartBusSystem.UI;
+package SmartBusSystem.UI.JFD;
 
+import SmartBusSystem.UI.GenerateExcel;
 import SmartBusSystem.pojo.Driver;
 import SmartBusSystem.service.TableRow.WorkArrangeRow;
 import SmartBusSystem.service.function.DriverHomePage;
@@ -24,7 +25,7 @@ import java.util.Objects;
 /**
  * @author 87948
  */
-public class DriverFunctionUI extends JFrame {
+public class DriverFunctionUI extends GenerateExcel {
     public DriverFunctionUI() {
         initComponents();
         initWorkArrange();
@@ -134,14 +135,7 @@ public class DriverFunctionUI extends JFrame {
     }
 
     private void ExportToExcelMouseReleased(MouseEvent e) {
-        try {
-            ExportTable.JTable2Excel(WorkArrange.getModel(), currentDriverId + "个人工作排班表", this);
-        } catch (IOException ex) {
-            showInCenterOfFrame(ExportFail);
-            throw new RuntimeException(ex);
-        }
-
-        showInCenterOfFrame(ExportSuccess);
+        ExportTable(WorkArrange, currentDriverId + "个人工作排班表", ExportSuccess, ExportFail);
     }
 
     private void initComponents() {
@@ -815,15 +809,4 @@ public class DriverFunctionUI extends JFrame {
         }
     }
     // 加载工作排班情况 END
-
-    // 会话窗口始终位于主窗体中心 BEGIN
-    private void setCenterOfFrame(JDialog jDialog) {
-        jDialog.setLocationRelativeTo(this);
-    }
-
-    private void showInCenterOfFrame(JDialog jDialog) {
-        setCenterOfFrame(jDialog);
-        jDialog.setVisible(true);
-    }
-    // 会话窗口始终位于主窗体中心 END
 }

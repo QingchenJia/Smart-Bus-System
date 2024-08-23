@@ -2,8 +2,9 @@
  * Created by JFormDesigner on Fri Jun 28 19:16:35 CST 2024
  */
 
-package SmartBusSystem.UI;
+package SmartBusSystem.UI.JFD;
 
+import SmartBusSystem.UI.CenterWindow;
 import SmartBusSystem.pojo.Driver;
 import SmartBusSystem.service.register.Register;
 import SmartBusSystem.service.register.impl.DriverRegister;
@@ -18,7 +19,7 @@ import java.util.Objects;
 /**
  * @author 87948
  */
-public class DriverRegisterUI extends JFrame {
+public class DriverRegisterUI extends CenterWindow {
     public DriverRegisterUI() {
         initComponents();
         this.setVisible(true);
@@ -421,17 +422,6 @@ public class DriverRegisterUI extends JFrame {
     private JDialog Pass;
     private JButton Register;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
-
-    // 会话窗口始终位于主窗体中心 BEGIN
-    private void setCenterOfFrame(JDialog jDialog) {
-        jDialog.setLocationRelativeTo(this);
-    }
-
-    private void showInCenterOfFrame(JDialog jDialog) {
-        setCenterOfFrame(jDialog);
-        jDialog.setVisible(true);
-    }
-    // 会话窗口始终位于主窗体中心 END
 
     // 司机注册 BEGIN
     private Register register;
