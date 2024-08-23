@@ -6,9 +6,9 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.TableModel;
 import java.awt.*;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -44,7 +44,7 @@ public class ExportTable {
             sheet.autoSizeColumn(col);
         }
 
-        FileOutputStream excelExport = new FileOutputStream(new File("data/export-excel/" + excelName + ".xlsx"));
+        FileOutputStream excelExport = new FileOutputStream(FileSystemView.getFileSystemView().getHomeDirectory() + "/" + excelName + ".xlsx");
         workbook.write(excelExport);
     }
 }
