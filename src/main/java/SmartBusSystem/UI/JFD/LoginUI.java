@@ -4,7 +4,8 @@
 
 package SmartBusSystem.UI.JFD;
 
-import SmartBusSystem.UI.CenterWindow;
+import SmartBusSystem.UI.AccountLogin;
+import SmartBusSystem.service.TableRow.Account;
 import SmartBusSystem.service.login.Login;
 import SmartBusSystem.service.login.VerifyCode;
 import SmartBusSystem.service.login.impl.AdminLogin;
@@ -24,7 +25,7 @@ import java.util.Objects;
 /**
  * @author 87948
  */
-public class LoginUI extends CenterWindow {
+public class LoginUI extends AccountLogin {
     public LoginUI() {
         initComponents();
         this.setVisible(true);
@@ -45,21 +46,25 @@ public class LoginUI extends CenterWindow {
     }
 
     private void UserLoginButtonMouseReleased(MouseEvent e) {
-        String ID = IdInput.getText();
-        String password = new String(PasswordInput.getPassword());
-        String code = CodeInput.getText();
-        String rightCode = RightCode.getText();
+        Account account = collectAccountInfo(IdInput, PasswordInput, CodeInput, RightCode);
 
-        roleLogin("乘客", ID, password, code, rightCode);
+        login = new UserLogin();
+
+        loginAccount(login,
+                account,
+                IdNoExist, PasswordWrong, CodeWrong,
+                UserPass);
     }
 
     private void DriverLoginButtonMouseReleased(MouseEvent e) {
-        String ID = IdInput.getText();
-        String password = new String(PasswordInput.getPassword());
-        String code = CodeInput.getText();
-        String rightCode = RightCode.getText();
+        Account account = collectAccountInfo(IdInput, PasswordInput, CodeInput, RightCode);
 
-        roleLogin("司机", ID, password, code, rightCode);
+        login = new DriverLogin();
+
+        loginAccount(login,
+                account,
+                IdNoExist, PasswordWrong, CodeWrong,
+                DriverPass);
     }
 
     private void DriverRegisterMouseReleased(MouseEvent e) {
@@ -73,10 +78,11 @@ public class LoginUI extends CenterWindow {
     }
 
     private void AdminLoginButtonMouseReleased(MouseEvent e) {
-        String ID = AdminIdInput.getText();
-        String password = new String(AdminPasswordInput.getPassword());
+        Account account = collectAccountInf(AdminIdInput, AdminPasswordInput);
 
-        roleLogin(ID, password);
+        login = new AdminLogin();
+
+        loginAccount(login, account, AdminLoginDialog);
     }
 
     private void UserEnterSystemMouseReleased(MouseEvent e) {
@@ -765,64 +771,7 @@ public class LoginUI extends CenterWindow {
     private JLabel PasswordDifferent;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 
-    // 登录 BEGIN
     private Login login;
-
-    private void roleLogin(String role, String ID, String password, String code, String rightCode) {
-        if (ID.isEmpty() || password.isEmpty() || code.isEmpty()) return;
-
-        if ("乘客".equals(role)) {
-            login = new UserLogin();
-        } else if ("司机".equals(role)) {
-            login = new DriverLogin();
-        }
-
-        if (!login.verifyID(ID)) {
-            showInCenterOfFrame(IdNoExist);
-            return;
-        }
-        try {
-            if (!login.verifyPassword(ID, password)) {
-                showInCenterOfFrame(PasswordWrong);
-                return;
-            }
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
-        if (!login.verifyVerifyCode(code, rightCode)) {
-            showInCenterOfFrame(CodeWrong);
-            return;
-        }
-
-        if ("乘客".equals(role)) {
-            showInCenterOfFrame(UserPass);
-        } else if ("司机".equals(role)) {
-            showInCenterOfFrame(DriverPass);
-        }
-
-    }
-
-    private void roleLogin(String ID, String password) {
-        if (ID.isEmpty() || password.isEmpty()) return;
-
-        login = new AdminLogin();
-
-        if (!login.verifyID(ID)) {
-            return;
-        }
-        try {
-            if (!login.verifyPassword(ID, password)) {
-                return;
-            }
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
-
-        AdminLoginDialog.dispose();
-        this.dispose();
-        new AdminFunctionUI();
-    }
-    // 登录 END
 
     // 恢复(重设密码) BEGIN
     private Recover recover;
