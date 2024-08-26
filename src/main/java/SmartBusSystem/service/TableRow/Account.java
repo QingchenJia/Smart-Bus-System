@@ -13,11 +13,13 @@ public class Account {
     private String code;
     private String rightCode;
     private String role;
+    private String newPassword;
+    private String newPasswordAgain;
 
     public Account() {
     }
 
-    public Account(String ID, String password, String passwordAgain, String phoneNum, String code, String rightCode, String role) {
+    public Account(String ID, String password, String passwordAgain, String phoneNum, String code, String rightCode, String role, String newPassword, String newPasswordAgain) {
         this.ID = ID;
         this.password = password;
         this.passwordAgain = passwordAgain;
@@ -25,5 +27,7 @@ public class Account {
         this.code = code;
         this.rightCode = rightCode;
         this.role = role;
+        this.newPassword = newPassword;
+        this.newPasswordAgain = newPasswordAgain;
     }
 }

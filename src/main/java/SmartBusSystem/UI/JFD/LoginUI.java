@@ -12,15 +12,11 @@ import SmartBusSystem.service.login.impl.AdminLogin;
 import SmartBusSystem.service.login.impl.DriverLogin;
 import SmartBusSystem.service.login.impl.UserLogin;
 import SmartBusSystem.service.recover.Recover;
-import SmartBusSystem.service.recover.impl.DriverRecover;
-import SmartBusSystem.service.recover.impl.UserRecover;
-import SmartBusSystem.service.tool.SecurityProtect;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Objects;
 
 /**
  * @author 87948
@@ -93,13 +89,13 @@ public class LoginUI extends AccountLogin {
     }
 
     private void RecoverButtonMouseReleased(MouseEvent e) {
-        String ID = RecoverIdInput.getText();
-        String phoneNum = RecoverPhoneNumInput.getText();
-        String newPassword = new String(NewPasswordInput.getPassword());
-        String newPasswordAgain = new String(NewPasswordAgainInput.getPassword());
-        String role = Objects.requireNonNull(RoleSelect.getSelectedItem()).toString();
+        Account account = gainNewAccountInfo(RecoverIdInput, RecoverPhoneNumInput, NewPasswordInput, NewPasswordAgainInput, RoleSelect);
 
-        resetPassword(role, ID, phoneNum, newPassword, newPasswordAgain);
+        recover = chooseRole(account.getRole());
+
+        resetAccountPassword(recover,
+                account,
+                IdNoExist, PhoneNumWrong, PasswordFormatError, PasswordNotSame);
     }
 
     private void RecoverMouseReleased(MouseEvent e) {
@@ -775,39 +771,4 @@ public class LoginUI extends AccountLogin {
 
     // 恢复(重设密码) BEGIN
     private Recover recover;
-
-    private void resetPassword(String role, String ID, String phoneNum, String newPassword, String newPasswordAgain) {
-        String newPasswordResult = null;
-        try {
-            newPasswordResult = SecurityProtect.encrypt(newPassword);
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
-
-        if ("乘客".equals(role)) {
-            recover = new UserRecover();
-        } else if ("司机".equals(role)) {
-            recover = new DriverRecover();
-        }
-
-        if (!recover.verifyID(ID)) {
-            showInCenterOfFrame(IdNoExist);
-            return;
-        }
-        if (!recover.verifyPhoneNum(ID, phoneNum)) {
-            showInCenterOfFrame(PhoneNumWrong);
-            return;
-        }
-        if (!recover.checkPassword(newPassword)) {
-            showInCenterOfFrame(PasswordFormatError);
-            return;
-        }
-        if (!newPassword.equals(newPasswordAgain)) {
-            showInCenterOfFrame(PasswordNotSame);
-            return;
-        }
-
-        recover.resetPassword(ID, newPasswordResult);
-    }
-    // 恢复(重设密码) END
 }
