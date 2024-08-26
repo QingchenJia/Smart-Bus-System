@@ -4,8 +4,9 @@
 
 package SmartBusSystem.UI.JFD;
 
-import SmartBusSystem.UI.CenterWindow;
+import SmartBusSystem.UI.AccountRegister;
 import SmartBusSystem.pojo.Driver;
+import SmartBusSystem.service.TableRow.Account;
 import SmartBusSystem.service.register.Register;
 import SmartBusSystem.service.register.impl.DriverRegister;
 import SmartBusSystem.service.tool.SecurityProtect;
@@ -19,19 +20,18 @@ import java.util.Objects;
 /**
  * @author 87948
  */
-public class DriverRegisterUI extends CenterWindow {
+public class DriverRegisterUI extends AccountRegister {
     public DriverRegisterUI() {
         initComponents();
         this.setVisible(true);
     }
 
     private void CheckMouseReleased(MouseEvent e) {
-        String ID = IdInput.getText();
-        String password = new String(PasswordInput.getPassword());
-        String passwordAgain = new String(PasswordAgainInput.getPassword());
-        String phoneNum = PhoneNumIdInput.getText();
+        Account account = collectAccountInfo(IdInput, PasswordInput, PasswordAgainInput, PhoneNumInput);
 
-        registerDriver(ID, password, passwordAgain, phoneNum);
+        registerAccount(register,
+                account,
+                IdWrong, IdExist, PasswordWrong, PasswordDifferent, PhoneNumWrong, Pass);
     }
 
     private void BackwardMouseReleased(MouseEvent e) {
@@ -43,7 +43,7 @@ public class DriverRegisterUI extends CenterWindow {
         String ID = IdInput.getText();
         String password = new String(PasswordInput.getPassword());
         int drivingYears = Integer.parseInt(Objects.requireNonNull(SelectDrivingYears.getSelectedItem()).toString());
-        String phoneNum = PhoneNumIdInput.getText();
+        String phoneNum = PhoneNumInput.getText();
 
         Driver driver = new Driver();
         driver.setID(ID);
@@ -68,7 +68,7 @@ public class DriverRegisterUI extends CenterWindow {
         PasswordAgain = new JLabel();
         DrivingYears = new JLabel();
         IdInput = new JFormattedTextField();
-        PhoneNumIdInput = new JFormattedTextField();
+        PhoneNumInput = new JFormattedTextField();
         PasswordInput = new JPasswordField();
         PasswordAgainInput = new JPasswordField();
         Check = new JButton();
@@ -125,8 +125,8 @@ public class DriverRegisterUI extends CenterWindow {
         DrivingYears.setBounds(new Rectangle(new Point(40, 208), DrivingYears.getPreferredSize()));
         contentPane.add(IdInput);
         IdInput.setBounds(110, 55, 195, 25);
-        contentPane.add(PhoneNumIdInput);
-        PhoneNumIdInput.setBounds(130, 175, 175, 25);
+        contentPane.add(PhoneNumInput);
+        PhoneNumInput.setBounds(130, 175, 175, 25);
         contentPane.add(PasswordInput);
         PasswordInput.setBounds(110, 95, 195, 25);
         contentPane.add(PasswordAgainInput);
@@ -369,10 +369,9 @@ public class DriverRegisterUI extends CenterWindow {
             Register.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseReleased(MouseEvent e) {
-                    RegisterMouseReleased(e);}
-
+                    RegisterMouseReleased(e);
                 }
-            );
+            });
             PassContentPane.add(Register);
             Register.setBounds(new Rectangle(new Point(70, 25), Register.getPreferredSize()));
 
@@ -403,7 +402,7 @@ public class DriverRegisterUI extends CenterWindow {
     private JLabel PasswordAgain;
     private JLabel DrivingYears;
     private JFormattedTextField IdInput;
-    private JFormattedTextField PhoneNumIdInput;
+    private JFormattedTextField PhoneNumInput;
     private JPasswordField PasswordInput;
     private JPasswordField PasswordAgainInput;
     private JButton Check;
@@ -424,33 +423,5 @@ public class DriverRegisterUI extends CenterWindow {
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 
     // 司机注册 BEGIN
-    private Register register;
-
-    private void registerDriver(String ID, String password, String passwordAgain, String phoneNum) {
-        register = new DriverRegister();
-
-        if (!register.checkID(ID)) {
-            showInCenterOfFrame(IdWrong);
-            return;
-        }
-        if (register.containObject(ID)) {
-            showInCenterOfFrame(IdExist);
-            return;
-        }
-        if (!register.checkPassword(password)) {
-            showInCenterOfFrame(PasswordWrong);
-            return;
-        }
-        if (!password.equals(passwordAgain)) {
-            showInCenterOfFrame(PasswordDifferent);
-            return;
-        }
-        if (!register.checkPhoneNum(phoneNum)) {
-            showInCenterOfFrame(PhoneNumWrong);
-            return;
-        }
-
-        showInCenterOfFrame(Pass);
-    }
-    // 司机注册 END
+    private static final Register register = new DriverRegister();
 }

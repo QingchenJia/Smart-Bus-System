@@ -4,9 +4,9 @@
 
 package SmartBusSystem.UI.JFD;
 
-import SmartBusSystem.UI.CenterWindow;
-import SmartBusSystem.UI.JFD.LoginUI;
+import SmartBusSystem.UI.AccountRegister;
 import SmartBusSystem.pojo.User;
+import SmartBusSystem.service.TableRow.Account;
 import SmartBusSystem.service.register.Register;
 import SmartBusSystem.service.register.impl.UserRegister;
 import SmartBusSystem.service.tool.SecurityProtect;
@@ -19,19 +19,18 @@ import java.awt.event.MouseEvent;
 /**
  * @author 87948
  */
-public class UserRegisterUI extends CenterWindow {
+public class UserRegisterUI extends AccountRegister {
     public UserRegisterUI() {
         initComponents();
         this.setVisible(true);
     }
 
     private void CheckMouseReleased(MouseEvent e) {
-        String ID = IdInput.getText();
-        String password = new String(PasswordInput.getPassword());
-        String passwordAgain = new String(PasswordAgainInput.getPassword());
-        String phoneNum = PhoneNumIdInput.getText();
+        Account account = collectAccountInfo(IdInput, PasswordInput, PasswordAgainInput, PhoneNumInput);
 
-        registerUser(ID, password, passwordAgain, phoneNum);
+        registerAccount(register,
+                account,
+                IdWrong, IdExist, PasswordWrong, PasswordDifferent, PhoneNumWrong, Pass);
     }
 
     private void BackwardMouseReleased(MouseEvent e) {
@@ -42,7 +41,7 @@ public class UserRegisterUI extends CenterWindow {
     private void RegisterMouseReleased(MouseEvent e) {
         String ID = IdInput.getText();
         String password = new String(PasswordInput.getPassword());
-        String phoneNum = PhoneNumIdInput.getText();
+        String phoneNum = PhoneNumInput.getText();
         int aptitude = IsAptitude.isSelected() ? 0 : 1;
 
         User user = new User();
@@ -68,7 +67,7 @@ public class UserRegisterUI extends CenterWindow {
         PasswordAgain = new JLabel();
         Aptitude = new JLabel();
         IdInput = new JFormattedTextField();
-        PhoneNumIdInput = new JFormattedTextField();
+        PhoneNumInput = new JFormattedTextField();
         PasswordInput = new JPasswordField();
         PasswordAgainInput = new JPasswordField();
         IsAptitude = new JCheckBox();
@@ -125,8 +124,8 @@ public class UserRegisterUI extends CenterWindow {
         Aptitude.setBounds(new Rectangle(new Point(40, 208), Aptitude.getPreferredSize()));
         contentPane.add(IdInput);
         IdInput.setBounds(110, 55, 195, 25);
-        contentPane.add(PhoneNumIdInput);
-        PhoneNumIdInput.setBounds(130, 175, 175, 25);
+        contentPane.add(PhoneNumInput);
+        PhoneNumInput.setBounds(130, 175, 175, 25);
         contentPane.add(PasswordInput);
         PasswordInput.setBounds(110, 95, 195, 25);
         contentPane.add(PasswordAgainInput);
@@ -382,7 +381,7 @@ public class UserRegisterUI extends CenterWindow {
     private JLabel PasswordAgain;
     private JLabel Aptitude;
     private JFormattedTextField IdInput;
-    private JFormattedTextField PhoneNumIdInput;
+    private JFormattedTextField PhoneNumInput;
     private JPasswordField PasswordInput;
     private JPasswordField PasswordAgainInput;
     private JCheckBox IsAptitude;
@@ -403,33 +402,5 @@ public class UserRegisterUI extends CenterWindow {
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 
     // 用户注册 BEGIN
-    private Register register;
-
-    private void registerUser(String ID, String password, String passwordAgain, String phoneNum) {
-        register = new UserRegister();
-
-        if (!register.checkID(ID)) {
-            showInCenterOfFrame(IdWrong);
-            return;
-        }
-        if (register.containObject(ID)) {
-            showInCenterOfFrame(IdExist);
-            return;
-        }
-        if (!register.checkPassword(password)) {
-            showInCenterOfFrame(PasswordWrong);
-            return;
-        }
-        if (!password.equals(passwordAgain)) {
-            showInCenterOfFrame(PasswordDifferent);
-            return;
-        }
-        if (!register.checkPhoneNum(phoneNum)) {
-            showInCenterOfFrame(PhoneNumWrong);
-            return;
-        }
-
-        showInCenterOfFrame(Pass);
-    }
-    // 用户注册 END
+    private static final Register register = new UserRegister();
 }

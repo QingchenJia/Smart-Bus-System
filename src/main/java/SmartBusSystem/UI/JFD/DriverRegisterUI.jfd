@@ -60,7 +60,7 @@ new FormModel {
 				"y": 55
 			} )
 			add( new FormComponent( "javax.swing.JFormattedTextField" ) {
-				name: "PhoneNumIdInput"
+				name: "PhoneNumInput"
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
 				"width": 175
 				"height": 25
