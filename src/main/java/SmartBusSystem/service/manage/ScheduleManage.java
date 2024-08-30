@@ -17,39 +17,39 @@ public class ScheduleManage {
     private static final DriverDao driverDao = new DriverDaoImpl();
     private static final ScheduleDao scheduleDao = new ScheduleDaoImpl();
 
-    public static List<Bus> queryBusAvailable(String dayOfWeek) {   // 可安排的车辆 状态正常且当天无人使用
+    public List<Bus> queryBusAvailable(String dayOfWeek) {   // 可安排的车辆 状态正常且当天无人使用
         return busDao.SelectBusAvailable(dayOfWeek);
     }
 
-    public static List<String> listBus2listBusLicenseNumber(List<Bus> buses) {
-        return BusManage.listBus2listBusLicenseNumber(buses);
+    public List<String> listBus2listBusLicenseNumber(List<Bus> buses) {
+        return buses.stream().map(Bus::getLicenseNumber).toList();
     }
 
-    public static List<Driver> queryDriverIsArrangedOnTheDay(String time) {
+    public List<Driver> queryDriverIsArrangedOnTheDay(String time) {
         return driverDao.SelectDriverIsArranged(time);
     }
 
-    public static List<String> listDriver2listDriverId(List<Driver> drivers) {
+    public List<String> listDriver2listDriverId(List<Driver> drivers) {
         return drivers.stream().map(Driver::getID).toList();
     }
 
-    public static Schedule queryScheduleById(Schedule schedule) {
+    public Schedule queryScheduleById(Schedule schedule) {
         return scheduleDao.SelectById(schedule);
     }
 
-    public static void deleteScheduleById(String DID, String dayOfWeek) {
+    public void deleteScheduleById(String DID, String dayOfWeek) {
         scheduleDao.DeleteSchedule(DID, dayOfWeek);
     }
 
-    public static void addNewSchedule(Schedule schedule) {
+    public void addNewSchedule(Schedule schedule) {
         scheduleDao.InsertSchedule(schedule);
     }
 
-    public static void updateSchedule(Schedule schedule) {
+    public void updateSchedule(Schedule schedule) {
         scheduleDao.UpdateSchedule(schedule);
     }
 
-    public static List<Driver> queryDriverAvailable(String time) {
+    public List<Driver> queryDriverAvailable(String time) {
         return driverDao.SelectDriverAvailable(time);
     }
 }

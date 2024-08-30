@@ -2,16 +2,17 @@ package SmartBusSystem.service.homepage;
 
 import SmartBusSystem.dao.BusDao;
 import SmartBusSystem.dao.DriverDao;
+import SmartBusSystem.dao.RouteDao;
 import SmartBusSystem.dao.ScheduleDao;
 import SmartBusSystem.dao.impl.BusDaoImpl;
 import SmartBusSystem.dao.impl.DriverDaoImpl;
+import SmartBusSystem.dao.impl.RouteDaoImpl;
 import SmartBusSystem.dao.impl.ScheduleDaoImpl;
 import SmartBusSystem.pojo.Bus;
 import SmartBusSystem.pojo.Driver;
 import SmartBusSystem.pojo.Route;
 import SmartBusSystem.pojo.Schedule;
-import SmartBusSystem.service.TableRow.WorkArrangeRow;
-import SmartBusSystem.service.query.RouteQuery;
+import SmartBusSystem.pojo.mediator.WorkArrangeRow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,20 +21,21 @@ public class DriverHomePage {
     private static final BusDao busDao = new BusDaoImpl();
     private static final DriverDao driverDao = new DriverDaoImpl();
     private static final ScheduleDao scheduleDao = new ScheduleDaoImpl();
+    private static final RouteDao routeDao = new RouteDaoImpl();
 
-    public static Driver queryCurrentDriverInformation(String DID) {
+    public Driver queryCurrentDriverInformation(String DID) {
         return driverDao.SelectById(DID);
     }
 
-    public static Bus queryBusById(String licenseNum) {
+    public Bus queryBusById(String licenseNum) {
         return busDao.SelectByLicenseNumber(licenseNum);
     }
 
-    public static Route queryRouteById(String routeId) {
-        return RouteQuery.getRouteById(routeId);
+    public Route queryRouteById(String routeId) {
+        return routeDao.SelectById(routeId);
     }
 
-    public static List<WorkArrangeRow> getOwnWorkArrangeRow(String currentId) {
+    public List<WorkArrangeRow> getOwnWorkArrangeRow(String currentId) {
         List<Schedule> schedules = scheduleDao.SelectByDriverID(currentId);
 
         List<WorkArrangeRow> workArrangeRows = new ArrayList<>();

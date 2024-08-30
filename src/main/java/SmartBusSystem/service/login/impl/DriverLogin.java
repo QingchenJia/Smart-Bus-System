@@ -1,13 +1,11 @@
 package SmartBusSystem.service.login.impl;
 
+import SmartBusSystem.Util.SecurityProtect;
 import SmartBusSystem.dao.DriverDao;
 import SmartBusSystem.dao.impl.DriverDaoImpl;
 import SmartBusSystem.pojo.Driver;
 import SmartBusSystem.service.login.Login;
-import SmartBusSystem.Util.SecurityProtect;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class DriverLogin implements Login {
     private static final DriverDao driverDao = new DriverDaoImpl();
 

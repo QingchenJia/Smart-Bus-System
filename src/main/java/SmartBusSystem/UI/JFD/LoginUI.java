@@ -5,7 +5,7 @@
 package SmartBusSystem.UI.JFD;
 
 import SmartBusSystem.UI.AccountLogin;
-import SmartBusSystem.service.TableRow.Account;
+import SmartBusSystem.pojo.mediator.Account;
 import SmartBusSystem.service.login.Login;
 import SmartBusSystem.service.login.VerifyCode;
 import SmartBusSystem.service.login.impl.AdminLogin;
@@ -22,6 +22,9 @@ import java.awt.event.MouseEvent;
  * @author 87948
  */
 public class LoginUI extends AccountLogin {
+    private Login login;
+    private Recover recover;
+
     public LoginUI() {
         initComponents();
         this.setVisible(true);
@@ -766,9 +769,4 @@ public class LoginUI extends AccountLogin {
     private JDialog PasswordNotSame;
     private JLabel PasswordDifferent;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
-
-    private Login login;
-
-    // 恢复(重设密码) BEGIN
-    private Recover recover;
 }

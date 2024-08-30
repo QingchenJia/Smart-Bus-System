@@ -1,6 +1,6 @@
 package SmartBusSystem.UI;
 
-import SmartBusSystem.service.TableRow.Account;
+import SmartBusSystem.pojo.mediator.Account;
 import SmartBusSystem.service.register.Register;
 
 import javax.swing.*;

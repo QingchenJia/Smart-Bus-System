@@ -1,13 +1,11 @@
 package SmartBusSystem.service.login.impl;
 
+import SmartBusSystem.Util.SecurityProtect;
 import SmartBusSystem.dao.AdminDao;
 import SmartBusSystem.dao.impl.AdminDaoImpl;
 import SmartBusSystem.pojo.Admin;
 import SmartBusSystem.service.login.Login;
-import SmartBusSystem.Util.SecurityProtect;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class AdminLogin implements Login {
     private static final AdminDao adminDao = new AdminDaoImpl();
 

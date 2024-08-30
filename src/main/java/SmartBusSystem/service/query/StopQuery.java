@@ -13,31 +13,31 @@ public class StopQuery {
     private static final StopDao stopDao = new StopDaoImpl();
     private static final RouteDao routeDao = new RouteDaoImpl();
 
-    public static List<Stop> searchBySimilarName(String similarName) {
+    public List<Stop> searchBySimilarName(String similarName) {
         return stopDao.SelectStopBySimilarName(similarName);
     }
 
-    public static List<String> listStop2listStopName(List<Stop> stops) {
+    public List<String> listStop2listStopName(List<Stop> stops) {
         return stops.stream().map(Stop::getName).toList();
     }
 
-    public static List<Stop> showAllStop() {
+    public List<Stop> showAllStop() {
         return stopDao.SelectAll();
     }
 
-    public static List<Route> searchPassByRoute(String stopName) {
+    public List<Route> searchPassByRoute(String stopName) {
         return routeDao.SelectRoutePassByStop(stopName);
     }
 
-    public static List<String> listRoute2listRouteBasicInformation(List<Route> routes) {
+    public List<String> listRoute2listRouteBasicInformation(List<Route> routes) {
         return routes.stream().map(route -> route.getID() + "路 " + route.getStartTime() + "->" + route.getEndTime()).toList();
     }
 
-    public static List<String> listRoute2listRouteId(List<Route> routes) {
+    public List<String> listRoute2listRouteId4navi(List<Route> routes) {
         return routes.stream().map(Route::getID).toList();
     }
 
-    public static Stop getStopByName(String name) {
+    public Stop getStopByName(String name) {
         return stopDao.SelectByName(name);
     }
 }

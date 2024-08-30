@@ -1,7 +1,7 @@
 package SmartBusSystem.UI;
 
 import SmartBusSystem.UI.JFD.AdminFunctionUI;
-import SmartBusSystem.service.TableRow.Account;
+import SmartBusSystem.pojo.mediator.Account;
 import SmartBusSystem.service.login.Login;
 import SmartBusSystem.service.recover.Recover;
 import SmartBusSystem.service.recover.impl.DriverRecover;

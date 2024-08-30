@@ -4,9 +4,7 @@ import SmartBusSystem.dao.UserDao;
 import SmartBusSystem.dao.impl.UserDaoImpl;
 import SmartBusSystem.pojo.User;
 import SmartBusSystem.service.recover.Recover;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class UserRecover implements Recover {
     private static final UserDao userDao = new UserDaoImpl();
 

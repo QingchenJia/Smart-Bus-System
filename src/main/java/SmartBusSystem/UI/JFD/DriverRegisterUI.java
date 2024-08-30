@@ -6,7 +6,7 @@ package SmartBusSystem.UI.JFD;
 
 import SmartBusSystem.UI.AccountRegister;
 import SmartBusSystem.pojo.Driver;
-import SmartBusSystem.service.TableRow.Account;
+import SmartBusSystem.pojo.mediator.Account;
 import SmartBusSystem.service.register.Register;
 import SmartBusSystem.service.register.impl.DriverRegister;
 import SmartBusSystem.Util.SecurityProtect;

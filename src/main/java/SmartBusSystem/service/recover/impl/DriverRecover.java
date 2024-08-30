@@ -4,9 +4,7 @@ import SmartBusSystem.dao.DriverDao;
 import SmartBusSystem.dao.impl.DriverDaoImpl;
 import SmartBusSystem.pojo.Driver;
 import SmartBusSystem.service.recover.Recover;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class DriverRecover implements Recover {
     private static final DriverDao driverDao = new DriverDaoImpl();
 

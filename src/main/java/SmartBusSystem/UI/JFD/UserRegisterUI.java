@@ -5,11 +5,11 @@
 package SmartBusSystem.UI.JFD;
 
 import SmartBusSystem.UI.AccountRegister;
+import SmartBusSystem.Util.SecurityProtect;
 import SmartBusSystem.pojo.User;
-import SmartBusSystem.service.TableRow.Account;
+import SmartBusSystem.pojo.mediator.Account;
 import SmartBusSystem.service.register.Register;
 import SmartBusSystem.service.register.impl.UserRegister;
-import SmartBusSystem.Util.SecurityProtect;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +20,8 @@ import java.awt.event.MouseEvent;
  * @author 87948
  */
 public class UserRegisterUI extends AccountRegister {
+    private static final Register register = new UserRegister();
+
     public UserRegisterUI() {
         initComponents();
         this.setVisible(true);
@@ -400,7 +402,4 @@ public class UserRegisterUI extends AccountRegister {
     private JDialog Pass;
     private JButton Register;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
-
-    // 用户注册 BEGIN
-    private static final Register register = new UserRegister();
 }

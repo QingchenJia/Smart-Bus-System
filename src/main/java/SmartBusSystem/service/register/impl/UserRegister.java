@@ -4,9 +4,7 @@ import SmartBusSystem.dao.UserDao;
 import SmartBusSystem.dao.impl.UserDaoImpl;
 import SmartBusSystem.pojo.User;
 import SmartBusSystem.service.register.Register;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class UserRegister implements Register {
     private static final UserDao userDao = new UserDaoImpl();
 

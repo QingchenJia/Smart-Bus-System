@@ -1,7 +1,8 @@
 package SmartBusSystem.service.navigation;
 
 import SmartBusSystem.pojo.Stop;
-import SmartBusSystem.service.TableRow.RouteGuideRow;
+import SmartBusSystem.pojo.mediator.RouteGuideRow;
+import SmartBusSystem.pojo.mediator.RouteStopLink;
 
 import java.util.ArrayList;
 import java.util.HashMap;

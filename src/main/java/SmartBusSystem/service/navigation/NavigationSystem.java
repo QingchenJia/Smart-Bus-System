@@ -1,7 +1,8 @@
 package SmartBusSystem.service.navigation;
 
 import SmartBusSystem.pojo.Stop;
-import SmartBusSystem.service.TableRow.RouteGuideRow;
+import SmartBusSystem.pojo.mediator.RouteGuideRow;
+import SmartBusSystem.pojo.mediator.RouteStopLink;
 import SmartBusSystem.service.homepage.UserHomePage;
 import SmartBusSystem.service.query.StopQuery;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,8 @@ import java.util.*;
 @Slf4j
 public class NavigationSystem {
     private static final Graph graph = new Graph();
+    private static final UserHomePage userHomePage = new UserHomePage();
+    private static final StopQuery stopQuery = new StopQuery();
 
     private static void initializeSampleData(List<Stop> stops, List<RouteGuideRow> routeGuideRows) {
         for (Stop stop : stops) {   // 存放所有站点
@@ -70,7 +73,7 @@ public class NavigationSystem {
             String to = path.get(i + 1);
             String fromName = graph.getStop(from).getName();
             String toName = graph.getStop(to).getName();
-            List<String> routeId = StopQuery.listRoute2listRouteId(StopQuery.searchPassByRoute(fromName));
+            List<String> routeId = stopQuery.listRoute2listRouteId4navi(stopQuery.searchPassByRoute(fromName));
 
             detailedRoute.add(routeId + "从 " + fromName + " 到 " + toName);
         }
@@ -78,12 +81,12 @@ public class NavigationSystem {
     }
 
     public static List<String> getNavigationGuide(String startStopName, String endStopName) {
-        List<Stop> stops = StopQuery.showAllStop();
-        List<RouteGuideRow> routeGuideRows = UserHomePage.getAllRouteGuideRow();
+        List<Stop> stops = stopQuery.showAllStop();
+        List<RouteGuideRow> routeGuideRows = userHomePage.getAllRouteGuideRow();
         initializeSampleData(stops, routeGuideRows);
 
-        String startStopId = StopQuery.getStopByName(startStopName).getID();
-        String endStopId = StopQuery.getStopByName(endStopName).getID();
+        String startStopId = stopQuery.getStopByName(startStopName).getID();
+        String endStopId = stopQuery.getStopByName(endStopName).getID();
 
         List<String> guide = findRoute(startStopId, endStopId);
 

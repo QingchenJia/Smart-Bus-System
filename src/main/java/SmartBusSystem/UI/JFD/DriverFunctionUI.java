@@ -5,11 +5,11 @@
 package SmartBusSystem.UI.JFD;
 
 import SmartBusSystem.UI.GenerateExcel;
+import SmartBusSystem.Util.SecurityProtect;
 import SmartBusSystem.pojo.Driver;
-import SmartBusSystem.service.TableRow.WorkArrangeRow;
+import SmartBusSystem.pojo.mediator.WorkArrangeRow;
 import SmartBusSystem.service.homepage.DriverHomePage;
 import SmartBusSystem.service.info.DriverInfoMdf;
-import SmartBusSystem.Util.SecurityProtect;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -24,6 +24,9 @@ import java.util.Objects;
  * @author 87948
  */
 public class DriverFunctionUI extends GenerateExcel {
+    private static final DriverHomePage driverHomePage = new DriverHomePage();
+    private static final DriverInfoMdf driverInfoMdf = new DriverInfoMdf();
+
     public DriverFunctionUI() {
         initComponents();
         initWorkArrange();
@@ -47,7 +50,7 @@ public class DriverFunctionUI extends GenerateExcel {
 
     private void TotalViewMouseReleased(MouseEvent e) {
         String currentId = this.getCurrentDriverId();
-        Driver driver = DriverHomePage.queryCurrentDriverInformation(currentId);
+        Driver driver = driverHomePage.queryCurrentDriverInformation(currentId);
         NameText.setText(driver.getName());
         IdText.setText(driver.getID());
         PhoneNumText.setText(driver.getPhoneNum());
@@ -58,7 +61,7 @@ public class DriverFunctionUI extends GenerateExcel {
 
     private void InformationModifyMouseReleased(MouseEvent e) {
         String currentId = this.getCurrentDriverId();
-        Driver driver = DriverHomePage.queryCurrentDriverInformation(currentId);
+        Driver driver = driverHomePage.queryCurrentDriverInformation(currentId);
         NameInput.setText(driver.getName());
         PhoneNumInput.setText(driver.getPhoneNum());
         SelectDrivingYears.setSelectedItem(String.valueOf(driver.getDrivingYears()));
@@ -71,7 +74,7 @@ public class DriverFunctionUI extends GenerateExcel {
         String name = NameInput.getText();
 
         String phoneNum = PhoneNumInput.getText();
-        if (!DriverInfoMdf.checkPhoneNum(phoneNum)) {
+        if (!driverInfoMdf.checkPhoneNum(phoneNum)) {
             showInCenterOfFrame(PhoneNumWrong);
             return;
         }
@@ -84,7 +87,7 @@ public class DriverFunctionUI extends GenerateExcel {
         driver.setPhoneNum(phoneNum);
         driver.setDrivingYears(drivingYears);
 
-        DriverInfoMdf.updateDriverInformation(driver);
+        driverInfoMdf.updateDriverInformation(driver);
 
         showInCenterOfFrame(Pass);
     }
@@ -96,14 +99,14 @@ public class DriverFunctionUI extends GenerateExcel {
         String newPasswordAgain = new String(NewPasswordAgainInput.getPassword());
 
         try {
-            if (!DriverInfoMdf.oldPasswordIsRight(ID, oldPassword)) {
+            if (!driverInfoMdf.oldPasswordIsRight(ID, oldPassword)) {
                 showInCenterOfFrame(OldPasswordWrong);
                 return;
             }
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
-        if (!DriverInfoMdf.checkPassword(newPassword)) {
+        if (!driverInfoMdf.checkPassword(newPassword)) {
             showInCenterOfFrame(PasswordWrong);
             return;
         }
@@ -119,7 +122,7 @@ public class DriverFunctionUI extends GenerateExcel {
             throw new RuntimeException(ex);
         }
 
-        DriverInfoMdf.updateDriverNewPassword(ID, newPasswordResult);
+        driverInfoMdf.updateDriverNewPassword(ID, newPasswordResult);
 
         showInCenterOfFrame(Pass);  // 修改密码成功后 跳出成功提示
         InformationModifyDialog.dispose();
@@ -796,7 +799,7 @@ public class DriverFunctionUI extends GenerateExcel {
         DefaultTableModel model = (DefaultTableModel) WorkArrange.getModel();
 
         // 添加新行数据
-        List<WorkArrangeRow> ownWorkArrangeRows = DriverHomePage.getOwnWorkArrangeRow(currentDriverId);
+        List<WorkArrangeRow> ownWorkArrangeRows = driverHomePage.getOwnWorkArrangeRow(currentDriverId);
         for (WorkArrangeRow ownWorkArrangeRow : ownWorkArrangeRows) {
             String time = ownWorkArrangeRow.getDayOfWeek();
             String busLicenseNum = ownWorkArrangeRow.getBus().getLicenseNumber();
