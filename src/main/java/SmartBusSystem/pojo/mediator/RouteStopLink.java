@@ -1,4 +1,4 @@
-package SmartBusSystem.service.navigation;
+package SmartBusSystem.pojo.mediator;
 
 public class RouteStopLink {
     private String routeId;

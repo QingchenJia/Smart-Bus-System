@@ -1,4 +1,4 @@
-package SmartBusSystem.service.TableRow;
+package SmartBusSystem.pojo.mediator;
 
 import lombok.Getter;
 import lombok.Setter;
