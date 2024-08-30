@@ -1,4 +1,4 @@
-package SmartBusSystem.service.tool;
+package SmartBusSystem.Util;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 

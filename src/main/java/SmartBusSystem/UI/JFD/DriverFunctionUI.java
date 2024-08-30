@@ -7,10 +7,9 @@ package SmartBusSystem.UI.JFD;
 import SmartBusSystem.UI.GenerateExcel;
 import SmartBusSystem.pojo.Driver;
 import SmartBusSystem.service.TableRow.WorkArrangeRow;
-import SmartBusSystem.service.function.DriverHomePage;
-import SmartBusSystem.service.function.DriverInformationModify;
-import SmartBusSystem.service.tool.ExportTable;
-import SmartBusSystem.service.tool.SecurityProtect;
+import SmartBusSystem.service.homepage.DriverHomePage;
+import SmartBusSystem.service.info.DriverInfoMdf;
+import SmartBusSystem.Util.SecurityProtect;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -18,7 +17,6 @@ import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -73,7 +71,7 @@ public class DriverFunctionUI extends GenerateExcel {
         String name = NameInput.getText();
 
         String phoneNum = PhoneNumInput.getText();
-        if (!DriverInformationModify.checkPhoneNum(phoneNum)) {
+        if (!DriverInfoMdf.checkPhoneNum(phoneNum)) {
             showInCenterOfFrame(PhoneNumWrong);
             return;
         }
@@ -86,7 +84,7 @@ public class DriverFunctionUI extends GenerateExcel {
         driver.setPhoneNum(phoneNum);
         driver.setDrivingYears(drivingYears);
 
-        DriverInformationModify.updateDriverInformation(driver);
+        DriverInfoMdf.updateDriverInformation(driver);
 
         showInCenterOfFrame(Pass);
     }
@@ -98,14 +96,14 @@ public class DriverFunctionUI extends GenerateExcel {
         String newPasswordAgain = new String(NewPasswordAgainInput.getPassword());
 
         try {
-            if (!DriverInformationModify.oldPasswordIsRight(ID, oldPassword)) {
+            if (!DriverInfoMdf.oldPasswordIsRight(ID, oldPassword)) {
                 showInCenterOfFrame(OldPasswordWrong);
                 return;
             }
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
-        if (!DriverInformationModify.checkPassword(newPassword)) {
+        if (!DriverInfoMdf.checkPassword(newPassword)) {
             showInCenterOfFrame(PasswordWrong);
             return;
         }
@@ -121,7 +119,7 @@ public class DriverFunctionUI extends GenerateExcel {
             throw new RuntimeException(ex);
         }
 
-        DriverInformationModify.updateDriverNewPassword(ID, newPasswordResult);
+        DriverInfoMdf.updateDriverNewPassword(ID, newPasswordResult);
 
         showInCenterOfFrame(Pass);  // 修改密码成功后 跳出成功提示
         InformationModifyDialog.dispose();

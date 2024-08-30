@@ -1,12 +1,12 @@
-package SmartBusSystem.service.function;
+package SmartBusSystem.service.info;
 
 import SmartBusSystem.dao.UserDao;
 import SmartBusSystem.dao.impl.UserDaoImpl;
 import SmartBusSystem.pojo.User;
 import SmartBusSystem.service.register.impl.UserRegister;
-import SmartBusSystem.service.tool.SecurityProtect;
+import SmartBusSystem.Util.SecurityProtect;
 
-public class UserInformationModify {
+public class UserInfoMdf {
     private static final UserDao userDao = new UserDaoImpl();
 
     public static boolean checkPhoneNum(String phoneNum) {

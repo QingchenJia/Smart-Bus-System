@@ -1,4 +1,4 @@
-package SmartBusSystem.service.function;
+package SmartBusSystem.service.manage;
 
 import SmartBusSystem.dao.BusDao;
 import SmartBusSystem.dao.DriverDao;
@@ -12,7 +12,7 @@ import SmartBusSystem.pojo.Schedule;
 
 import java.util.List;
 
-public class AdminEditSchedule {
+public class ScheduleManage {
     private static final BusDao busDao = new BusDaoImpl();
     private static final DriverDao driverDao = new DriverDaoImpl();
     private static final ScheduleDao scheduleDao = new ScheduleDaoImpl();
@@ -22,7 +22,7 @@ public class AdminEditSchedule {
     }
 
     public static List<String> listBus2listBusLicenseNumber(List<Bus> buses) {
-        return AdminEditBus.listBus2listBusLicenseNumber(buses);
+        return BusManage.listBus2listBusLicenseNumber(buses);
     }
 
     public static List<Driver> queryDriverIsArrangedOnTheDay(String time) {

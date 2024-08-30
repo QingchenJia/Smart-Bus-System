@@ -1,4 +1,4 @@
-package SmartBusSystem.service.function;
+package SmartBusSystem.service.homepage;
 
 import SmartBusSystem.dao.BusDao;
 import SmartBusSystem.dao.DriverDao;
@@ -11,6 +11,7 @@ import SmartBusSystem.pojo.Driver;
 import SmartBusSystem.pojo.Route;
 import SmartBusSystem.pojo.Schedule;
 import SmartBusSystem.service.TableRow.WorkArrangeRow;
+import SmartBusSystem.service.query.RouteQuery;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ public class DriverHomePage {
     }
 
     public static Route queryRouteById(String routeId) {
-        return UserSearchRoute.getRouteById(routeId);
+        return RouteQuery.getRouteById(routeId);
     }
 
     public static List<WorkArrangeRow> getOwnWorkArrangeRow(String currentId) {

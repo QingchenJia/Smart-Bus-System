@@ -1,6 +1,6 @@
 package SmartBusSystem.UI;
 
-import SmartBusSystem.service.tool.ExportTable;
+import SmartBusSystem.Util.ExportTable;
 
 import javax.swing.*;
 import java.io.IOException;

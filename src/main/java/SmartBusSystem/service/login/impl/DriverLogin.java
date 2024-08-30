@@ -4,7 +4,7 @@ import SmartBusSystem.dao.DriverDao;
 import SmartBusSystem.dao.impl.DriverDaoImpl;
 import SmartBusSystem.pojo.Driver;
 import SmartBusSystem.service.login.Login;
-import SmartBusSystem.service.tool.SecurityProtect;
+import SmartBusSystem.Util.SecurityProtect;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

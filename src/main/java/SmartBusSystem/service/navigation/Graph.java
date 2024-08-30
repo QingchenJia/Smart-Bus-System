@@ -1,4 +1,4 @@
-package SmartBusSystem.service.NavigationSystem;
+package SmartBusSystem.service.navigation;
 
 import SmartBusSystem.pojo.Stop;
 import SmartBusSystem.service.TableRow.RouteGuideRow;

@@ -1,4 +1,4 @@
-package SmartBusSystem.service.NavigationSystem;
+package SmartBusSystem.service.navigation;
 
 public class RouteStopLink {
     private String routeId;

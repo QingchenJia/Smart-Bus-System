@@ -6,13 +6,11 @@ package SmartBusSystem.UI.JFD;
 
 import SmartBusSystem.UI.GenerateExcel;
 import SmartBusSystem.pojo.User;
-import SmartBusSystem.service.NavigationSystem.NavigationSystem;
+import SmartBusSystem.service.navigation.NavigationSystem;
 import SmartBusSystem.service.TableRow.RouteGuideRow;
-import SmartBusSystem.service.function.UserHomePage;
-import SmartBusSystem.service.function.UserInformationModify;
-import SmartBusSystem.service.function.UserSearchRoute;
-import SmartBusSystem.service.function.UserSearchStop;
-import SmartBusSystem.service.tool.SecurityProtect;
+import SmartBusSystem.service.homepage.UserHomePage;
+import SmartBusSystem.service.info.UserInfoMdf;
+import SmartBusSystem.Util.SecurityProtect;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -70,7 +68,7 @@ public class UserFunctionUI extends GenerateExcel {
         String name = NameInput.getText();
 
         String phoneNum = PhoneNumInput.getText();
-        if (!UserInformationModify.checkPhoneNum(phoneNum)) {
+        if (!UserInfoMdf.checkPhoneNum(phoneNum)) {
             showInCenterOfFrame(PhoneNumWrong);
             return;
         }
@@ -83,7 +81,7 @@ public class UserFunctionUI extends GenerateExcel {
         user.setPhoneNum(phoneNum);
         user.setAptitude(aptitude);
 
-        UserInformationModify.updateUserInformation(user);
+        UserInfoMdf.updateUserInformation(user);
 
         showInCenterOfFrame(Pass);
     }
@@ -95,14 +93,14 @@ public class UserFunctionUI extends GenerateExcel {
         String newPasswordAgain = new String(NewPasswordAgainInput.getPassword());
 
         try {
-            if (!UserInformationModify.oldPasswordIsRight(ID, oldPassword)) {
+            if (!UserInfoMdf.oldPasswordIsRight(ID, oldPassword)) {
                 showInCenterOfFrame(OldPasswordWrong);
                 return;
             }
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
-        if (!UserInformationModify.checkPassword(newPassword)) {
+        if (!UserInfoMdf.checkPassword(newPassword)) {
             showInCenterOfFrame(PasswordWrong);
             return;
         }
@@ -118,7 +116,7 @@ public class UserFunctionUI extends GenerateExcel {
             throw new RuntimeException(ex);
         }
 
-        UserInformationModify.updateUserNewPassword(ID, newPasswordResult);
+        UserInfoMdf.updateUserNewPassword(ID, newPasswordResult);
 
         showInCenterOfFrame(Pass);  // 修改密码成功后 跳出成功提示
         InformationModifyDialog.dispose();
@@ -1228,7 +1226,7 @@ public class UserFunctionUI extends GenerateExcel {
             return;
         }
 
-        List<String> stopQueryResults = UserSearchStop.listStop2listStopName(UserSearchStop.searchBySimilarName(text)); // 备选列表内容
+        List<String> stopQueryResults = SmartBusSystem.service.query.StopQuery.listStop2listStopName(SmartBusSystem.service.query.StopQuery.searchBySimilarName(text)); // 备选列表内容
 
         stopQueryListModel.clear();
 
@@ -1278,7 +1276,7 @@ public class UserFunctionUI extends GenerateExcel {
 
     private void showAllStopNameInList(DefaultListModel<String> listModel) {
         // 备选列表展示全部站点
-        List<String> stopQuerySelections = UserSearchStop.listStop2listStopName(UserSearchStop.showAllStop()); // 备选列表中选项内容
+        List<String> stopQuerySelections = SmartBusSystem.service.query.StopQuery.listStop2listStopName(SmartBusSystem.service.query.StopQuery.showAllStop()); // 备选列表中选项内容
 
         listModel.clear();
 
@@ -1298,7 +1296,7 @@ public class UserFunctionUI extends GenerateExcel {
         passByRouteListModel = new DefaultListModel<>();
         PassRouteList.setModel(passByRouteListModel);
 
-        List<String> routeBasicInfos = UserSearchStop.listRoute2listRouteBasicInformation(UserSearchStop.searchPassByRoute(stopName));  // 经行线路基本信息
+        List<String> routeBasicInfos = SmartBusSystem.service.query.StopQuery.listRoute2listRouteBasicInformation(SmartBusSystem.service.query.StopQuery.searchPassByRoute(stopName));  // 经行线路基本信息
 
         passByRouteListModel.clear();
 
@@ -1312,7 +1310,7 @@ public class UserFunctionUI extends GenerateExcel {
 
     // 线路搜索 BEGIN
     private void showAllRouteIdInBox() {
-        List<String> routeQuerySelections = UserSearchRoute.listRoute2listRouteId(UserSearchRoute.showAllRoute());  // 备选容器中选项内容
+        List<String> routeQuerySelections = SmartBusSystem.service.query.RouteQuery.listRoute2listRouteId(SmartBusSystem.service.query.RouteQuery.showAllRoute());  // 备选容器中选项内容
 
         for (String routeQuerySelection : routeQuerySelections) {
             SelectRouteId.addItem(routeQuerySelection);
@@ -1326,15 +1324,15 @@ public class UserFunctionUI extends GenerateExcel {
         PassStopList.setModel(passByStopListModel);
 
         String routeId = Objects.requireNonNull(SelectRouteId.getSelectedItem()).toString().split("路")[0];
-        String routeName = UserSearchRoute.getRouteById(routeId).getName();
-        Time startTime = UserSearchRoute.getRouteById(routeId).getStartTime();
-        Time endTime = UserSearchRoute.getRouteById(routeId).getEndTime();
+        String routeName = SmartBusSystem.service.query.RouteQuery.getRouteById(routeId).getName();
+        Time startTime = SmartBusSystem.service.query.RouteQuery.getRouteById(routeId).getStartTime();
+        Time endTime = SmartBusSystem.service.query.RouteQuery.getRouteById(routeId).getEndTime();
         String workTime = startTime + "->" + endTime;
 
         RouteResultNameText.setText(routeName);
         WorkTimeText.setText(workTime);
 
-        List<String> stopNames = UserSearchRoute.listStop2listStopName(UserSearchRoute.searchPassByStop(routeId));
+        List<String> stopNames = SmartBusSystem.service.query.RouteQuery.listStop2listStopName(SmartBusSystem.service.query.RouteQuery.searchPassByStop(routeId));
 
         passByStopListModel.clear();
 
@@ -1355,7 +1353,7 @@ public class UserFunctionUI extends GenerateExcel {
             return;
         }
 
-        List<String> startStopQueryResults = UserSearchStop.listStop2listStopName(UserSearchStop.searchBySimilarName(text)); // 备选列表内容
+        List<String> startStopQueryResults = SmartBusSystem.service.query.StopQuery.listStop2listStopName(SmartBusSystem.service.query.StopQuery.searchBySimilarName(text)); // 备选列表内容
 
         startStopQueryListModel.clear();
 
@@ -1382,7 +1380,7 @@ public class UserFunctionUI extends GenerateExcel {
             return;
         }
 
-        List<String> endStopQueryResults = UserSearchStop.listStop2listStopName(UserSearchStop.searchBySimilarName(text)); // 备选列表内容
+        List<String> endStopQueryResults = SmartBusSystem.service.query.StopQuery.listStop2listStopName(SmartBusSystem.service.query.StopQuery.searchBySimilarName(text)); // 备选列表内容
 
         endStopQueryListModel.clear();
 

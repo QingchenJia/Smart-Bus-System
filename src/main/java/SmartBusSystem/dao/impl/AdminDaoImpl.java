@@ -3,7 +3,7 @@ package SmartBusSystem.dao.impl;
 import SmartBusSystem.dao.AdminDao;
 import SmartBusSystem.mapper.AdminMapper;
 import SmartBusSystem.pojo.Admin;
-import SmartBusSystem.service.tool.DatabaseOperation;
+import SmartBusSystem.Util.DatabaseOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 

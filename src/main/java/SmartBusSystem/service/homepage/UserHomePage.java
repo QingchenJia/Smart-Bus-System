@@ -1,4 +1,4 @@
-package SmartBusSystem.service.function;
+package SmartBusSystem.service.homepage;
 
 import SmartBusSystem.dao.RouteDao;
 import SmartBusSystem.dao.StopDao;

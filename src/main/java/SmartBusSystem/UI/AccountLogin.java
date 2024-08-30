@@ -6,7 +6,7 @@ import SmartBusSystem.service.login.Login;
 import SmartBusSystem.service.recover.Recover;
 import SmartBusSystem.service.recover.impl.DriverRecover;
 import SmartBusSystem.service.recover.impl.UserRecover;
-import SmartBusSystem.service.tool.SecurityProtect;
+import SmartBusSystem.Util.SecurityProtect;
 
 import javax.swing.*;
 import java.util.Objects;

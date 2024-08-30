@@ -1,4 +1,4 @@
-package SmartBusSystem.service.function;
+package SmartBusSystem.service.manage;
 
 import SmartBusSystem.dao.BusDao;
 import SmartBusSystem.dao.RouteDao;
@@ -6,10 +6,11 @@ import SmartBusSystem.dao.impl.BusDaoImpl;
 import SmartBusSystem.dao.impl.RouteDaoImpl;
 import SmartBusSystem.pojo.Bus;
 import SmartBusSystem.pojo.Route;
+import SmartBusSystem.service.homepage.DriverHomePage;
 
 import java.util.List;
 
-public class AdminEditBus {
+public class BusManage {
     private static final BusDao busDao = new BusDaoImpl();
     private static final RouteDao routeDao = new RouteDaoImpl();
 

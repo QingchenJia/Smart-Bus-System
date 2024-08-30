@@ -8,9 +8,9 @@ import SmartBusSystem.UI.GenerateExcel;
 import SmartBusSystem.pojo.Bus;
 import SmartBusSystem.pojo.Schedule;
 import SmartBusSystem.service.TableRow.WorkArrangeRow;
-import SmartBusSystem.service.function.AdminEditBus;
-import SmartBusSystem.service.function.AdminEditSchedule;
-import SmartBusSystem.service.function.AdminHomePage;
+import SmartBusSystem.service.manage.BusManage;
+import SmartBusSystem.service.manage.ScheduleManage;
+import SmartBusSystem.service.homepage.AdminHomePage;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -50,7 +50,7 @@ public class AdminFunctionUI extends GenerateExcel {
         Bus bus = new Bus();
         bus.setLicenseNumber(BusResultLicenseNumText.getText());
         bus.setStatus(SelectBusStatus.isSelected() ? 1 : 0);
-        AdminEditBus.updateBusStatus(bus);
+        BusManage.updateBusStatus(bus);
 
         showInCenterOfFrame(Pass);
         BusSearchResult.dispose();
@@ -76,17 +76,17 @@ public class AdminFunctionUI extends GenerateExcel {
         String routeId = ((String) Objects.requireNonNull(NewSelectRouteId.getSelectedItem())).split("路")[0];
         int status = NewSelectBusStatus.isSelected() ? 1 : 0;
 
-        if (!AdminEditBus.checkLicenseNumber(licenseNum)) {
+        if (!BusManage.checkLicenseNumber(licenseNum)) {
             showInCenterOfFrame(LicenseNumberWrong);
             return;
         }
-        if (AdminEditBus.containBus(licenseNum)) {
+        if (BusManage.containBus(licenseNum)) {
             showInCenterOfFrame(BusExistDialog);
             return;
         }
 
         Bus bus = new Bus(licenseNum, status, routeId);
-        AdminEditBus.addNewBus(bus);
+        BusManage.addNewBus(bus);
 
         showInCenterOfFrame(Pass);
         BusAddDialog.dispose();
@@ -94,7 +94,7 @@ public class AdminFunctionUI extends GenerateExcel {
 
     private void DeleteBusButtonMouseReleased(MouseEvent e) {
         String licenseNum = BusResultLicenseNumText.getText();
-        AdminEditBus.deleteBus(licenseNum);
+        BusManage.deleteBus(licenseNum);
 
         showInCenterOfFrame(Pass);
         BusSearchResult.dispose();
@@ -118,7 +118,7 @@ public class AdminFunctionUI extends GenerateExcel {
 
         Schedule schedule = new Schedule(DID, time, licenseNum);
 
-        AdminEditSchedule.updateSchedule(schedule);
+        ScheduleManage.updateSchedule(schedule);
 
         showInCenterOfFrame(Pass);
         ScheduleSearchResult.dispose();
@@ -128,7 +128,7 @@ public class AdminFunctionUI extends GenerateExcel {
         String DID = ScheduleResultDIDText.getText();
         String time = ScheduleResultTimeText.getText();
 
-        AdminEditSchedule.deleteScheduleById(DID, time);
+        ScheduleManage.deleteScheduleById(DID, time);
 
         showDriverIsArrangedOnTheDay(time);
 
@@ -148,7 +148,7 @@ public class AdminFunctionUI extends GenerateExcel {
 
         Schedule schedule = new Schedule(DID, time, licenseNum);
 
-        AdminEditSchedule.addNewSchedule(schedule);
+        ScheduleManage.addNewSchedule(schedule);
 
         showInCenterOfFrame(Pass);
         AddNewScheduleDialog.dispose();
@@ -1004,7 +1004,7 @@ public class AdminFunctionUI extends GenerateExcel {
     // 车辆查询 BEGIN
     private void showAllBusLicenseNum() {
         BusSelectBusLicenseNum.removeAllItems();
-        List<String> busLicenseNumbers = AdminEditBus.listBus2listBusLicenseNumber(AdminEditBus.queryAllBus());
+        List<String> busLicenseNumbers = BusManage.listBus2listBusLicenseNumber(BusManage.queryAllBus());
         for (String busLicenseNumber : busLicenseNumbers) {
             BusSelectBusLicenseNum.addItem(busLicenseNumber);
         }
@@ -1012,7 +1012,7 @@ public class AdminFunctionUI extends GenerateExcel {
 
     private void initBusSearchResult() {    // 初始化查询结果
         String licenseNum = (String) BusSelectBusLicenseNum.getSelectedItem();
-        Bus bus = AdminEditBus.queryBusById(licenseNum);
+        Bus bus = BusManage.queryBusById(licenseNum);
 
         BusResultLicenseNumText.setText(bus.getLicenseNumber());
         BelongRouteIdText.setText(bus.getRID());
@@ -1022,7 +1022,7 @@ public class AdminFunctionUI extends GenerateExcel {
 
     // 车辆新增 BEGIN
     private void showAllRouteId() {
-        List<String> routeIds = AdminEditBus.listRoute2listRouteId(AdminEditBus.queryRouteStatusIsOne());
+        List<String> routeIds = BusManage.listRoute2listRouteId(BusManage.queryRouteStatusIsOne());
         for (String routeId : routeIds) {
             NewSelectRouteId.addItem(routeId);
         }
@@ -1043,7 +1043,7 @@ public class AdminFunctionUI extends GenerateExcel {
     private void showDriverIsArrangedOnTheDay(String time) {
         SelectDID.removeAllItems();
 
-        List<String> driverIds = AdminEditSchedule.listDriver2listDriverId(AdminEditSchedule.queryDriverIsArrangedOnTheDay(time));
+        List<String> driverIds = ScheduleManage.listDriver2listDriverId(ScheduleManage.queryDriverIsArrangedOnTheDay(time));
         for (String driverId : driverIds) {
             SelectDID.addItem(driverId);
         }
@@ -1060,7 +1060,7 @@ public class AdminFunctionUI extends GenerateExcel {
     private void showAllBusAvailable(String time, JComboBox jComboBox) {
         jComboBox.removeAllItems();
 
-        List<String> busLicenseNumbers = AdminEditSchedule.listBus2listBusLicenseNumber(AdminEditSchedule.queryBusAvailable(time));
+        List<String> busLicenseNumbers = ScheduleManage.listBus2listBusLicenseNumber(ScheduleManage.queryBusAvailable(time));
         for (String busLicenseNumber : busLicenseNumbers) {
             jComboBox.addItem(busLicenseNumber);
         }
@@ -1074,7 +1074,7 @@ public class AdminFunctionUI extends GenerateExcel {
         schedule.setDID(DID);
         schedule.setTime(time);
 
-        Schedule scheduleResult = AdminEditSchedule.queryScheduleById(schedule);
+        Schedule scheduleResult = ScheduleManage.queryScheduleById(schedule);
 
         ScheduleResultDIDText.setText(scheduleResult.getDID());
         ScheduleResultTimeText.setText(scheduleResult.getTime());
@@ -1098,7 +1098,7 @@ public class AdminFunctionUI extends GenerateExcel {
     }
 
     private void showDriverAvailable(String time) {
-        List<String> driverIds = AdminEditSchedule.listDriver2listDriverId(AdminEditSchedule.queryDriverAvailable(time));
+        List<String> driverIds = ScheduleManage.listDriver2listDriverId(ScheduleManage.queryDriverAvailable(time));
 
         SelectAddScheduleDID.removeAllItems();
 

@@ -1,9 +1,9 @@
-package SmartBusSystem.service.NavigationSystem;
+package SmartBusSystem.service.navigation;
 
 import SmartBusSystem.pojo.Stop;
 import SmartBusSystem.service.TableRow.RouteGuideRow;
-import SmartBusSystem.service.function.UserHomePage;
-import SmartBusSystem.service.function.UserSearchStop;
+import SmartBusSystem.service.homepage.UserHomePage;
+import SmartBusSystem.service.query.StopQuery;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
@@ -70,7 +70,7 @@ public class NavigationSystem {
             String to = path.get(i + 1);
             String fromName = graph.getStop(from).getName();
             String toName = graph.getStop(to).getName();
-            List<String> routeId = UserSearchStop.listRoute2listRouteId(UserSearchStop.searchPassByRoute(fromName));
+            List<String> routeId = StopQuery.listRoute2listRouteId(StopQuery.searchPassByRoute(fromName));
 
             detailedRoute.add(routeId + "从 " + fromName + " 到 " + toName);
         }
@@ -78,12 +78,12 @@ public class NavigationSystem {
     }
 
     public static List<String> getNavigationGuide(String startStopName, String endStopName) {
-        List<Stop> stops = UserSearchStop.showAllStop();
+        List<Stop> stops = StopQuery.showAllStop();
         List<RouteGuideRow> routeGuideRows = UserHomePage.getAllRouteGuideRow();
         initializeSampleData(stops, routeGuideRows);
 
-        String startStopId = UserSearchStop.getStopByName(startStopName).getID();
-        String endStopId = UserSearchStop.getStopByName(endStopName).getID();
+        String startStopId = StopQuery.getStopByName(startStopName).getID();
+        String endStopId = StopQuery.getStopByName(endStopName).getID();
 
         List<String> guide = findRoute(startStopId, endStopId);
 

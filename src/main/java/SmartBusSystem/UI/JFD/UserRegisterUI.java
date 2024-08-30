@@ -9,7 +9,7 @@ import SmartBusSystem.pojo.User;
 import SmartBusSystem.service.TableRow.Account;
 import SmartBusSystem.service.register.Register;
 import SmartBusSystem.service.register.impl.UserRegister;
-import SmartBusSystem.service.tool.SecurityProtect;
+import SmartBusSystem.Util.SecurityProtect;
 
 import javax.swing.*;
 import java.awt.*;

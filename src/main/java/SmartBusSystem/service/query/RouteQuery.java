@@ -1,4 +1,4 @@
-package SmartBusSystem.service.function;
+package SmartBusSystem.service.query;
 
 import SmartBusSystem.dao.RouteDao;
 import SmartBusSystem.dao.StopDao;
@@ -9,7 +9,7 @@ import SmartBusSystem.pojo.Stop;
 
 import java.util.List;
 
-public class UserSearchRoute {
+public class RouteQuery {
     private static final StopDao stopDao = new StopDaoImpl();
     private static final RouteDao routeDao = new RouteDaoImpl();
 

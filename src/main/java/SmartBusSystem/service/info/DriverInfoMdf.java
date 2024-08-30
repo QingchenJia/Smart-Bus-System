@@ -1,11 +1,11 @@
-package SmartBusSystem.service.function;
+package SmartBusSystem.service.info;
 
 import SmartBusSystem.dao.DriverDao;
 import SmartBusSystem.dao.impl.DriverDaoImpl;
 import SmartBusSystem.pojo.Driver;
-import SmartBusSystem.service.tool.SecurityProtect;
+import SmartBusSystem.Util.SecurityProtect;
 
-public class DriverInformationModify {
+public class DriverInfoMdf {
     private static final DriverDao driverDao = new DriverDaoImpl();
 
     public static boolean checkPhoneNum(String phoneNum) {
