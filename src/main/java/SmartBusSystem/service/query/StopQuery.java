@@ -25,6 +25,14 @@ public class StopQuery {
         return stopDao.SelectAll();
     }
 
+    public List<String> getSimilarStopName(String similarName) {
+        return listStop2listStopName(searchBySimilarName(similarName));
+    }
+
+    public List<String> getAllStopName() {
+        return listStop2listStopName(showAllStop());
+    }
+
     public List<Route> searchPassByRoute(String stopName) {
         return routeDao.SelectRoutePassByStop(stopName);
     }

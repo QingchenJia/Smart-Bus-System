@@ -21,8 +21,24 @@ public class BusManage {
         return buses.stream().map(Bus::getLicenseNumber).toList();
     }
 
+    public List<String> getAllBusLicenseNum() {
+        return listBus2listBusLicenseNumber(queryAllBus());
+    }
+
     public Bus queryBusById(String licenseNum) {
         return busDao.SelectByLicenseNumber(licenseNum);
+    }
+
+    public void addNewBus(Bus bus) {
+        busDao.InsertBus(bus);
+    }
+
+    public boolean containBus(String licenseNum) {
+        return busDao.SelectBusAvailable(licenseNum) != null;
+    }
+
+    public void deleteBus(String licenseNum) {
+        busDao.DeleteBus(licenseNum);
     }
 
     public void updateBusStatus(Bus bus) {
@@ -42,15 +58,7 @@ public class BusManage {
         return routes.stream().map(route -> route.getID() + "路").toList();
     }
 
-    public void addNewBus(Bus bus) {
-        busDao.InsertBus(bus);
-    }
-
-    public boolean containBus(String licenseNum) {
-        return busDao.SelectBusAvailable(licenseNum) != null;
-    }
-
-    public void deleteBus(String licenseNum) {
-        busDao.DeleteBus(licenseNum);
+    public List<String> getStatusIsOneRouteId() {
+        return listRoute2listRouteId(queryRouteStatusIsOne());
     }
 }

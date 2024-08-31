@@ -21,6 +21,10 @@ public class RouteQuery {
         return routes.stream().map(route -> route.getID() + "路").toList();
     }
 
+    public List<String> getAllRouteId() {
+        return listRoute2listRouteId(showAllRoute());
+    }
+
     public Route getRouteById(String ID) {
         return routeDao.SelectById(ID);
     }
@@ -31,5 +35,9 @@ public class RouteQuery {
 
     public List<String> listStop2listStopName(List<Stop> stops) {
         return stops.stream().map(Stop::getName).toList();
+    }
+
+    public List<String> getPassByStopName(String RID) {
+        return listStop2listStopName(searchPassByStop(RID));
     }
 }

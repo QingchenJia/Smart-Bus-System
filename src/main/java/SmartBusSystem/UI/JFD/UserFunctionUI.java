@@ -1233,7 +1233,7 @@ public class UserFunctionUI extends GenerateExcel {
             return;
         }
 
-        List<String> stopQueryResults = stopQuery.listStop2listStopName(stopQuery.searchBySimilarName(text)); // 备选列表内容
+        List<String> stopQueryResults = stopQuery.getSimilarStopName(text); // 备选列表内容
 
         stopQueryListModel.clear();
 
@@ -1283,7 +1283,7 @@ public class UserFunctionUI extends GenerateExcel {
 
     private void showAllStopNameInList(DefaultListModel<String> listModel) {
         // 备选列表展示全部站点
-        List<String> stopQuerySelections = stopQuery.listStop2listStopName(stopQuery.showAllStop()); // 备选列表中选项内容
+        List<String> stopQuerySelections = stopQuery.getAllStopName(); // 备选列表中选项内容
 
         listModel.clear();
 
@@ -1317,7 +1317,7 @@ public class UserFunctionUI extends GenerateExcel {
 
     // 线路搜索 BEGIN
     private void showAllRouteIdInBox() {
-        List<String> routeQuerySelections = routeQuery.listRoute2listRouteId(routeQuery.showAllRoute());  // 备选容器中选项内容
+        List<String> routeQuerySelections = routeQuery.getAllRouteId();  // 备选容器中选项内容
 
         for (String routeQuerySelection : routeQuerySelections) {
             SelectRouteId.addItem(routeQuerySelection);
@@ -1339,7 +1339,7 @@ public class UserFunctionUI extends GenerateExcel {
         RouteResultNameText.setText(routeName);
         WorkTimeText.setText(workTime);
 
-        List<String> stopNames = routeQuery.listStop2listStopName(routeQuery.searchPassByStop(routeId));
+        List<String> stopNames = routeQuery.getPassByStopName(routeId);
 
         passByStopListModel.clear();
 
@@ -1360,7 +1360,7 @@ public class UserFunctionUI extends GenerateExcel {
             return;
         }
 
-        List<String> startStopQueryResults = stopQuery.listStop2listStopName(stopQuery.searchBySimilarName(text)); // 备选列表内容
+        List<String> startStopQueryResults = stopQuery.getSimilarStopName(text); // 备选列表内容
 
         startStopQueryListModel.clear();
 
@@ -1387,7 +1387,7 @@ public class UserFunctionUI extends GenerateExcel {
             return;
         }
 
-        List<String> endStopQueryResults = stopQuery.listStop2listStopName(stopQuery.searchBySimilarName(text)); // 备选列表内容
+        List<String> endStopQueryResults = stopQuery.getSimilarStopName(text); // 备选列表内容
 
         endStopQueryListModel.clear();
 

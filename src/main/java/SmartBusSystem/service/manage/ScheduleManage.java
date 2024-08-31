@@ -25,12 +25,28 @@ public class ScheduleManage {
         return buses.stream().map(Bus::getLicenseNumber).toList();
     }
 
+    public List<String> getAvailableBusLicenseNum(String dayOfWeek) {
+        return listBus2listBusLicenseNumber(queryBusAvailable(dayOfWeek));
+    }
+
     public List<Driver> queryDriverIsArrangedOnTheDay(String time) {
         return driverDao.SelectDriverIsArranged(time);
     }
 
+    public List<Driver> queryDriverAvailable(String time) {
+        return driverDao.SelectDriverAvailable(time);
+    }
+
     public List<String> listDriver2listDriverId(List<Driver> drivers) {
         return drivers.stream().map(Driver::getID).toList();
+    }
+
+    public List<String> getArrangedOnTheDayDriverId(String time) {
+        return listDriver2listDriverId(queryDriverIsArrangedOnTheDay(time));
+    }
+
+    public List<String> getAvailableDriverId(String time) {
+        return listDriver2listDriverId(queryDriverAvailable(time));
     }
 
     public Schedule queryScheduleById(Schedule schedule) {
@@ -47,9 +63,5 @@ public class ScheduleManage {
 
     public void updateSchedule(Schedule schedule) {
         scheduleDao.UpdateSchedule(schedule);
-    }
-
-    public List<Driver> queryDriverAvailable(String time) {
-        return driverDao.SelectDriverAvailable(time);
     }
 }

@@ -1008,7 +1008,7 @@ public class AdminFunctionUI extends GenerateExcel {
     // 车辆查询 BEGIN
     private void showAllBusLicenseNum() {
         BusSelectBusLicenseNum.removeAllItems();
-        List<String> busLicenseNumbers = busManage.listBus2listBusLicenseNumber(busManage.queryAllBus());
+        List<String> busLicenseNumbers = busManage.getAllBusLicenseNum();
         for (String busLicenseNumber : busLicenseNumbers) {
             BusSelectBusLicenseNum.addItem(busLicenseNumber);
         }
@@ -1026,7 +1026,7 @@ public class AdminFunctionUI extends GenerateExcel {
 
     // 车辆新增 BEGIN
     private void showAllRouteId() {
-        List<String> routeIds = busManage.listRoute2listRouteId(busManage.queryRouteStatusIsOne());
+        List<String> routeIds = busManage.getStatusIsOneRouteId();
         for (String routeId : routeIds) {
             NewSelectRouteId.addItem(routeId);
         }
@@ -1047,7 +1047,7 @@ public class AdminFunctionUI extends GenerateExcel {
     private void showDriverIsArrangedOnTheDay(String time) {
         SelectDID.removeAllItems();
 
-        List<String> driverIds = scheduleManage.listDriver2listDriverId(scheduleManage.queryDriverIsArrangedOnTheDay(time));
+        List<String> driverIds = scheduleManage.getArrangedOnTheDayDriverId(time);
         for (String driverId : driverIds) {
             SelectDID.addItem(driverId);
         }
@@ -1064,7 +1064,7 @@ public class AdminFunctionUI extends GenerateExcel {
     private void showAllBusAvailable(String time, JComboBox jComboBox) {
         jComboBox.removeAllItems();
 
-        List<String> busLicenseNumbers = scheduleManage.listBus2listBusLicenseNumber(scheduleManage.queryBusAvailable(time));
+        List<String> busLicenseNumbers = scheduleManage.getAvailableBusLicenseNum(time);
         for (String busLicenseNumber : busLicenseNumbers) {
             jComboBox.addItem(busLicenseNumber);
         }
@@ -1102,7 +1102,7 @@ public class AdminFunctionUI extends GenerateExcel {
     }
 
     private void showDriverAvailable(String time) {
-        List<String> driverIds = scheduleManage.listDriver2listDriverId(scheduleManage.queryDriverAvailable(time));
+        List<String> driverIds = scheduleManage.getAvailableDriverId(time);
 
         SelectAddScheduleDID.removeAllItems();
 
