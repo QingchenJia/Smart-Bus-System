@@ -56,5 +56,3 @@ Sessionx.vim
 tags
 # Persistent undo
 [._]*.un~
-/src/test/
-/data/export-excel/
