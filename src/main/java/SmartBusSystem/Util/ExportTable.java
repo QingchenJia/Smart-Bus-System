@@ -8,7 +8,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.TableModel;
-import java.awt.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -16,7 +15,7 @@ public class ExportTable {
     private final static Workbook workbook = new XSSFWorkbook();
     private final static Sheet sheet = workbook.createSheet();
 
-    public static void JTable2Excel(TableModel tableModel, String excelName, Frame frame) throws IOException {
+    public static void JTable2Excel(TableModel tableModel, String excelName) throws IOException {
         // 创建表头行
         Row headRow = sheet.createRow(0);
         for (int col = 0; col < tableModel.getColumnCount(); col++) {
