@@ -21,6 +21,10 @@ public class RouteAndStop {
 
     @Override
     public String toString() {
-        return "RouteAndStop{" + "RID='" + RID + '\'' + ", SID='" + SID + '\'' + ", order=" + order + '}';
+        return "RouteAndStop{" +
+                "RID='" + RID + '\'' +
+                ", SID='" + SID + '\'' +
+                ", order=" + order +
+                '}';
     }
 }

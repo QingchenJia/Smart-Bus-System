@@ -18,7 +18,9 @@ public class StopQuery {
     }
 
     public List<String> listStop2listStopName(List<Stop> stops) {
-        return stops.stream().map(Stop::getName).toList();
+        return stops.stream()
+                .map(Stop::getName)
+                .toList();
     }
 
     public List<Stop> showAllStop() {
@@ -38,11 +40,15 @@ public class StopQuery {
     }
 
     public List<String> listRoute2listRouteBasicInformation(List<Route> routes) {
-        return routes.stream().map(route -> route.getID() + "路 " + route.getStartTime() + "->" + route.getEndTime()).toList();
+        return routes.stream()
+                .map(route -> route.getID() + "路 " + route.getStartTime() + "->" + route.getEndTime())
+                .toList();
     }
 
     public List<String> listRoute2listRouteId4navi(List<Route> routes) {
-        return routes.stream().map(Route::getID).toList();
+        return routes.stream()
+                .map(Route::getID)
+                .toList();
     }
 
     public Stop getStopByName(String name) {

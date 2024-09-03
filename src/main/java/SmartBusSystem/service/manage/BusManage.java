@@ -18,7 +18,9 @@ public class BusManage {
     }
 
     public List<String> listBus2listBusLicenseNumber(List<Bus> buses) {
-        return buses.stream().map(Bus::getLicenseNumber).toList();
+        return buses.stream()
+                .map(Bus::getLicenseNumber)
+                .toList();
     }
 
     public List<String> getAllBusLicenseNum() {
@@ -55,7 +57,9 @@ public class BusManage {
     }
 
     public List<String> listRoute2listRouteId(List<Route> routes) {
-        return routes.stream().map(route -> route.getID() + "路").toList();
+        return routes.stream().
+                map(route -> route.getID() + "路").
+                toList();
     }
 
     public List<String> getStatusIsOneRouteId() {

@@ -22,7 +22,9 @@ public class ScheduleManage {
     }
 
     public List<String> listBus2listBusLicenseNumber(List<Bus> buses) {
-        return buses.stream().map(Bus::getLicenseNumber).toList();
+        return buses.stream()
+                .map(Bus::getLicenseNumber)
+                .toList();
     }
 
     public List<String> getAvailableBusLicenseNum(String dayOfWeek) {
@@ -38,7 +40,9 @@ public class ScheduleManage {
     }
 
     public List<String> listDriver2listDriverId(List<Driver> drivers) {
-        return drivers.stream().map(Driver::getID).toList();
+        return drivers.stream()
+                .map(Driver::getID)
+                .toList();
     }
 
     public List<String> getArrangedOnTheDayDriverId(String time) {

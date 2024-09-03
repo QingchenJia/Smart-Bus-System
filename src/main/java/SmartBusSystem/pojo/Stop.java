@@ -19,6 +19,9 @@ public class Stop {
 
     @Override
     public String toString() {
-        return "Stop{" + "ID='" + ID + '\'' + ", name='" + name + '\'' + '}';
+        return "Stop{" +
+                "ID='" + ID + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

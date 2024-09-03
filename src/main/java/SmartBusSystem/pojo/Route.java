@@ -29,6 +29,13 @@ public class Route {
 
     @Override
     public String toString() {
-        return "Route{" + "ID='" + ID + '\'' + ", name='" + name + '\'' + ", status=" + status + ", startTime=" + startTime + ", endTime=" + endTime + ", price=" + price + '}';
+        return "Route{" +
+                "ID='" + ID + '\'' +
+                ", name='" + name + '\'' +
+                ", status=" + status +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", price=" + price +
+                '}';
     }
 }

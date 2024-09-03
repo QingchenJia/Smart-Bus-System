@@ -21,6 +21,10 @@ public class Bus {
 
     @Override
     public String toString() {
-        return "Bus{" + "licenseNumber='" + licenseNumber + '\'' + ", status=" + status + ", RID='" + RID + '\'' + '}';
+        return "Bus{" +
+                "licenseNumber='" + licenseNumber + '\'' +
+                ", status=" + status +
+                ", RID='" + RID + '\'' +
+                '}';
     }
 }

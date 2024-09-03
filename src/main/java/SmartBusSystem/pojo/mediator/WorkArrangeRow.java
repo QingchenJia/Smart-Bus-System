@@ -26,6 +26,11 @@ public class WorkArrangeRow {
 
     @Override
     public String toString() {
-        return "WorkArrangeRow{" + "dayOfWeek='" + dayOfWeek + '\'' + ", driver=" + driver + ", bus=" + bus + ", route=" + route + '}';
+        return "WorkArrangeRow{" +
+                "dayOfWeek='" + dayOfWeek + '\'' +
+                ", bus=" + bus +
+                ", route=" + route +
+                ", driver=" + driver +
+                '}';
     }
 }

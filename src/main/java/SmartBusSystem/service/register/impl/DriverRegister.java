@@ -26,7 +26,7 @@ public class DriverRegister implements Register {
 
     @Override
     public boolean checkPhoneNum(String phoneNum) {
-        return phoneNum.matches("[1]\\d{10}");
+        return phoneNum.matches("1\\d{10}");
     }
 
     @Override
