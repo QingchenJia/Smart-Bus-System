@@ -3,7 +3,7 @@ package SmartBusSystem.dao.impl;
 import SmartBusSystem.dao.StopDao;
 import SmartBusSystem.mapper.StopMapper;
 import SmartBusSystem.pojo.Stop;
-import SmartBusSystem.Util.DatabaseOperation;
+import SmartBusSystem.Util.DatabaseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 
@@ -15,7 +15,7 @@ public class StopDaoImpl implements StopDao {
     private static final StopMapper stopMapper;
 
     static {
-        sqlSession = DatabaseOperation.getSqlSession();
+        sqlSession = DatabaseUtil.getSqlSession();
         stopMapper = sqlSession.getMapper(StopMapper.class);
     }
 

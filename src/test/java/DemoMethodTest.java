@@ -1,4 +1,4 @@
-import SmartBusSystem.Util.SecurityProtect;
+import SmartBusSystem.Util.CipherUtil;
 import org.junit.Test;
 
 public class DemoMethodTest {
@@ -6,10 +6,10 @@ public class DemoMethodTest {
     public void testEncrypt() throws Exception {
         String text = "123abc";
 
-        String encrypt = SecurityProtect.encrypt(text);
+        String encrypt = CipherUtil.encrypt(text);
         System.out.println(("密文:" + encrypt));
 
-        String decrypt = SecurityProtect.decrypt(encrypt);
+        String decrypt = CipherUtil.decrypt(encrypt);
         System.out.println(("明文:" + decrypt));
     }
 }

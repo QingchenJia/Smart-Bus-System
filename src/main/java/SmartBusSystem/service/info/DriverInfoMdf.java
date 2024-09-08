@@ -1,6 +1,6 @@
 package SmartBusSystem.service.info;
 
-import SmartBusSystem.Util.SecurityProtect;
+import SmartBusSystem.Util.CipherUtil;
 import SmartBusSystem.dao.DriverDao;
 import SmartBusSystem.dao.impl.DriverDaoImpl;
 import SmartBusSystem.pojo.Driver;
@@ -18,7 +18,7 @@ public class DriverInfoMdf {
 
     public boolean oldPasswordIsRight(String ID, String oldPassword) throws Exception {
         Driver driver = driverDao.SelectById(ID);
-        return oldPassword.equals(SecurityProtect.decrypt(driver.getPassword()));
+        return oldPassword.equals(CipherUtil.decrypt(driver.getPassword()));
     }
 
     public boolean checkPassword(String password) {

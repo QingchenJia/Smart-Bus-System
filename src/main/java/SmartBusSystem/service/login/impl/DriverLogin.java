@@ -1,6 +1,6 @@
 package SmartBusSystem.service.login.impl;
 
-import SmartBusSystem.Util.SecurityProtect;
+import SmartBusSystem.Util.CipherUtil;
 import SmartBusSystem.dao.DriverDao;
 import SmartBusSystem.dao.impl.DriverDaoImpl;
 import SmartBusSystem.pojo.Driver;
@@ -18,7 +18,7 @@ public class DriverLogin implements Login {
     @Override
     public boolean verifyPassword(String ID, String password) throws Exception {
         Driver driver = driverDao.SelectById(ID);
-        return password.equals(SecurityProtect.decrypt(driver.getPassword()));
+        return password.equals(CipherUtil.decrypt(driver.getPassword()));
     }
 
     @Override

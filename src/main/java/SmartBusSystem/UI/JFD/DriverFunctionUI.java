@@ -5,7 +5,7 @@
 package SmartBusSystem.UI.JFD;
 
 import SmartBusSystem.UI.GenerateExcel;
-import SmartBusSystem.Util.SecurityProtect;
+import SmartBusSystem.Util.CipherUtil;
 import SmartBusSystem.pojo.Driver;
 import SmartBusSystem.pojo.mediator.WorkArrangeRow;
 import SmartBusSystem.service.homepage.DriverHomePage;
@@ -117,7 +117,7 @@ public class DriverFunctionUI extends GenerateExcel {
 
         String newPasswordResult = null;
         try {
-            newPasswordResult = SecurityProtect.encrypt(newPassword);
+            newPasswordResult = CipherUtil.encrypt(newPassword);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

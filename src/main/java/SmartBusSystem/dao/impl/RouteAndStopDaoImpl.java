@@ -3,7 +3,7 @@ package SmartBusSystem.dao.impl;
 import SmartBusSystem.dao.RouteAndStopDao;
 import SmartBusSystem.mapper.RouteAndStopMapper;
 import SmartBusSystem.pojo.RouteAndStop;
-import SmartBusSystem.Util.DatabaseOperation;
+import SmartBusSystem.Util.DatabaseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 
@@ -15,7 +15,7 @@ public class RouteAndStopDaoImpl implements RouteAndStopDao {
     private static final RouteAndStopMapper routeAndStopMapper;
 
     static {
-        sqlSession = DatabaseOperation.getSqlSession();
+        sqlSession = DatabaseUtil.getSqlSession();
         routeAndStopMapper = sqlSession.getMapper(RouteAndStopMapper.class);
     }
 

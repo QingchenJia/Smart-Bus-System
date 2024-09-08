@@ -9,7 +9,7 @@ import SmartBusSystem.pojo.Driver;
 import SmartBusSystem.pojo.mediator.Account;
 import SmartBusSystem.service.register.Register;
 import SmartBusSystem.service.register.impl.DriverRegister;
-import SmartBusSystem.Util.SecurityProtect;
+import SmartBusSystem.Util.CipherUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,7 +48,7 @@ public class DriverRegisterUI extends AccountRegister {
         Driver driver = new Driver();
         driver.setID(ID);
         try {
-            driver.setPassword(SecurityProtect.encrypt(password));
+            driver.setPassword(CipherUtil.encrypt(password));
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

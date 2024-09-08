@@ -11,7 +11,7 @@ import javax.swing.table.TableModel;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class ExportTable {
+public class FileIOUtil {
     private final static Workbook workbook = new XSSFWorkbook();
     private final static Sheet sheet = workbook.createSheet();
 

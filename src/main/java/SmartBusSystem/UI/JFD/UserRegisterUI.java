@@ -5,7 +5,7 @@
 package SmartBusSystem.UI.JFD;
 
 import SmartBusSystem.UI.AccountRegister;
-import SmartBusSystem.Util.SecurityProtect;
+import SmartBusSystem.Util.CipherUtil;
 import SmartBusSystem.pojo.User;
 import SmartBusSystem.pojo.mediator.Account;
 import SmartBusSystem.service.register.Register;
@@ -49,7 +49,7 @@ public class UserRegisterUI extends AccountRegister {
         User user = new User();
         user.setID(ID);
         try {
-            user.setPassword(SecurityProtect.encrypt(password));
+            user.setPassword(CipherUtil.encrypt(password));
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

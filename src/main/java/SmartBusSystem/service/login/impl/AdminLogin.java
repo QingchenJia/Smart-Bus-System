@@ -1,6 +1,6 @@
 package SmartBusSystem.service.login.impl;
 
-import SmartBusSystem.Util.SecurityProtect;
+import SmartBusSystem.Util.CipherUtil;
 import SmartBusSystem.dao.AdminDao;
 import SmartBusSystem.dao.impl.AdminDaoImpl;
 import SmartBusSystem.pojo.Admin;
@@ -18,7 +18,7 @@ public class AdminLogin implements Login {
     @Override
     public boolean verifyPassword(String ID, String password) throws Exception {
         Admin admin = adminDao.SelectById(ID);
-        return password.equals(SecurityProtect.decrypt(admin.getPassword()));
+        return password.equals(CipherUtil.decrypt(admin.getPassword()));
     }
 
     @Override

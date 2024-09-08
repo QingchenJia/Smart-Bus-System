@@ -1,6 +1,6 @@
 package SmartBusSystem.UI;
 
-import SmartBusSystem.Util.ExportTable;
+import SmartBusSystem.Util.FileIOUtil;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.io.IOException;
 public class GenerateExcel extends CenterWindow {
     protected void ExportTable(JTable jTable, String tableName, JDialog success, JDialog failure) {
         try {
-            ExportTable.JTable2Excel(jTable.getModel(), tableName);
+            FileIOUtil.JTable2Excel(jTable.getModel(), tableName);
         } catch (IOException ex) {
             showInCenterOfFrame(failure);
             throw new RuntimeException(ex);

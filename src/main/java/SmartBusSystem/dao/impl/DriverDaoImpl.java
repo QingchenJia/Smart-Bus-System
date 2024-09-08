@@ -3,7 +3,7 @@ package SmartBusSystem.dao.impl;
 import SmartBusSystem.dao.DriverDao;
 import SmartBusSystem.mapper.DriverMapper;
 import SmartBusSystem.pojo.Driver;
-import SmartBusSystem.Util.DatabaseOperation;
+import SmartBusSystem.Util.DatabaseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 
@@ -15,7 +15,7 @@ public class DriverDaoImpl implements DriverDao {
     private static final DriverMapper driverMapper;
 
     static {
-        sqlSession = DatabaseOperation.getSqlSession();
+        sqlSession = DatabaseUtil.getSqlSession();
         driverMapper = sqlSession.getMapper(DriverMapper.class);
     }
 

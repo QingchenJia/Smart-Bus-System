@@ -3,7 +3,7 @@ package SmartBusSystem.dao.impl;
 import SmartBusSystem.dao.AdminDao;
 import SmartBusSystem.mapper.AdminMapper;
 import SmartBusSystem.pojo.Admin;
-import SmartBusSystem.Util.DatabaseOperation;
+import SmartBusSystem.Util.DatabaseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 
@@ -13,7 +13,7 @@ public class AdminDaoImpl implements AdminDao {
     private static final AdminMapper adminMapper;
 
     static {
-        sqlSession = DatabaseOperation.getSqlSession();
+        sqlSession = DatabaseUtil.getSqlSession();
         adminMapper = sqlSession.getMapper(AdminMapper.class);
     }
 

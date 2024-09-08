@@ -3,7 +3,7 @@ package SmartBusSystem.dao.impl;
 import SmartBusSystem.dao.ScheduleDao;
 import SmartBusSystem.mapper.ScheduleMapper;
 import SmartBusSystem.pojo.Schedule;
-import SmartBusSystem.Util.DatabaseOperation;
+import SmartBusSystem.Util.DatabaseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 
@@ -15,7 +15,7 @@ public class ScheduleDaoImpl implements ScheduleDao {
     private static final ScheduleMapper scheduleMapper;
 
     static {
-        sqlSession = DatabaseOperation.getSqlSession();
+        sqlSession = DatabaseUtil.getSqlSession();
         scheduleMapper = sqlSession.getMapper(ScheduleMapper.class);
     }
 

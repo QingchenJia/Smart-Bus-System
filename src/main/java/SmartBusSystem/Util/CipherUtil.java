@@ -8,7 +8,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.security.Security;
 import java.util.Base64;
 
-public class SecurityProtect {
+public class CipherUtil {
     private static final SecretKeySpec key;
     private static final IvParameterSpec iv;
     private static final String algorithm = "AES/CBC/PKCS5Padding";

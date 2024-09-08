@@ -3,7 +3,7 @@ package SmartBusSystem.dao.impl;
 import SmartBusSystem.dao.UserDao;
 import SmartBusSystem.mapper.UserMapper;
 import SmartBusSystem.pojo.User;
-import SmartBusSystem.Util.DatabaseOperation;
+import SmartBusSystem.Util.DatabaseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 
@@ -15,7 +15,7 @@ public class UserDaoImpl implements UserDao {
     private static final UserMapper userMapper;
 
     static {
-        sqlSession = DatabaseOperation.getSqlSession();
+        sqlSession = DatabaseUtil.getSqlSession();
         userMapper = sqlSession.getMapper(UserMapper.class);
     }
 

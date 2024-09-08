@@ -6,7 +6,7 @@ import SmartBusSystem.service.login.Login;
 import SmartBusSystem.service.recover.Recover;
 import SmartBusSystem.service.recover.impl.DriverRecover;
 import SmartBusSystem.service.recover.impl.UserRecover;
-import SmartBusSystem.Util.SecurityProtect;
+import SmartBusSystem.Util.CipherUtil;
 
 import javax.swing.*;
 import java.util.Objects;
@@ -117,7 +117,7 @@ public class AccountLogin extends CenterWindow {
                                         JDialog IdNoExist, JDialog PhoneNumWrong, JDialog PasswordFormatError, JDialog PasswordNotSame) {
         String newPasswordResult = null;
         try {
-            newPasswordResult = SecurityProtect.encrypt(account.getNewPassword());
+            newPasswordResult = CipherUtil.encrypt(account.getNewPassword());
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

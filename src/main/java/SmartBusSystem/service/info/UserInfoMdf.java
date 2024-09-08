@@ -1,6 +1,6 @@
 package SmartBusSystem.service.info;
 
-import SmartBusSystem.Util.SecurityProtect;
+import SmartBusSystem.Util.CipherUtil;
 import SmartBusSystem.dao.UserDao;
 import SmartBusSystem.dao.impl.UserDaoImpl;
 import SmartBusSystem.pojo.User;
@@ -19,7 +19,7 @@ public class UserInfoMdf {
 
     public boolean oldPasswordIsRight(String ID, String oldPassword) throws Exception {
         User user = userDao.SelectById(ID);
-        return oldPassword.equals(SecurityProtect.decrypt(user.getPassword()));
+        return oldPassword.equals(CipherUtil.decrypt(user.getPassword()));
     }
 
     public boolean checkPassword(String password) {
