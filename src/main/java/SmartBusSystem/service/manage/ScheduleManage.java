@@ -17,7 +17,8 @@ public class ScheduleManage {
     private static final DriverDao driverDao = new DriverDaoImpl();
     private static final ScheduleDao scheduleDao = new ScheduleDaoImpl();
 
-    public List<Bus> queryBusAvailable(String dayOfWeek) {   // 可安排的车辆 状态正常且当天无人使用
+    public List<Bus> queryBusAvailable(String dayOfWeek) {
+        // 可安排的车辆 状态正常且当天无人使用
         return busDao.SelectBusAvailable(dayOfWeek);
     }
 

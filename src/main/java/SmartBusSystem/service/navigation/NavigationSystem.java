@@ -16,8 +16,8 @@ public class NavigationSystem {
     private static final StopQuery stopQuery = new StopQuery();
 
     private static void initializeSampleData(List<Stop> stops, List<RouteGuideRow> routeGuideRows) {
-        for (Stop stop : stops) {   // 存放所有站点
-            graph.addStop(stop);
+        for (Stop stop : stops) {
+            graph.addStop(stop);    // 存放所有站点
         }
 
         for (RouteGuideRow routeGuideRow : routeGuideRows) {
@@ -77,6 +77,7 @@ public class NavigationSystem {
 
             detailedRoute.add(routeId + "从 " + fromName + " 到 " + toName);
         }
+
         return detailedRoute;
     }
 
@@ -101,7 +102,10 @@ public class NavigationSystem {
     }
 
     private static void showNavigationInConsole(String title, String startStopName, List<String> guide) {
-        List<String> toNames = guide.stream().map(partGuide -> "->" + partGuide.split("到")[1]).toList();
+        List<String> toNames = guide.stream()
+                .map(partGuide -> "->" + partGuide.split("到")[1])
+                .toList();
+
         StringBuilder temp = new StringBuilder();
         for (String toName : toNames) {
             temp.append(toName);

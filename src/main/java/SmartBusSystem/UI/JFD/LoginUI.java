@@ -77,10 +77,8 @@ public class LoginUI extends AccountLogin {
     }
 
     private void AdminLoginButtonMouseReleased(MouseEvent e) {
-        Account account = collectAccountInf(AdminIdInput, AdminPasswordInput);
-
+        Account account = collectAccountInfo(AdminIdInput, AdminPasswordInput);
         login = new AdminLogin();
-
         loginAccount(login, account, AdminLoginDialog);
     }
 

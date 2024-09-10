@@ -18,6 +18,7 @@ public class BusManage {
     }
 
     public List<String> listBus2listBusLicenseNumber(List<Bus> buses) {
+        // 链式编程lambda表达式获取汽车牌号list
         return buses.stream()
                 .map(Bus::getLicenseNumber)
                 .toList();
@@ -48,6 +49,7 @@ public class BusManage {
     }
 
     public boolean checkLicenseNumber(String licenseNum) {
+        // China mainland 汽车车牌号正则表达式
         String licenseNumberRegex = "[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵青藏川宁琼]([A-Z][A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳使领]|[DF][A-HJ-NP-Z0-9]{5})";
         return licenseNum.matches(licenseNumberRegex);
     }
@@ -57,9 +59,10 @@ public class BusManage {
     }
 
     public List<String> listRoute2listRouteId(List<Route> routes) {
-        return routes.stream().
-                map(route -> route.getID() + "路").
-                toList();
+        // 链式编程lambda表达式获取路线编号list
+        return routes.stream()
+                .map(route -> route.getID() + "路")
+                .toList();
     }
 
     public List<String> getStatusIsOneRouteId() {
