@@ -1,7 +1,3 @@
-/*
- * Created by JFormDesigner on Mon Jul 01 20:22:42 CST 2024
- */
-
 package SmartBusSystem.UI.JFD;
 
 import SmartBusSystem.UI.GenerateExcel;
@@ -26,9 +22,6 @@ import java.sql.Time;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * @author 87948
- */
 public class UserFunctionUI extends GenerateExcel {
     private static final UserHomePage userHomePage = new UserHomePage();
     private static final UserInfoMdf userInfoMdf = new UserInfoMdf();

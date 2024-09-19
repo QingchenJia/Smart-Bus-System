@@ -1,7 +1,3 @@
-/*
- * Created by JFormDesigner on Fri Jun 28 19:16:35 CST 2024
- */
-
 package SmartBusSystem.UI.JFD;
 
 import SmartBusSystem.UI.AccountRegister;
@@ -17,9 +13,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Objects;
 
-/**
- * @author 87948
- */
 public class DriverRegisterUI extends AccountRegister {
     public DriverRegisterUI() {
         initComponents();

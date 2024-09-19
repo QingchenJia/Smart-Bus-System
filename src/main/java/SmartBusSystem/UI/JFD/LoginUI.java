@@ -1,7 +1,3 @@
-/*
- * Created by JFormDesigner on Wed Jun 26 23:27:45 CST 2024
- */
-
 package SmartBusSystem.UI.JFD;
 
 import SmartBusSystem.UI.AccountLogin;
@@ -18,9 +14,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-/**
- * @author 87948
- */
 public class LoginUI extends AccountLogin {
     private Login login;
     private Recover recover;

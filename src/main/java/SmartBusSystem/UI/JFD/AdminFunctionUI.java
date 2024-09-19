@@ -1,7 +1,3 @@
-/*
- * Created by JFormDesigner on Thu Jul 11 14:44:36 CST 2024
- */
-
 package SmartBusSystem.UI.JFD;
 
 import SmartBusSystem.UI.GenerateExcel;
@@ -23,9 +19,6 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * @author 87948
- */
 public class AdminFunctionUI extends GenerateExcel {
     private static final AdminHomePage adminHomePage = new AdminHomePage();
     private static final BusManage busManage = new BusManage();

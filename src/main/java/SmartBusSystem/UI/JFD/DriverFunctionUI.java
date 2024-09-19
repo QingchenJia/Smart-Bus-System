@@ -1,7 +1,3 @@
-/*
- * Created by JFormDesigner on Tue Jul 09 13:46:35 CST 2024
- */
-
 package SmartBusSystem.UI.JFD;
 
 import SmartBusSystem.UI.GenerateExcel;
@@ -20,9 +16,6 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * @author 87948
- */
 public class DriverFunctionUI extends GenerateExcel {
     private static final DriverHomePage driverHomePage = new DriverHomePage();
     private static final DriverInfoMdf driverInfoMdf = new DriverInfoMdf();

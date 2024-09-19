@@ -1,7 +1,3 @@
-/*
- * Created by JFormDesigner on Thu Jun 27 13:40:09 CST 2024
- */
-
 package SmartBusSystem.UI.JFD;
 
 import SmartBusSystem.UI.AccountRegister;
@@ -16,9 +12,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-/**
- * @author 87948
- */
 public class UserRegisterUI extends AccountRegister {
     private static final Register register = new UserRegister();
 
