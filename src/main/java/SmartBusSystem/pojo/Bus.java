@@ -1,30 +1,14 @@
 package SmartBusSystem.pojo;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Setter
-@Getter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Bus {
     private String licenseNumber;
     private int status;
     private String RID;
-
-    public Bus() {
-    }
-
-    public Bus(String licenseNumber, int status, String RID) {
-        this.licenseNumber = licenseNumber;
-        this.status = status;
-        this.RID = RID;
-    }
-
-    @Override
-    public String toString() {
-        return "Bus{" +
-                "licenseNumber='" + licenseNumber + '\'' +
-                ", status=" + status +
-                ", RID='" + RID + '\'' +
-                '}';
-    }
 }

@@ -1,10 +1,12 @@
 package SmartBusSystem.pojo.mediator;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Setter
-@Getter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Account {
     private String ID;
     private String password;
@@ -15,19 +17,4 @@ public class Account {
     private String role;
     private String newPassword;
     private String newPasswordAgain;
-
-    public Account() {
-    }
-
-    public Account(String ID, String password, String passwordAgain, String phoneNum, String code, String rightCode, String role, String newPassword, String newPasswordAgain) {
-        this.ID = ID;
-        this.password = password;
-        this.passwordAgain = passwordAgain;
-        this.phoneNum = phoneNum;
-        this.code = code;
-        this.rightCode = rightCode;
-        this.role = role;
-        this.newPassword = newPassword;
-        this.newPasswordAgain = newPasswordAgain;
-    }
 }

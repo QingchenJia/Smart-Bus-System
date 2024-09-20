@@ -1,31 +1,19 @@
 package SmartBusSystem.pojo.mediator;
 
 import SmartBusSystem.pojo.Stop;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Setter
-@Getter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class RouteGuideRow {
     private String routeId;
     private String routeName;
     private List<Stop> stops;
-
-    public RouteGuideRow() {
-    }
-
-    public RouteGuideRow(String routeId, String routeName, List<Stop> stops) {
-        this.routeId = routeId;
-        this.routeName = routeName;
-        this.stops = stops;
-    }
-
-    @Override
-    public String toString() {
-        return "RouteGuideRow{" + "routeId='" + routeId + '\'' + ", routeName='" + routeName + '\'' + ", stops=" + stops + '}';
-    }
 
     public String getStopNameResult() {
         StringBuilder tempStopName = new StringBuilder();

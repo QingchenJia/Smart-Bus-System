@@ -1,27 +1,13 @@
 package SmartBusSystem.pojo;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Setter
-@Getter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Admin {
     private String ID;
     private String password;
-
-    public Admin() {
-    }
-
-    public Admin(String ID, String password) {
-        this.ID = ID;
-        this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "Admin{" +
-                "ID='" + ID + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
 }

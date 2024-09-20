@@ -58,13 +58,6 @@
             <version>1.2.3</version>
         </dependency>
 
-        <!-- 添加logback-core依赖 -->
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-            <version>1.2.3</version>
-        </dependency>
-
         <!-- BC密码工具 -->
         <dependency>
             <groupId>org.bouncycastle</groupId>

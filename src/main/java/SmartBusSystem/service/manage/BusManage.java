@@ -37,7 +37,7 @@ public class BusManage {
     }
 
     public boolean containBus(String licenseNum) {
-        return busDao.SelectBusAvailable(licenseNum) != null;
+        return busDao.SelectByLicenseNumber(licenseNum) != null;
     }
 
     public void deleteBus(String licenseNum) {
