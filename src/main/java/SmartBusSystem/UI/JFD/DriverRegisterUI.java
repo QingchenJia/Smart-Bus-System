@@ -89,45 +89,45 @@ public class DriverRegisterUI extends AccountRegister {
 
         //---- Id ----
         Id.setText("\u8d26\u53f7:");
-        Id.setFont(Id.getFont().deriveFont(Id.getFont().getStyle() | Font.BOLD, Id.getFont().getSize() + 11f));
+        Id.setFont(Id.getFont().deriveFont(Id.getFont().getStyle() | Font.BOLD, Id.getFont().getSize() + 8f));
         contentPane.add(Id);
         Id.setBounds(new Rectangle(new Point(40, 48), Id.getPreferredSize()));
 
         //---- Password ----
         Password.setText("\u5bc6\u7801:");
-        Password.setFont(Password.getFont().deriveFont(Password.getFont().getStyle() | Font.BOLD, Password.getFont().getSize() + 11f));
+        Password.setFont(Password.getFont().deriveFont(Password.getFont().getStyle() | Font.BOLD, Password.getFont().getSize() + 8f));
         contentPane.add(Password);
         Password.setBounds(new Rectangle(new Point(40, 88), Password.getPreferredSize()));
 
         //---- PhoneNum ----
         PhoneNum.setText("\u624b\u673a\u53f7:");
-        PhoneNum.setFont(PhoneNum.getFont().deriveFont(PhoneNum.getFont().getStyle() | Font.BOLD, PhoneNum.getFont().getSize() + 11f));
+        PhoneNum.setFont(PhoneNum.getFont().deriveFont(PhoneNum.getFont().getStyle() | Font.BOLD, PhoneNum.getFont().getSize() + 8f));
         contentPane.add(PhoneNum);
         PhoneNum.setBounds(new Rectangle(new Point(40, 168), PhoneNum.getPreferredSize()));
 
         //---- PasswordAgain ----
         PasswordAgain.setText("\u518d\u6b21\u8f93\u5165:");
-        PasswordAgain.setFont(PasswordAgain.getFont().deriveFont(PasswordAgain.getFont().getStyle() | Font.BOLD, PasswordAgain.getFont().getSize() + 11f));
+        PasswordAgain.setFont(PasswordAgain.getFont().deriveFont(PasswordAgain.getFont().getStyle() | Font.BOLD, PasswordAgain.getFont().getSize() + 8f));
         contentPane.add(PasswordAgain);
         PasswordAgain.setBounds(new Rectangle(new Point(40, 128), PasswordAgain.getPreferredSize()));
 
         //---- DrivingYears ----
         DrivingYears.setText("\u9a7e\u9f84:");
-        DrivingYears.setFont(DrivingYears.getFont().deriveFont(DrivingYears.getFont().getStyle() | Font.BOLD, DrivingYears.getFont().getSize() + 11f));
+        DrivingYears.setFont(DrivingYears.getFont().deriveFont(DrivingYears.getFont().getStyle() | Font.BOLD, DrivingYears.getFont().getSize() + 8f));
         contentPane.add(DrivingYears);
         DrivingYears.setBounds(new Rectangle(new Point(40, 208), DrivingYears.getPreferredSize()));
         contentPane.add(IdInput);
-        IdInput.setBounds(110, 55, 195, 25);
+        IdInput.setBounds(110, 55, 195, 20);
         contentPane.add(PhoneNumInput);
-        PhoneNumInput.setBounds(130, 175, 175, 25);
+        PhoneNumInput.setBounds(130, 175, 175, 20);
         contentPane.add(PasswordInput);
-        PasswordInput.setBounds(110, 95, 195, 25);
+        PasswordInput.setBounds(110, 95, 195, 20);
         contentPane.add(PasswordAgainInput);
-        PasswordAgainInput.setBounds(155, 135, 150, 25);
+        PasswordAgainInput.setBounds(155, 135, 150, 20);
 
         //---- Check ----
         Check.setText("\u68c0\u67e5");
-        Check.setFont(Check.getFont().deriveFont(Check.getFont().getStyle() | Font.BOLD, Check.getFont().getSize() + 10f));
+        Check.setFont(Check.getFont().deriveFont(Check.getFont().getStyle() | Font.BOLD, Check.getFont().getSize() + 6f));
         Check.setFocusPainted(false);
         Check.addMouseListener(new MouseAdapter() {
             @Override
@@ -140,7 +140,7 @@ public class DriverRegisterUI extends AccountRegister {
 
         //---- Backward ----
         Backward.setText("\u8fd4\u56de");
-        Backward.setFont(Backward.getFont().deriveFont(Backward.getFont().getStyle() | Font.BOLD, Backward.getFont().getSize() + 10f));
+        Backward.setFont(Backward.getFont().deriveFont(Backward.getFont().getStyle() | Font.BOLD, Backward.getFont().getSize() + 6f));
         Backward.setFocusPainted(false);
         Backward.addMouseListener(new MouseAdapter() {
             @Override
@@ -174,8 +174,9 @@ public class DriverRegisterUI extends AccountRegister {
             "19",
             "20"
         }));
+        SelectDrivingYears.setFont(SelectDrivingYears.getFont().deriveFont(SelectDrivingYears.getFont().getSize() - 2f));
         contentPane.add(SelectDrivingYears);
-        SelectDrivingYears.setBounds(105, 215, 70, SelectDrivingYears.getPreferredSize().height);
+        SelectDrivingYears.setBounds(105, 210, 70, SelectDrivingYears.getPreferredSize().height);
 
         contentPane.setPreferredSize(new Dimension(360, 340));
         setSize(360, 340);

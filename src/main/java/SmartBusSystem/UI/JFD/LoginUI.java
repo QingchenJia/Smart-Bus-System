@@ -175,19 +175,19 @@ public class LoginUI extends AccountLogin {
 
         //---- Id ----
         Id.setText("\u8d26\u53f7:");
-        Id.setFont(Id.getFont().deriveFont(Id.getFont().getSize() + 12f));
+        Id.setFont(Id.getFont().deriveFont(Id.getFont().getSize() + 10f));
         contentPane.add(Id);
         Id.setBounds(new Rectangle(new Point(110, 118), Id.getPreferredSize()));
 
         //---- Password ----
         Password.setText("\u5bc6\u7801:");
-        Password.setFont(Password.getFont().deriveFont(Password.getFont().getSize() + 12f));
+        Password.setFont(Password.getFont().deriveFont(Password.getFont().getSize() + 10f));
         contentPane.add(Password);
         Password.setBounds(new Rectangle(new Point(110, 168), Password.getPreferredSize()));
 
         //---- Code ----
         Code.setText("\u9a8c\u8bc1\u7801:");
-        Code.setFont(Code.getFont().deriveFont(Code.getFont().getSize() + 12f));
+        Code.setFont(Code.getFont().deriveFont(Code.getFont().getSize() + 10f));
         contentPane.add(Code);
         Code.setBounds(new Rectangle(new Point(110, 218), Code.getPreferredSize()));
         contentPane.add(CodeInput);
@@ -207,7 +207,7 @@ public class LoginUI extends AccountLogin {
 
         //---- UserLoginButton ----
         UserLoginButton.setText("\u4e58\u5ba2\u767b\u5f55");
-        UserLoginButton.setFont(UserLoginButton.getFont().deriveFont(UserLoginButton.getFont().getStyle() | Font.BOLD, UserLoginButton.getFont().getSize() + 10f));
+        UserLoginButton.setFont(UserLoginButton.getFont().deriveFont(UserLoginButton.getFont().getStyle() | Font.BOLD, UserLoginButton.getFont().getSize() + 8f));
         UserLoginButton.setFocusPainted(false);
         UserLoginButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -216,11 +216,11 @@ public class LoginUI extends AccountLogin {
             }
         });
         contentPane.add(UserLoginButton);
-        UserLoginButton.setBounds(110, 265, UserLoginButton.getPreferredSize().width, 31);
+        UserLoginButton.setBounds(120, 265, UserLoginButton.getPreferredSize().width, 31);
 
         //---- DriverLoginButton ----
         DriverLoginButton.setText("\u53f8\u673a\u767b\u5f55");
-        DriverLoginButton.setFont(DriverLoginButton.getFont().deriveFont(DriverLoginButton.getFont().getStyle() | Font.BOLD, DriverLoginButton.getFont().getSize() + 10f));
+        DriverLoginButton.setFont(DriverLoginButton.getFont().deriveFont(DriverLoginButton.getFont().getStyle() | Font.BOLD, DriverLoginButton.getFont().getSize() + 8f));
         DriverLoginButton.setFocusPainted(false);
         DriverLoginButton.addMouseListener(new MouseAdapter() {
             @Override
@@ -229,7 +229,7 @@ public class LoginUI extends AccountLogin {
             }
         });
         contentPane.add(DriverLoginButton);
-        DriverLoginButton.setBounds(255, 265, DriverLoginButton.getPreferredSize().width, 31);
+        DriverLoginButton.setBounds(270, 265, DriverLoginButton.getPreferredSize().width, 31);
 
         //---- Register ----
         Register.setText("\u6ce8\u518c");
@@ -285,7 +285,7 @@ public class LoginUI extends AccountLogin {
 
             //---- UserRegister ----
             UserRegister.setText("\u4e58\u5ba2\u6ce8\u518c");
-            UserRegister.setFont(UserRegister.getFont().deriveFont(UserRegister.getFont().getStyle() | Font.BOLD, UserRegister.getFont().getSize() + 10f));
+            UserRegister.setFont(UserRegister.getFont().deriveFont(UserRegister.getFont().getStyle() | Font.BOLD, UserRegister.getFont().getSize() + 6f));
             UserRegister.setFocusPainted(false);
             UserRegister.addMouseListener(new MouseAdapter() {
                 @Override
@@ -294,11 +294,11 @@ public class LoginUI extends AccountLogin {
                 }
             });
             RegisterSelectContentPane.add(UserRegister);
-            UserRegister.setBounds(40, 20, UserRegister.getPreferredSize().width, 26);
+            UserRegister.setBounds(50, 20, UserRegister.getPreferredSize().width, 26);
 
             //---- DriverRegister ----
             DriverRegister.setText("\u53f8\u673a\u6ce8\u518c");
-            DriverRegister.setFont(DriverRegister.getFont().deriveFont(DriverRegister.getFont().getStyle() | Font.BOLD, DriverRegister.getFont().getSize() + 10f));
+            DriverRegister.setFont(DriverRegister.getFont().deriveFont(DriverRegister.getFont().getStyle() | Font.BOLD, DriverRegister.getFont().getSize() + 6f));
             DriverRegister.setFocusPainted(false);
             DriverRegister.addMouseListener(new MouseAdapter() {
                 @Override
@@ -307,7 +307,7 @@ public class LoginUI extends AccountLogin {
                 }
             });
             RegisterSelectContentPane.add(DriverRegister);
-            DriverRegister.setBounds(40, 65, DriverRegister.getPreferredSize().width, 26);
+            DriverRegister.setBounds(50, 65, DriverRegister.getPreferredSize().width, 26);
 
             RegisterSelectContentPane.setPreferredSize(new Dimension(215, 145));
             RegisterSelect.setSize(215, 145);
