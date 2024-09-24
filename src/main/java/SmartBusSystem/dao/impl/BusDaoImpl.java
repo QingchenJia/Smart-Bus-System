@@ -9,7 +9,6 @@ import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
-@Slf4j
 public class BusDaoImpl implements BusDao {
     private static final SqlSession sqlSession;
     private static final BusMapper busMapper;
@@ -21,23 +20,17 @@ public class BusDaoImpl implements BusDao {
 
     @Override
     public List<Bus> SelectAll() {
-        List<Bus> buses = busMapper.SelectAll();
-        log.info("全部车辆->" + buses);
-        return buses;
+        return busMapper.SelectAll();
     }
 
     @Override
     public Bus SelectByLicenseNumber(String licenseNumber) {
-        Bus bus = busMapper.SelectByLicenseNumber(licenseNumber);
-        log.info("检索车辆->" + bus);
-        return bus;
+        return busMapper.SelectByLicenseNumber(licenseNumber);
     }
 
     @Override
     public List<Bus> SelectBusAvailable(String dayOfWeek) {
-        List<Bus> buses = busMapper.SelectBusAvailable(dayOfWeek);
-        log.info("可用车辆->" + buses);
-        return buses;
+        return busMapper.SelectBusAvailable(dayOfWeek);
     }
 
     @Override

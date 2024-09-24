@@ -9,7 +9,6 @@ import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
-@Slf4j
 public class ScheduleDaoImpl implements ScheduleDao {
     private static final SqlSession sqlSession;
     private static final ScheduleMapper scheduleMapper;
@@ -21,9 +20,7 @@ public class ScheduleDaoImpl implements ScheduleDao {
 
     @Override
     public Schedule SelectById(Schedule schedule) {
-        Schedule scheduleResult = scheduleMapper.SelectById(schedule);
-        log.info("查询排班->" + scheduleResult);
-        return scheduleResult;
+        return scheduleMapper.SelectById(schedule);
     }
 
     @Override
@@ -34,16 +31,12 @@ public class ScheduleDaoImpl implements ScheduleDao {
 
     @Override
     public List<Schedule> SelectByDriverID(String DID) {
-        List<Schedule> schedules = scheduleMapper.SelectByDriverID(DID);
-        log.info("工作安排->" + schedules);
-        return schedules;
+        return scheduleMapper.SelectByDriverID(DID);
     }
 
     @Override
     public List<Schedule> SelectByDayOfWeek(String dayOfWeek) {
-        List<Schedule> schedules = scheduleMapper.SelectByDayOfWeek(dayOfWeek);
-        log.info("工作安排->" + schedules);
-        return schedules;
+        return scheduleMapper.SelectByDayOfWeek(dayOfWeek);
     }
 
     @Override

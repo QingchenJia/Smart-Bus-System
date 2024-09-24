@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-@Slf4j
 public class VerifyCode {
     public static ArrayList<Character> alphabet = new ArrayList<>();    // 字母表
     public static ArrayList<Integer> number = new ArrayList<>();    // 数字表
@@ -19,7 +18,7 @@ public class VerifyCode {
     }
 
     public static String getVerifyCode() {
-        //随机拼凑
+        // 随机拼凑
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < 4; i++) {
             stringBuilder.append(alphabet.get(random.nextInt(alphabet.size())));
@@ -34,8 +33,6 @@ public class VerifyCode {
         codeArray[index] = codeArray[codeArray.length - 1];
         codeArray[codeArray.length - 1] = temp;
 
-        String verifyCode = new String(codeArray);
-        log.info("验证码->" + verifyCode);
-        return verifyCode;
+        return new String(codeArray);
     }
 }

@@ -9,7 +9,6 @@ import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
-@Slf4j
 public class UserDaoImpl implements UserDao {
     private static final SqlSession sqlSession;
     private static final UserMapper userMapper;
@@ -21,23 +20,17 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> SelectAll() {
-        List<User> users = userMapper.SelectAll();
-        log.info("所有用户->" + users);
-        return users;
+        return userMapper.SelectAll();
     }
 
     @Override
     public User SelectById(String ID) {
-        User user = userMapper.SelectById(ID);
-        log.info("当前用户->" + user);   // 控制台展示查询结果
-        return user;
+        return userMapper.SelectById(ID);
     }
 
     @Override
     public List<User> SelectByAptitude(int aptitude) {
-        List<User> users = userMapper.SelectByAptitude(aptitude);
-        log.info("同一资质用户->" + users);
-        return users;
+        return userMapper.SelectByAptitude(aptitude);
     }
 
     @Override

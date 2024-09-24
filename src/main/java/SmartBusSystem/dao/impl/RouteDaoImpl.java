@@ -9,7 +9,6 @@ import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
-@Slf4j
 public class RouteDaoImpl implements RouteDao {
     private static final SqlSession sqlSession;
     private static final RouteMapper routeMapper;
@@ -21,16 +20,12 @@ public class RouteDaoImpl implements RouteDao {
 
     @Override
     public List<Route> SelectAll() {
-        List<Route> routes = routeMapper.SelectAll();
-        log.info("所有线路->" + routes); // 控制台展示查询结果
-        return routes;
+        return routeMapper.SelectAll();
     }
 
     @Override
     public Route SelectById(String ID) {
-        Route route = routeMapper.SelectById(ID);
-        log.info("查询线路->" + route);
-        return route;
+        return routeMapper.SelectById(ID);
     }
 
     @Override
@@ -41,15 +36,11 @@ public class RouteDaoImpl implements RouteDao {
 
     @Override
     public List<Route> SelectRoutePassByStop(String stopName) {
-        List<Route> routes = routeMapper.SelectRoutePassByStop(stopName);
-        log.info("经行路线->" + routes);
-        return routes;
+        return routeMapper.SelectRoutePassByStop(stopName);
     }
 
     @Override
     public List<Route> SelectStatusIsOne() {
-        List<Route> routes = routeMapper.SelectStatusIsOne();
-        log.info("正常路线->" + routes);
-        return routes;
+        return routeMapper.SelectStatusIsOne();
     }
 }

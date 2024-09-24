@@ -9,7 +9,6 @@ import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
-@Slf4j
 public class DriverDaoImpl implements DriverDao {
     private static final SqlSession sqlSession;
     private static final DriverMapper driverMapper;
@@ -21,30 +20,22 @@ public class DriverDaoImpl implements DriverDao {
 
     @Override
     public List<Driver> SelectAll() {
-        List<Driver> drivers = driverMapper.SelectAll();
-        log.info("全部司机->" + drivers);
-        return drivers;
+        return driverMapper.SelectAll();
     }
 
     @Override
     public Driver SelectById(String ID) {
-        Driver driver = driverMapper.SelectById(ID);
-        log.info("当前司机->" + driver);
-        return driver;
+        return driverMapper.SelectById(ID);
     }
 
     @Override
     public List<Driver> SelectDriverAvailable(String time) {
-        List<Driver> drivers = driverMapper.SelectDriverAvailable(time);
-        log.info("可用司机->" + drivers);
-        return drivers;
+        return driverMapper.SelectDriverAvailable(time);
     }
 
     @Override
     public List<Driver> SelectDriverIsArranged(String time) {
-        List<Driver> drivers = driverMapper.SelectDriverIsArranged(time);
-        log.info("在班司机->" + drivers);
-        return drivers;
+        return driverMapper.SelectDriverIsArranged(time);
     }
 
     @Override

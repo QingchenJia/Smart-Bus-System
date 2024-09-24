@@ -9,7 +9,6 @@ import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
-@Slf4j
 public class RouteAndStopDaoImpl implements RouteAndStopDao {
     private static final SqlSession sqlSession;
     private static final RouteAndStopMapper routeAndStopMapper;
@@ -21,9 +20,7 @@ public class RouteAndStopDaoImpl implements RouteAndStopDao {
 
     @Override
     public List<RouteAndStop> SelectById(RouteAndStop routeAndStop) {
-        List<RouteAndStop> routeAndStops = routeAndStopMapper.SelectById(routeAndStop);
-        log.info("路站关系->" + routeAndStops);
-        return routeAndStops;
+        return routeAndStopMapper.SelectById(routeAndStop);
     }
 
     @Override
