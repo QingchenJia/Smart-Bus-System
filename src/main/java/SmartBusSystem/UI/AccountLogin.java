@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import javax.swing.*;
 import java.util.Objects;
 
-@Slf4j
 public class AccountLogin extends CenterWindow {
     protected Account collectAccountInfo(JFormattedTextField IdInput, JPasswordField PasswordInput, JFormattedTextField CodeInput, JLabel RightCode) {
         // 收集UI组件中的内容 组成对象 适用于乘客和司机
@@ -39,8 +38,6 @@ public class AccountLogin extends CenterWindow {
     protected boolean verifyAccount(Login login,
                                     Account account,
                                     JDialog IdNoExist, JDialog PasswordWrong, JDialog CodeWrong) {
-        log.info("登录验证");
-
         // 登录验证
         if (account.getID().isEmpty() || account.getPassword().isEmpty() || account.getCode().isEmpty()) return false;
         if (!login.verifyID(account.getID())) {
@@ -64,8 +61,6 @@ public class AccountLogin extends CenterWindow {
     }
 
     protected boolean verifyAccount(Login login, Account account) {
-        log.info("登录验证");
-
         if (account.getID().isEmpty() || account.getPassword().isEmpty()) return false;
         if (!login.verifyID(account.getID())) {
             return false;
@@ -88,16 +83,12 @@ public class AccountLogin extends CenterWindow {
         if (verifyAccount(login,
                 account,
                 IdNoExist, PasswordWrong, CodeWrong)) {
-            log.info("登陆成功");
-
             showInCenterOfFrame(Pass);
         }
     }
 
     protected void loginAccount(Login login, Account account, JDialog AdminLoginDialog) {
         if (verifyAccount(login, account)) {
-            log.info("登陆成功");
-
             AdminLoginDialog.dispose();
             this.dispose();
             new AdminFunctionUI();
@@ -129,7 +120,8 @@ public class AccountLogin extends CenterWindow {
 
     protected void resetAccountPassword(Recover recover,
                                         Account account,
-                                        JDialog IdNoExist, JDialog PhoneNumWrong, JDialog PasswordFormatError, JDialog PasswordNotSame) {
+                                        JDialog IdNoExist, JDialog PhoneNumWrong, JDialog PasswordFormatError, JDialog PasswordNotSame,
+                                        JDialog success) {
         String newPasswordResult = null;
         try {
             newPasswordResult = CipherUtil.encrypt(account.getNewPassword());
@@ -154,8 +146,8 @@ public class AccountLogin extends CenterWindow {
             return;
         }
 
-        log.info("修改成功");
-
         recover.resetPassword(account.getID(), newPasswordResult);
+
+        success.setVisible(true);
     }
 }

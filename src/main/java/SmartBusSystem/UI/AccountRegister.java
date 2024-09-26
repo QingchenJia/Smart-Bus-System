@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 
-@Slf4j
 public class AccountRegister extends CenterWindow {
     protected Account collectAccountInfo(JFormattedTextField IdInput, JPasswordField PasswordInput, JPasswordField PasswordAgainInput, JFormattedTextField PhoneNumInput) {
         Account account = new Account();
@@ -42,8 +41,6 @@ public class AccountRegister extends CenterWindow {
             showInCenterOfFrame(PhoneNumWrong);
             return;
         }
-
-        log.info("注册成功");
 
         showInCenterOfFrame(Pass);
     }

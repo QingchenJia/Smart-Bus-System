@@ -96,22 +96,6 @@ public class NavigationSystem {
         navigation.add(title);
         navigation.addAll(guide);
 
-        showNavigationInConsole(title, startStopName, guide);
-
         return navigation;
-    }
-
-    private static void showNavigationInConsole(String title, String startStopName, List<String> guide) {
-        List<String> toNames = guide.stream()
-                .map(partGuide -> "->" + partGuide.split("到")[1])
-                .toList();
-
-        StringBuilder temp = new StringBuilder();
-        for (String toName : toNames) {
-            temp.append(toName);
-        }
-        String nextNames = new String(temp);
-
-        log.info(title + ": " + startStopName + nextNames);
     }
 }

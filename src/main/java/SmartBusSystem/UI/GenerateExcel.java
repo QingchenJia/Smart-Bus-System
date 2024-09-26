@@ -10,7 +10,6 @@ import java.io.IOException;
 public class GenerateExcel extends CenterWindow {
     protected void ExportTable(JTable jTable, String tableName, JDialog success, JDialog failure) {
         try {
-            log.info("尝试导出Excel");
             FileIOUtil.JTable2Excel(jTable.getModel(), tableName);
 
             log.info("Excel导出成功");
