@@ -89,7 +89,8 @@ public class LoginUI extends AccountLogin {
 
         resetAccountPassword(recover,
                 account,
-                IdNoExist, PhoneNumWrong, PasswordFormatError, PasswordNotSame);
+                IdNoExist, PhoneNumWrong, PasswordFormatError, PasswordNotSame,
+                SuccessOperation);
     }
 
     private void RecoverMouseReleased(MouseEvent e) {
@@ -101,6 +102,11 @@ public class LoginUI extends AccountLogin {
         this.dispose();
         String ID = IdInput.getText();
         new DriverFunctionUI(ID);  //打开功能界面 同时记录当前司机ID
+    }
+
+    private void ReturnLoginUIMouseReleased(MouseEvent e) {
+        SuccessOperation.dispose();
+        RecoverDialog.dispose();
     }
 
     private void initComponents() {
@@ -155,6 +161,8 @@ public class LoginUI extends AccountLogin {
         tips5 = new JLabel();
         PasswordNotSame = new JDialog();
         PasswordDifferent = new JLabel();
+        SuccessOperation = new JDialog();
+        ReturnLoginUI = new JButton();
 
         //======== this ========
         setAlwaysOnTop(true);
@@ -705,6 +713,46 @@ public class LoginUI extends AccountLogin {
             PasswordNotSame.setSize(315, 125);
             PasswordNotSame.setLocationRelativeTo(PasswordNotSame.getOwner());
         }
+
+        //======== SuccessOperation ========
+        {
+            SuccessOperation.setTitle("\u64cd\u4f5c\u6210\u529f");
+            SuccessOperation.setModal(true);
+            SuccessOperation.setAlwaysOnTop(true);
+            SuccessOperation.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            var SuccessOperationContentPane = SuccessOperation.getContentPane();
+            SuccessOperationContentPane.setLayout(null);
+
+            //---- ReturnLoginUI ----
+            ReturnLoginUI.setText("\u8fd4\u56de\u767b\u5f55");
+            ReturnLoginUI.setFont(ReturnLoginUI.getFont().deriveFont(ReturnLoginUI.getFont().getStyle() | Font.BOLD, ReturnLoginUI.getFont().getSize() + 10f));
+            ReturnLoginUI.setFocusPainted(false);
+            ReturnLoginUI.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    ReturnLoginUIMouseReleased(e);
+                }
+            });
+            SuccessOperationContentPane.add(ReturnLoginUI);
+            ReturnLoginUI.setBounds(new Rectangle(new Point(40, 35), ReturnLoginUI.getPreferredSize()));
+
+            {
+                // compute preferred size
+                Dimension preferredSize = new Dimension();
+                for(int i = 0; i < SuccessOperationContentPane.getComponentCount(); i++) {
+                    Rectangle bounds = SuccessOperationContentPane.getComponent(i).getBounds();
+                    preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
+                    preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
+                }
+                Insets insets = SuccessOperationContentPane.getInsets();
+                preferredSize.width += insets.right;
+                preferredSize.height += insets.bottom;
+                SuccessOperationContentPane.setMinimumSize(preferredSize);
+                SuccessOperationContentPane.setPreferredSize(preferredSize);
+            }
+            SuccessOperation.setSize(205, 145);
+            SuccessOperation.setLocationRelativeTo(SuccessOperation.getOwner());
+        }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents  @formatter:on
     }
 
@@ -759,5 +807,7 @@ public class LoginUI extends AccountLogin {
     private JLabel tips5;
     private JDialog PasswordNotSame;
     private JLabel PasswordDifferent;
+    private JDialog SuccessOperation;
+    private JButton ReturnLoginUI;
     // JFormDesigner - End of variables declaration  //GEN-END:variables  @formatter:on
 }
